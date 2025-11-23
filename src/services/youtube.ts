@@ -180,8 +180,11 @@ export const fetchLatestVideos = async (maxResults = 6): Promise<YouTubeVideo[]>
         return cachedVideos.slice(0, maxResults);
     }
 
-    // Try YouTube API first (if key is available)
-    if (API_KEY) {
+    // Check if API key is valid (not placeholder)
+    const hasValidAPIKey = API_KEY && API_KEY !== 'your_youtube_api_key_here';
+
+    // Try YouTube API first (if valid key is available)
+    if (hasValidAPIKey) {
         try {
             console.log('Fetching from YouTube API...');
             const videos = await fetchFromYouTubeAPI(maxResults);
@@ -192,19 +195,21 @@ export const fetchLatestVideos = async (maxResults = 6): Promise<YouTubeVideo[]>
         }
     }
 
-    // Fallback to RSS feed
+    // Fallback to RSS feed (works without API key)
     try {
         console.log('Fetching from RSS feed...');
         const videos = await fetchFromRSSFeed(maxResults);
-        cacheVideos(videos);
-        return videos;
+        if (videos && videos.length > 0) {
+            cacheVideos(videos);
+            return videos;
+        }
     } catch (error) {
         console.error('RSS feed failed:', error);
     }
 
-    // Last resort: return fallback videos
-    console.warn('All API methods failed, using fallback videos');
-    return FALLBACK_VIDEOS.slice(0, maxResults);
+    // Last resort: return empty array to avoid showing fallback images
+    console.warn('All API methods failed, returning empty array');
+    return [];
 };
 
 /**
