@@ -36,7 +36,9 @@ const RadioPlayer = () => {
   return (
     <div
       className="
-      w-full max-w-4xl mx-auto mt-0
+      w-full max-w-4xl mx-auto
+      mt-6   /* ← SEPARACIÓN EXTRA */
+      mb-6   /* ← OPCIONAL, SEPARA DE LO QUE SIGUE */
       bg-gradient-to-br from-[#1e2a3a] to-[#0f1a27]
       rounded-xl px-5 py-3
       shadow-lg border border-white/10

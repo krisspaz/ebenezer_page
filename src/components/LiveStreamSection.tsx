@@ -128,11 +128,11 @@ const LiveStreamSection = () => {
   const next = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
-    <section id="transmision" className="py-24 bg-background relative">
+    <section id="transmision" className="py-12 bg-background relative">
       <div className="container mx-auto px-4">
 
         {/* TITULO */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-14">
           <h2 className="font-heading text-4xl md:text-5xl font-bold text-primary">
             TRANSMISIÓN <span className="text-accent">EN VIVO</span>
           </h2>
@@ -143,7 +143,7 @@ const LiveStreamSection = () => {
         </div>
 
         {/* BLOQUE PRINCIPAL MINIMALISTA */}
-        <div className="max-w-xl mx-auto mb-20">
+        <div className="max-w-xl mx-auto mb-16">
           <div className="bg-gradient-to-br from-[#1e2a3a] to-[#0f1a27] rounded-3xl p-10 text-center shadow-xl border border-white/10">
 
             {!live.isLive ? (
@@ -158,10 +158,17 @@ const LiveStreamSection = () => {
                 <p className="text-white/80 text-xl mb-8">{getNextService()}</p>
 
                 <div className="flex justify-center gap-4">
-                  <Button onClick={() => window.open("https://www.youtube.com/@iglesiaebenezercoban", "_blank")} className="bg-red-600 hover:bg-red-700 text-white">
+                  <Button
+                    onClick={() => window.open("https://www.youtube.com/@iglesiaebenezercoban", "_blank")}
+                    className="bg-red-600 hover:bg-red-700 text-white"
+                  >
                     <Youtube className="w-5 h-5 mr-2" /> YouTube
                   </Button>
-                  <Button onClick={() => window.open("https://www.facebook.com/ebenezercoban", "_blank")} className="bg-[#1877F2] hover:bg-[#0f66d9] text-white">
+
+                  <Button
+                    onClick={() => window.open("https://www.facebook.com/ebenezercoban", "_blank")}
+                    className="bg-[#1877F2] hover:bg-[#0f66d9] text-white"
+                  >
                     <Facebook className="w-5 h-5 mr-2" /> Facebook
                   </Button>
                 </div>
@@ -224,7 +231,9 @@ const LiveStreamSection = () => {
 
                       <div className="p-4">
                         <p className="text-accent text-sm font-bold">{vid.date}</p>
-                        <h4 className="font-heading text-primary text-lg line-clamp-2">{vid.title}</h4>
+                        <h4 className="font-heading text-primary text-lg line-clamp-2">
+                          {vid.title}
+                        </h4>
                       </div>
                     </div>
                   </div>
