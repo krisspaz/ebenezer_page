@@ -139,7 +139,7 @@ const fetchFromYouTubeAPI = async (maxResults: number): Promise<YouTubeVideo[]> 
 };
 
 /**
- * Fetch videos using RSS feed via direct XML parsing
+ * Fetch videos directly from YouTube RSS feed (no external API needed)
  */
 const fetchFromRSSFeed = async (maxResults: number): Promise<YouTubeVideo[]> => {
     const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
@@ -152,17 +152,17 @@ const fetchFromRSSFeed = async (maxResults: number): Promise<YouTubeVideo[]> => 
 
     const xmlText = await response.text();
 
-    // Parse XML manually
+    // Parse XML using DOMParser
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
 
-    // Check for parsing errors
+    // Check for XML parsing errors
     const parserError = xmlDoc.querySelector('parsererror');
     if (parserError) {
         throw new Error('Failed to parse RSS feed XML');
     }
 
-    // Get all entry elements
+    // Get all video entries
     const entries = xmlDoc.querySelectorAll('entry');
 
     if (entries.length === 0) {
@@ -171,14 +171,27 @@ const fetchFromRSSFeed = async (maxResults: number): Promise<YouTubeVideo[]> => 
 
     const videos: YouTubeVideo[] = [];
 
+    // Parse each entry
     for (let i = 0; i < Math.min(entries.length, maxResults); i++) {
         const entry = entries[i];
 
-        const videoId = entry.querySelector('videoId')?.textContent || '';
-        const title = entry.querySelector('title')?.textContent || 'Sin título';
-        const published = entry.querySelector('published')?.textContent || '';
-        const thumbnail = entry.querySelector('media\\:thumbnail, thumbnail')?.getAttribute('url') ||
-            `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+        // Extract video data from XML
+        const videoIdElement = entry.querySelector('videoId');
+        const titleElement = entry.querySelector('title');
+        const publishedElement = entry.querySelector('published');
+        const thumbnailElement = entry.querySelector('media\\:thumbnail, thumbnail');
+
+        const videoId = videoIdElement?.textContent || '';
+        const title = titleElement?.textContent || 'Sin título';
+        const published = publishedElement?.textContent || '';
+
+        // Get thumbnail URL - YouTube RSS provides it in media:thumbnail
+        let thumbnail = thumbnailElement?.getAttribute('url') || '';
+
+        // Fallback to YouTube's standard thumbnail URL if not found
+        if (!thumbnail && videoId) {
+            thumbnail = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+        }
 
         if (videoId) {
             videos.push({
@@ -189,6 +202,10 @@ const fetchFromRSSFeed = async (maxResults: number): Promise<YouTubeVideo[]> => 
                 url: `https://www.youtube.com/watch?v=${videoId}`
             });
         }
+    }
+
+    if (videos.length === 0) {
+        throw new Error('No valid videos extracted from RSS feed');
     }
 
     return videos;
@@ -205,11 +222,8 @@ export const fetchLatestVideos = async (maxResults = 6): Promise<YouTubeVideo[]>
         return cachedVideos.slice(0, maxResults);
     }
 
-    // Check if API key is valid (not placeholder)
-    const hasValidAPIKey = API_KEY && API_KEY !== 'your_youtube_api_key_here';
-
-    // Try YouTube API first (if valid key is available)
-    if (hasValidAPIKey) {
+    // Try YouTube API first (if key is available)
+    if (API_KEY) {
         try {
             console.log('Fetching from YouTube API...');
             const videos = await fetchFromYouTubeAPI(maxResults);
@@ -220,21 +234,19 @@ export const fetchLatestVideos = async (maxResults = 6): Promise<YouTubeVideo[]>
         }
     }
 
-    // Fallback to RSS feed (works without API key)
+    // Fallback to RSS feed
     try {
         console.log('Fetching from RSS feed...');
         const videos = await fetchFromRSSFeed(maxResults);
-        if (videos && videos.length > 0) {
-            cacheVideos(videos);
-            return videos;
-        }
+        cacheVideos(videos);
+        return videos;
     } catch (error) {
         console.error('RSS feed failed:', error);
     }
 
-    // Last resort: return empty array to avoid showing fallback images
-    console.warn('All API methods failed, returning empty array');
-    return [];
+    // Last resort: return fallback videos
+    console.warn('All API methods failed, using fallback videos');
+    return FALLBACK_VIDEOS.slice(0, maxResults);
 };
 
 /**
