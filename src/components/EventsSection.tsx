@@ -1,5 +1,6 @@
 import { Calendar, Clock, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import RadioPlayer from "@/components/RadioPlayer";
 
 const events = [
   {
@@ -90,6 +91,9 @@ const EventsSection = () => {
             </div>
           ))}
         </div>
+
+        {/* Radio Player */}
+        <RadioPlayer />
       </div>
     </section>
   );
