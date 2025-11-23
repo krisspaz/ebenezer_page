@@ -11,36 +11,14 @@ const LiveStreamSection = () => {
 
   useEffect(() => {
     const loadVideos = async () => {
-      const fetchedVideos = await fetchLatestVideos();
-      if (fetchedVideos.length > 0) {
+      try {
+        const fetchedVideos = await fetchLatestVideos();
         setVideos(fetchedVideos);
-      } else {
-        // Fallback data if API fails or no key provided
-        setVideos([
-          {
-            id: "1",
-            title: "Servicio Dominical - La Fe Inquebrantable",
-            date: "Hace 2 días",
-            thumbnail: "https://images.unsplash.com/photo-1438232991995b7058bbb3?w=800&q=80",
-            url: "#"
-          },
-          {
-            id: "2",
-            title: "Estudio Bíblico - El Poder de la Oración",
-            date: "Hace 5 días",
-            thumbnail: "https://images.unsplash.com/photo-1507692049790-de58293a4697?w=800&q=80",
-            url: "#"
-          },
-          {
-            id: "3",
-            title: "Noche de Adoración - Rendidos a Tus Pies",
-            date: "Hace 1 semana",
-            thumbnail: "https://images.unsplash.com/photo-1445445290350-16a63cfaf7a7?w=800&q=80",
-            url: "#"
-          },
-        ]);
+      } catch (error) {
+        console.error('Error loading videos:', error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     loadVideos();
