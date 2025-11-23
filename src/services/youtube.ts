@@ -139,34 +139,59 @@ const fetchFromYouTubeAPI = async (maxResults: number): Promise<YouTubeVideo[]> 
 };
 
 /**
- * Fetch videos using RSS feed via rss2json
+ * Fetch videos using RSS feed via direct XML parsing
  */
 const fetchFromRSSFeed = async (maxResults: number): Promise<YouTubeVideo[]> => {
     const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
-    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&count=${maxResults}`;
 
-    const response = await fetch(apiUrl);
+    const response = await fetch(rssUrl);
 
     if (!response.ok) {
-        throw new Error(`RSS API error: ${response.status} ${response.statusText}`);
+        throw new Error(`RSS feed error: ${response.status} ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const xmlText = await response.text();
 
-    if (data.status !== 'ok' || !data.items || data.items.length === 0) {
+    // Parse XML manually
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+    // Check for parsing errors
+    const parserError = xmlDoc.querySelector('parsererror');
+    if (parserError) {
+        throw new Error('Failed to parse RSS feed XML');
+    }
+
+    // Get all entry elements
+    const entries = xmlDoc.querySelectorAll('entry');
+
+    if (entries.length === 0) {
         throw new Error('No videos found in RSS feed');
     }
 
-    return data.items.map((item: any) => {
-        const videoId = item.guid?.split(':')[2] || item.link?.split('v=')[1] || 'unknown';
-        return {
-            id: videoId,
-            title: item.title,
-            thumbnail: item.thumbnail || `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`,
-            date: formatDate(item.pubDate),
-            url: item.link
-        };
-    });
+    const videos: YouTubeVideo[] = [];
+
+    for (let i = 0; i < Math.min(entries.length, maxResults); i++) {
+        const entry = entries[i];
+
+        const videoId = entry.querySelector('videoId')?.textContent || '';
+        const title = entry.querySelector('title')?.textContent || 'Sin título';
+        const published = entry.querySelector('published')?.textContent || '';
+        const thumbnail = entry.querySelector('media\\:thumbnail, thumbnail')?.getAttribute('url') ||
+            `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+
+        if (videoId) {
+            videos.push({
+                id: videoId,
+                title: title,
+                thumbnail: thumbnail,
+                date: formatDate(published),
+                url: `https://www.youtube.com/watch?v=${videoId}`
+            });
+        }
+    }
+
+    return videos;
 };
 
 /**
