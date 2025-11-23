@@ -1,12 +1,30 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Play, Pause, Volume2, Radio } from "lucide-react";
 
-const RADIO_STREAM_URL = "https://rhemastereo.fm/stream";
+// Try multiple possible stream URLs
+const STREAM_URLS = [
+  "https://stream.zeno.fm/f3c0en7rf9duv",
+  "https://stream.zeno.fm/rhema-stereo-91-7",
+  "https://rhemastereo.fm/radio/8000/radio.mp3",
+  "https://streaming.emisoras.com.gt:8000/rhemastereo",
+];
 
 const RadioPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.7);
+  const [currentStreamIndex, setCurrentStreamIndex] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+
+  // Try next stream URL if current one fails
+  const tryNextStream = () => {
+    if (currentStreamIndex < STREAM_URLS.length - 1) {
+      setCurrentStreamIndex(prev => prev + 1);
+      setError(null);
+    } else {
+      setError("No se pudo conectar con la emisora");
+    }
+  };
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -14,8 +32,10 @@ const RadioPlayer = () => {
       audioRef.current.pause();
       setPlaying(false);
     } else {
-      audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
+      setError(null);
+      audioRef.current.play().catch((err) => {
+        console.error("Error playing audio:", err);
+        tryNextStream();
       });
       setPlaying(true);
     }
@@ -29,11 +49,27 @@ const RadioPlayer = () => {
     }
   };
 
+  // Handle audio errors
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleError = () => {
+      console.error("Stream error, trying next URL...");
+      if (playing) {
+        tryNextStream();
+      }
+    };
+
+    audio.addEventListener('error', handleError);
+    return () => audio.removeEventListener('error', handleError);
+  }, [playing, currentStreamIndex]);
+
   return (
     <div className="max-w-5xl mx-auto mt-12 animate-fade-in-up">
       <div className="bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10 rounded-2xl p-6 shadow-sm border border-primary/10 backdrop-blur-sm">
-        <audio ref={audioRef} src={RADIO_STREAM_URL} preload="none" />
-        
+        <audio ref={audioRef} src={STREAM_URLS[currentStreamIndex]} preload="none" crossOrigin="anonymous" />
+
         <div className="flex items-center gap-4 flex-wrap justify-center">
           {/* Radio Icon */}
           <div className="flex items-center gap-3">
@@ -41,8 +77,8 @@ const RadioPlayer = () => {
               <Radio className="w-5 h-5 text-primary" />
             </div>
             <div className="hidden sm:block">
-              <p className="text-sm font-bold text-primary">Rhe Mastereo FM</p>
-              <p className="text-xs text-muted-foreground">En vivo</p>
+              <p className="text-sm font-bold text-primary">Rhema Stereo</p>
+              <p className="text-xs text-muted-foreground">{error || "91.7 FM - En vivo"}</p>
             </div>
           </div>
 
