@@ -24,7 +24,7 @@ const SERVICE_TIMES = [
 
 const toMinutes = (t: string) => {
   const [h, m] = t.split(":").map(Number);
-  return h * 60 + (m || 0);
+  return h * 60 + m;
 };
 
 const getNextService = () => {
@@ -32,7 +32,7 @@ const getNextService = () => {
   const currentDay = now.getDay();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-  let next = null;
+  let next: any = null;
   let minDiff = Infinity;
 
   SERVICE_TIMES.forEach((s) => {
@@ -55,6 +55,7 @@ const getNextService = () => {
   const name = labels[next.day];
 
   const [h, m] = next.start.split(":");
+
   const hour = Number(h);
   const hour12 = hour % 12 || 12;
   const ampm = hour >= 12 ? "PM" : "AM";
@@ -63,25 +64,29 @@ const getNextService = () => {
 };
 
 // ===============================
-// DETECTAR EN VIVO
+// 🔥 DETECTAR SI ESTÁ EN VIVO (Versión Estable)
 // ===============================
 const CHANNEL_ID = "UCNHgmUxPdMXtOFYChK1ib1w";
 
 const checkLiveStatus = async () => {
   try {
     const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
-    const response = await fetch(proxy);
-    const data = await response.json();
+    const proxy = `https://corsproxy.io/?${encodeURIComponent(rssUrl)}`;
+
+    const response = await fetch(proxy, {
+      headers: { "Cache-Control": "no-cache" },
+    });
+
+    const text = await response.text();
 
     const parser = new DOMParser();
-    const xml = parser.parseFromString(data.contents, "text/xml");
+    const xml = parser.parseFromString(text, "text/xml");
 
     const entry = xml.querySelector("entry");
     if (!entry) return { isLive: false };
 
     const broadcast = entry.querySelector("yt\\:liveBroadcastContent")?.textContent;
-    const videoId = entry.querySelector("yt\\:videoId, videoId")?.textContent;
+    const videoId = entry.querySelector("yt\\:videoId")?.textContent;
 
     if (broadcast === "live" && videoId) {
       return {
@@ -94,7 +99,8 @@ const checkLiveStatus = async () => {
     }
 
     return { isLive: false };
-  } catch {
+  } catch (e) {
+    console.error("LIVE STATUS ERROR:", e);
     return { isLive: false };
   }
 };
@@ -108,10 +114,21 @@ const LiveStreamSection = () => {
   const [loading, setLoading] = useState(true);
   const [live, setLive] = useState<any>({ isLive: false });
 
+  // 1️⃣ Primera vez: verificar live
   useEffect(() => {
     checkLiveStatus().then(setLive);
   }, []);
 
+  // 2️⃣ Actualizar estado de live CADA 30 SEGUNDOS
+  useEffect(() => {
+    const interval = setInterval(() => {
+      checkLiveStatus().then(setLive);
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // 3️⃣ Cargar vídeos anteriores
   useEffect(() => {
     const load = async () => {
       try {
@@ -142,10 +159,11 @@ const LiveStreamSection = () => {
           </p>
         </div>
 
-        {/* BLOQUE PRINCIPAL MINIMALISTA */}
+        {/* BLOQUE LIVE */}
         <div className="max-w-xl mx-auto mb-16">
           <div className="bg-gradient-to-br from-[#1e2a3a] to-[#0f1a27] rounded-3xl p-10 text-center shadow-xl border border-white/10">
 
+            {/* SI NO ESTÁ EN VIVO */}
             {!live.isLive ? (
               <>
                 <div className="mb-6 flex justify-center">
@@ -154,7 +172,7 @@ const LiveStreamSection = () => {
                   </div>
                 </div>
 
-                <h3 className="text-3xl font-heading text-white mb-2">Próxima Transmisión</h3>
+                <h3 className="text-3xl font-heading text-white mb-2">Proximo Servicio</h3>
                 <p className="text-white/80 text-xl mb-8">{getNextService()}</p>
 
                 <div className="flex justify-center gap-4">
@@ -174,6 +192,8 @@ const LiveStreamSection = () => {
                 </div>
               </>
             ) : (
+
+              // SI ESTÁ EN VIVO 🔥🔥🔥
               <>
                 <div className="inline-flex items-center bg-red-600 px-5 py-2 rounded-full text-white mb-6">
                   <span className="w-2 h-2 bg-white rounded-full animate-pulse mr-2" />
@@ -198,17 +218,13 @@ const LiveStreamSection = () => {
           </div>
         </div>
 
-        {/* CARRUSEL */}
+        {/* CARRUSEL DE VIDEOS */}
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between mb-6">
-            <h3 className="text-primary text-3xl font-heading font-bold">Transmisiones Anteriores</h3>
+            <h3 className="text-primary text-3xl font-heading font-bold">Anteriores Servicios</h3>
             <div className="flex gap-2">
-              <Button variant="outline" size="icon" onClick={prev}>
-                <ChevronLeft />
-              </Button>
-              <Button variant="outline" size="icon" onClick={next}>
-                <ChevronRight />
-              </Button>
+              <Button variant="outline" size="icon" onClick={prev}><ChevronLeft /></Button>
+              <Button variant="outline" size="icon" onClick={next}><ChevronRight /></Button>
             </div>
           </div>
 
@@ -231,9 +247,7 @@ const LiveStreamSection = () => {
 
                       <div className="p-4">
                         <p className="text-accent text-sm font-bold">{vid.date}</p>
-                        <h4 className="font-heading text-primary text-lg line-clamp-2">
-                          {vid.title}
-                        </h4>
+                        <h4 className="font-heading text-primary text-lg line-clamp-2">{vid.title}</h4>
                       </div>
                     </div>
                   </div>
