@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Share2, Facebook, Twitter, MessageCircle, Copy, Sparkles } from "lucide-react";
+import { Share2, Facebook, MessageCircle, Copy, Sparkles, Instagram } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { fetchDailyVerse, getVerseProgress } from "../services/dailyVerse";
@@ -34,11 +34,23 @@ const DailyVerse = () => {
         window.open(url, "_blank", "width=600,height=400");
     };
 
-    const shareToTwitter = () => {
+    const shareToX = () => {
         if (!verse) return;
         const text = `"${verse.text.substring(0, 200)}..." - ${verse.reference}`;
         const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
         window.open(url, "_blank", "width=600,height=400");
+    };
+
+    const shareToInstagram = async () => {
+        if (!verse) return;
+        const text = `📖 ${verse.reference}\n\n"${verse.text}"\n\n#versiculodeldia #biblia #fe`;
+        try {
+            await navigator.clipboard.writeText(text);
+            toast.success("Texto copiado. Pégalo en Instagram 📸");
+            window.open("https://www.instagram.com/", "_blank");
+        } catch {
+            toast.error("Error al copiar");
+        }
     };
 
     const shareToWhatsApp = () => {
@@ -140,13 +152,23 @@ const DailyVerse = () => {
                                 </Button>
 
                                 <Button
-                                    onClick={shareToTwitter}
+                                    onClick={shareToX}
                                     variant="outline"
                                     size="sm"
                                     className="gap-2 border-slate-300 dark:border-[#1e293b] hover:bg-slate-100 dark:hover:bg-[#1e293b] hover:text-slate-800 dark:hover:text-white"
                                 >
-                                    <Twitter className="w-4 h-4 text-teal-600 dark:text-[#14b8a6]" />
-                                    <span className="hidden sm:inline">Twitter</span>
+                                    <span className="font-bold text-teal-600 dark:text-[#14b8a6]">𝕏</span>
+                                    <span className="hidden sm:inline">X</span>
+                                </Button>
+
+                                <Button
+                                    onClick={shareToInstagram}
+                                    variant="outline"
+                                    size="sm"
+                                    className="gap-2 border-slate-300 dark:border-[#1e293b] hover:bg-slate-100 dark:hover:bg-[#1e293b] hover:text-slate-800 dark:hover:text-white"
+                                >
+                                    <Instagram className="w-4 h-4 text-pink-500" />
+                                    <span className="hidden sm:inline">Instagram</span>
                                 </Button>
 
                                 <Button
