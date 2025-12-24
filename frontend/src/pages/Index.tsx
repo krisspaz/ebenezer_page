@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import MinistriesSection from "../components/MinistriesSection";
+import AboutSection from "../components/AbouSection";
 import EventsSection from "../components/EventsSection";
 import LiveStreamSection from "../components/LiveStreamSection";
 import PrayerWall from "../components/PrayerWall";
@@ -19,6 +20,7 @@ const Index = () => {
         <Hero />
         <ScrollReveal variant="fadeUp"><DailyVerse /></ScrollReveal>
         <ScrollReveal variant="fadeUp" delay={0.1}><MinistriesSection /></ScrollReveal>
+        <ScrollReveal variant="fadeUp" delay={0.1}><AboutSection /></ScrollReveal>
         <ScrollReveal variant="fadeUp" delay={0.1}><EventsSection /></ScrollReveal>
         <ScrollReveal variant="fadeUp" delay={0.1}><LiveStreamSection /></ScrollReveal>
         <ScrollReveal variant="fadeUp" delay={0.1}><PrayerWall /></ScrollReveal>
