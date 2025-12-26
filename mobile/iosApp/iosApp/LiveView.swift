@@ -3,48 +3,9 @@ import SwiftUI
 import UIKit
 import WebKit
 
-// MARK: - Radio Player Manager
-class RadioPlayer: ObservableObject {
-    static let shared = RadioPlayer()
-    private var player: AVPlayer?
-    @Published var isPlaying = false
-
-    private let radioURL = "https://radio.fiberstreams.com:2000/stream/8710"  // One Radio Stream
-
-    func togglePlay() {
-        if isPlaying {
-            pause()
-        } else {
-            play()
-        }
-    }
-
-    func play() {
-        guard let url = URL(string: radioURL) else { return }
-
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("Audio session error: \(error)")
-        }
-
-        if player == nil {
-            player = AVPlayer(url: url)
-        }
-        player?.play()
-        isPlaying = true
-    }
-
-    func pause() {
-        player?.pause()
-        isPlaying = false
-    }
-}
-
 // MARK: - Live View with REAL Audio
 struct LiveView: View {
-    @StateObject private var radioPlayer = RadioPlayer.shared
+    @ObservedObject private var radioPlayer = RadioPlayer.shared
     @Environment(\.openURL) var openURL
 
     var body: some View {

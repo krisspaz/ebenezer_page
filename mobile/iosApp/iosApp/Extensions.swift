@@ -1,3 +1,4 @@
+import AVKit
 import SwiftUI
 
 // MARK: - Color Extension
@@ -19,5 +20,46 @@ extension Color {
         self.init(
             .sRGB, red: Double(r) / 255, green: Double(g) / 255, blue: Double(b) / 255,
             opacity: Double(a) / 255)
+    }
+}
+
+// MARK: - Radio Player Manager (Singleton)
+class RadioPlayer: ObservableObject {
+    static let shared = RadioPlayer()
+    private var player: AVPlayer?
+    @Published var isPlaying = false
+
+    private let radioURL = "https://radio.fiberstreams.com:2000/stream/8710"
+
+    private init() {}
+
+    func togglePlay() {
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+
+    func play() {
+        guard let url = URL(string: radioURL) else { return }
+
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Audio session error: \(error)")
+        }
+
+        if player == nil {
+            player = AVPlayer(url: url)
+        }
+        player?.play()
+        isPlaying = true
+    }
+
+    func pause() {
+        player?.pause()
+        isPlaying = false
     }
 }
