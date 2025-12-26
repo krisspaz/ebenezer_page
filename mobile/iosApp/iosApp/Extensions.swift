@@ -1,4 +1,4 @@
-import AVKit
+import AVFoundation
 import SwiftUI
 
 // MARK: - Color Extension
@@ -44,12 +44,14 @@ class RadioPlayer: ObservableObject {
     func play() {
         guard let url = URL(string: radioURL) else { return }
 
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("Audio session error: \(error)")
-        }
+        #if os(iOS)
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch {
+                print("Audio session error: \(error)")
+            }
+        #endif
 
         if player == nil {
             player = AVPlayer(url: url)

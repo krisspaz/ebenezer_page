@@ -1,7 +1,5 @@
-import AVKit
+import AVFoundation
 import SwiftUI
-import UIKit
-import WebKit
 
 // MARK: - Live View with REAL Audio
 struct LiveView: View {

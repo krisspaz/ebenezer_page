@@ -1,4 +1,4 @@
-import AVKit
+import AVFoundation
 import SwiftUI
 import UIKit
 
