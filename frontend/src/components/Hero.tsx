@@ -70,25 +70,22 @@ const Hero = () => {
       <div className="absolute inset-0">
         <iframe
           key={isMuted ? 'muted' : 'unmuted'}
-          src={`https://www.youtube.com/embed/7NjF2EKCqts?autoplay=1&mute=${isMuted ? 1 : 0}&loop=1&playlist=7NjF2EKCqts&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1`}
+          src={`https://www.youtube.com/embed/7NjF2EKCqts?autoplay=1&mute=${isMuted ? 1 : 0}&loop=1&playlist=7NjF2EKCqts&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&vq=hd1080&hd=1`}
           title="PROCLAMA PROFETICA"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          className="w-full h-full object-cover scale-150"
+          className="absolute"
           style={{
-            position: 'absolute',
             top: '50%',
             left: '50%',
-            transform: 'translate(-50%, -50%) scale(1.5)',
-            width: '100vw',
-            height: '100vh',
-            minWidth: '177.77vh',
-            minHeight: '56.25vw',
+            transform: 'translate(-50%, -50%)',
+            width: '300vw',
+            height: '300vh',
             pointerEvents: 'none',
           }}
         />
         {/* Dark overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
       </div>
 
       {/* Sound Toggle Button */}
