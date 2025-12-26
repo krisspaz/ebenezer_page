@@ -118,7 +118,7 @@ const EventsSection = () => {
       title: "Servicio de Familia",
       date: "Viernes",
       time: "7:00 PM - 9:00 PM",
-      location: "Salón de Jóvenes",
+      location: "Templo Principal",
       image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop",
       category: t('events.categories.youth'),
     },
