@@ -8,8 +8,9 @@ const MinistriesSection = () => {
     const ministries = [
         {
             id: 1,
-            title: t('ministries.items.worship.title'),
-            description: t('ministries.items.worship.desc'),
+            title: "Alabanza",
+            description: "Adoración profética continua, sin velo y con gobierno",
+            verse: "“Asimismo David y los jefes del ejército apartaron para el ministerio a los hijos de Asaf, de Hemán y de Jedutún, para que profetizasen con arpas, salterios y címbalos; y el número de ellos, hombres idóneos para la obra de su ministerio, fue:” 1 Crónicas 25:1",
             icon: <Music className="w-8 h-8 text-white" />,
             color: "from-[#1e293b]/80 to-[#0f172a]/90",
             size: "col-span-12 md:col-span-6 lg:col-span-8 row-span-2",
@@ -17,17 +18,19 @@ const MinistriesSection = () => {
         },
         {
             id: 2,
-            title: t('ministries.items.kids.title'),
-            description: t('ministries.items.kids.desc'),
-            icon: <Baby className="w-6 h-6 text-white" />,
+            title: "Danza",
+            description: "Una expresión integral de adoración",
+            verse: "“Por lo tanto, amados hermanos, les ruego que entreguen su cuerpo a Dios por todo lo que él ha hecho a favor de ustedes. Que sea un sacrificio vivo y santo, la clase de sacrificio que a él agrada. Esa es la verdadera forma de adorarlo.” Romanos 12:1",
+            icon: <Heart className="w-6 h-6 text-white" />,
             color: "from-[#F4C95D]/70 to-[#1e293b]/90",
             size: "col-span-12 md:col-span-6 lg:col-span-4 row-span-1",
             image: "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?q=80&w=2069&auto=format&fit=crop"
         },
         {
             id: 3,
-            title: t('ministries.items.youth.title'),
-            description: t('ministries.items.youth.desc'),
+            title: "Multimedia",
+            description: "La voz visual de lo que sucede en el altar, donde Dios se manifiesta",
+            verse: "“De la misma manera, dejen que sus buenas acciones brillen a la vista de todos, para que todos alaben a su Padre celestial.” Mateo 5:16",
             icon: <Mic2 className="w-6 h-6 text-white" />,
             color: "from-[#14b8a6]/70 to-[#1e293b]/90",
             size: "col-span-12 md:col-span-6 lg:col-span-4 row-span-1",
@@ -35,17 +38,19 @@ const MinistriesSection = () => {
         },
         {
             id: 4,
-            title: t('ministries.items.women.title'),
-            description: t('ministries.items.women.desc'),
-            icon: <Heart className="w-6 h-6 text-white" />,
+            title: "Altar familiar",
+            description: "Levantando altares para bendecir familias",
+            verse: "“Constrúyanme un altar donde yo determine que recuerden mi nombre, y allí me presentaré ante ustedes y los bendeciré.” Éxodo 20:24",
+            icon: <BookOpen className="w-6 h-6 text-white" />,
             color: "from-[#F4C95D]/60 to-[#0f172a]/90",
             size: "col-span-12 md:col-span-6 lg:col-span-4",
             image: "https://images.unsplash.com/photo-1573497019236-17f8177b81e8?q=80&w=2069&auto=format&fit=crop"
         },
         {
             id: 5,
-            title: t('ministries.items.men.title'),
-            description: t('ministries.items.men.desc'),
+            title: "Evangelismo",
+            description: "Una expresión del amor ágape que busca la restauración del pecador",
+            verse: "“Pues el amor de Cristo nos apremia, habiendo llegado a esta conclusión: que uno murió por todos, por consiguiente, todos murieron;” 2 Corintios 5:14",
             icon: <Users className="w-6 h-6 text-white" />,
             color: "from-[#1e293b]/70 to-[#14b8a6]/40",
             size: "col-span-12 md:col-span-6 lg:col-span-4",
@@ -53,12 +58,23 @@ const MinistriesSection = () => {
         },
         {
             id: 6,
-            title: t('ministries.items.discipleship.title'),
-            description: t('ministries.items.discipleship.desc'),
+            title: "Prejus",
+            description: "Formado para honrar a Dios hoy y mañana",
+            verse: "“¿Cómo puede mantenerse íntegro el joven?, viviendo conforme a tu palabra.” Salmos 119:9",
             icon: <BookOpen className="w-6 h-6 text-white" />,
             color: "from-[#14b8a6]/60 to-[#0f172a]/90",
             size: "col-span-12 md:col-span-12 lg:col-span-4",
             image: "https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?q=80&w=2070&auto=format&fit=crop"
+        },
+        {
+            id: 7,
+            title: "Matrimonios",
+            description: "Matrimonios que viven el diseño del amor más el respeto",
+            verse: "“En todo caso, cada uno de vosotros ame también a su mujer como a sí mismo, y que la mujer respete a su marido.” Efesios 5:33 LBLA",
+            icon: <Heart className="w-6 h-6 text-white" />,
+            color: "from-[#14b8a6]/70 to-[#1e293b]/90",
+            size: "col-span-12 md:col-span-6 lg:col-span-4 row-span-1",
+            image: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=2070&auto=format&fit=crop"
         }
     ];
 
@@ -107,6 +123,9 @@ const MinistriesSection = () => {
                                 <h3 className="text-white font-heading text-2xl font-bold mb-1">{item.title}</h3>
                                 <p className="text-gray-200 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
                                     {item.description}
+                                </p>
+                                <p className="text-yellow-300 text-xs italic mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    {item.verse}
                                 </p>
                             </div>
                         </motion.div>
