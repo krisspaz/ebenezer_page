@@ -79,8 +79,9 @@ const Hero = () => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '300vw',
-            height: '300vh',
+            width: '178vh',
+            height: '100vh',
+            minWidth: '100vw',
             pointerEvents: 'none',
           }}
         />
