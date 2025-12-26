@@ -75,10 +75,8 @@ const FloatingAudioPlayer = () => {
         setIsExpanded(false);
         setActiveTab('menu');
         setIsFullscreen(false);
-        if (isPlaying && audioRef.current) {
-            audioRef.current.pause();
-            setIsPlaying(false);
-        }
+        // Radio keeps playing even when closing the panel
+        // User can pause explicitly with the pause button
     };
 
     // YouTube embed URL - uses channel's live stream or latest video
