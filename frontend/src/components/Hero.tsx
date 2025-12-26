@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Volume2, VolumeX } from "lucide-react";
+import proclama2026 from "../assets/proclama2026.png";
 
 interface TimeLeft {
   days: number;
@@ -13,9 +14,11 @@ interface TimeLeft {
 const Hero = () => {
   const { t } = useTranslation();
   const containerRef = useRef(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const [isMuted, setIsMuted] = useState(true);
+  const [countdownComplete, setCountdownComplete] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
@@ -38,6 +41,10 @@ const Hero = () => {
           minutes: Math.floor((difference / 1000 / 60) % 60),
           seconds: Math.floor((difference / 1000) % 60),
         });
+        setCountdownComplete(false);
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        setCountdownComplete(true);
       }
     };
 
@@ -45,6 +52,17 @@ const Hero = () => {
     const timer = setInterval(calculateTimeLeft, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Handle Mute/Unmute without reloading iframe
+  useEffect(() => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      const command = isMuted ? 'mute' : 'unMute';
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func: command, args: [] }),
+        '*'
+      );
+    }
+  }, [isMuted]);
 
   const TimeBox = ({ value, label }: { value: number; label: string }) => (
     <div className="flex flex-col items-center">
@@ -59,6 +77,35 @@ const Hero = () => {
     </div>
   );
 
+  // When countdown is complete - show only the image
+  if (countdownComplete) {
+    return (
+      <section
+        id="inicio"
+        className="relative w-full h-[calc(100vh-4rem)] mt-16 overflow-hidden"
+        style={{ backgroundColor: '#5c6b94' }}
+        aria-label="Proclama Profética 2026"
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.img
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            src={proclama2026}
+            alt="Proclama Profética 2026"
+            className="w-full h-full object-contain md:object-cover"
+          />
+        </div>
+
+        {/* Copyright */}
+        <div className="absolute bottom-8 w-full text-center text-xs md:text-sm text-white/60 z-20 tracking-[0.2em] uppercase font-light">
+          {t('common.copyright')}
+        </div>
+      </section>
+    );
+  }
+
+  // Before countdown ends - show video with countdown
   return (
     <section
       id="inicio"
@@ -69,16 +116,16 @@ const Hero = () => {
       {/* YouTube Video Background */}
       <div className="absolute inset-0">
         <iframe
-          key={isMuted ? 'muted' : 'unmuted'}
-          src={`https://www.youtube.com/embed/7NjF2EKCqts?autoplay=1&mute=${isMuted ? 1 : 0}&loop=1&playlist=7NjF2EKCqts&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&vq=hd1080&hd=1`}
+          ref={iframeRef}
+          src="https://www.youtube.com/embed/7NjF2EKCqts?autoplay=1&mute=1&loop=1&playlist=7NjF2EKCqts&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&vq=hd1080&hd=1&enablejsapi=1"
           title="PROCLAMA PROFETICA"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           className="absolute"
           style={{
-            top: '50%',
+            top: '53%',
             left: '50%',
-            transform: 'translate(-50%, -50%)',
+            transform: 'translate(-50%, -50%) scale(1.2)',
             width: '178vh',
             height: '100vh',
             minWidth: '100vw',
@@ -89,7 +136,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
       </div>
 
-      {/* Sound Toggle Button */}
+      {/* Sound Toggle Button - Re-added as requested */}
       <button
         onClick={() => setIsMuted(!isMuted)}
         className="absolute top-6 right-6 z-30 bg-black/50 hover:bg-black/70 backdrop-blur-md text-white p-3 rounded-full transition-all border border-white/20 hover:border-[#F4C95D]/50"
@@ -108,7 +155,7 @@ const Hero = () => {
         >
           {/* Title */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-4 drop-shadow-[0_6px_25px_rgba(0,0,0,0.9)]">
-            PROCLAMA  <span className="text-[#F4C95D]"> PROFETICA</span>
+            PROCLAMA  <span className="text-[#F4C95D]"> PROFÉTICA</span>
           </h1>
 
           <p className="text-lg md:text-xl text-white/90 mb-8 max-w-xl mx-auto">
