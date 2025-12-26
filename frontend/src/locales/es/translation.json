@@ -10,7 +10,8 @@
         "open": "Abrir",
         "video": "VIDEO",
         "live": "EN VIVO",
-        "anonymous": "Anónimo"
+        "anonymous": "Anónimo",
+        "copyright": "© 2025 Iglesia de Cristo Ebenezer Cobán"
     },
     "nav": {
         "home": "Inicio",
@@ -19,17 +20,23 @@
         "live": "En Vivo",
         "prayer": "Oración",
         "contact": "Contacto",
-        "about": "NOSOTROS",
+        "about": "Nosotros",
         "skipToContent": "Saltar al contenido principal",
         "toggleTheme": "Alternar tema",
         "openMenu": "Abrir menú",
         "closeMenu": "Cerrar menú"
     },
     "hero": {
-        "welcome": "Bienvenidos a Ebenezer",
+        "welcome": "Bienvenido a Casa",
         "subtitle": "Una iglesia de puertas abiertas, donde el amor de Dios transforma vidas.",
         "watchLive": "Ver en Vivo",
-        "newHere": "¿Eres Nuevo?"
+        "newHere": "¿Eres Nuevo?",
+        "slide2Title": "Nuestra Fe en Él",
+        "slide2Subtitle": "Jesús es fiel para sostenernos.",
+        "slide3Title": "La Palabra de Dios",
+        "slide3Subtitle": "Luz que guía y transforma el corazón.",
+        "previousSlide": "Slide anterior",
+        "nextSlide": "Siguiente slide"
     },
     "footer": {
         "description": "Una comunidad de fe dedicada a compartir el amor de Cristo y servir a nuestra ciudad con excelencia, pasión y compromiso.",
@@ -39,7 +46,7 @@
         "email": "contacto@ebenezercoban.org"
     },
     "contact": {
-        "title": "CONTÁCTANOS",
+        "title": "Contáctanos",
         "subtitle": "Estamos aquí para servirte. Si necesitas información, oración o deseas asistir a una actividad, estamos para ayudarte.",
         "location": {
             "title": "Ubicación",
@@ -69,37 +76,42 @@
             "phonePlaceholder": "Número de contacto",
             "messageLabel": "Mensaje",
             "messagePlaceholder": "Escribe tu mensaje…",
-            "submit": "ENVIAR"
+            "submit": "Enviar"
         },
         "whatsappFab": "Contactar por WhatsApp"
     },
     "ministries": {
         "title": "Nuestros Ministerios",
         "subtitle": "Hay un lugar para ti en la familia de Ebenezer Cobán.",
+        "servingWithPurpose": "Sirviendo con Propósito",
         "items": {
-            "worship": {
+            "alabanza": {
                 "title": "Alabanza",
-                "desc": "Adoración que transforma atmósferas."
+                "desc": "Adoración profética continua, sin velo y con gobierno"
             },
-            "kids": {
-                "title": "Niños",
-                "desc": "Instruyendo al niño en su camino."
+            "danza": {
+                "title": "Danza",
+                "desc": "Una expresión integral de adoración"
             },
-            "youth": {
-                "title": "Jóvenes",
-                "desc": "Pasión y fuerza para Dios."
+            "multimedia": {
+                "title": "Multimedia",
+                "desc": "La voz visual de lo que sucede en el altar"
             },
-            "women": {
-                "title": "Mujeres",
-                "desc": "Mujeres de fe y virtud."
+            "altarFamiliar": {
+                "title": "Altar Familiar",
+                "desc": "Levantando altares para bendecir familias"
             },
-            "men": {
-                "title": "Varones",
-                "desc": "Hombres de valor."
+            "evangelismo": {
+                "title": "Evangelismo",
+                "desc": "Amor ágape que busca la restauración del pecador"
             },
-            "discipleship": {
-                "title": "Discipulado",
-                "desc": "Creciendo en el conocimiento."
+            "prejus": {
+                "title": "Prejus",
+                "desc": "Formado para honrar a Dios hoy y mañana"
+            },
+            "matrimonios": {
+                "title": "Matrimonios",
+                "desc": "Matrimonios que viven el diseño del amor más el respeto"
             }
         }
     },
@@ -114,15 +126,15 @@
         }
     },
     "livestream": {
-        "title": "TRANSMISIÓN",
-        "titleHighlight": "EN VIVO",
+        "title": "Transmisión",
+        "titleHighlight": "En Vivo",
         "subtitle": "Únete a nuestros servicios desde cualquier lugar.",
         "liveNow": "EN VIVO AHORA",
         "serviceInProgress": "CULTO EN PROGRESO",
         "weAreLive": "Estamos en servicio",
         "startingSoon": "La transmisión puede iniciar en cualquier momento.",
         "nextService": "Próximo Servicio",
-        "pastsServices": "Servicios Anteriores",
+        "pastServices": "Servicios Anteriores",
         "watchOn": "Ver en",
         "days": {
             "sunday": "Domingo",
@@ -160,11 +172,25 @@
     },
     "audioPlayer": {
         "radio": "Radio",
+        "radioLive": "Radio en Vivo",
         "churchLive": "Iglesia en Vivo",
         "liveStatus": "En Vivo 🔴",
         "recentStream": "Transmisión Reciente",
-        "stationName": "Rhema Stereo",
-        "frequency": "87.10 FM"
+        "stationName": "Radio Ebenezer Cobán",
+        "frequency": "Streaming 24/7",
+        "playNow": "Escuchar Ahora",
+        "pause": "Pausar",
+        "playing": "Reproduciendo ahora",
+        "media": "Medios",
+        "youtube": "YouTube",
+        "watchVideos": "Ver servicios y videos"
+    },
+    "about": {
+        "title": "Nosotros",
+        "subtitle": "Conoce más sobre nuestra iglesia",
+        "mission": "Nuestra Misión",
+        "vision": "Nuestra Visión",
+        "values": "Nuestros Valores"
     },
     "settings": {
         "title": "Ajustes",

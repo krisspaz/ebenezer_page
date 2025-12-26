@@ -10,7 +10,8 @@
         "open": "Open",
         "video": "VIDEO",
         "live": "LIVE",
-        "anonymous": "Anonymous"
+        "anonymous": "Anonymous",
+        "copyright": "© 2025 Ebenezer Coban Church of Christ"
     },
     "nav": {
         "home": "Home",
@@ -19,17 +20,23 @@
         "live": "Live",
         "prayer": "Prayer",
         "contact": "Contact",
-        "about": "ABOUT US",
+        "about": "About Us",
         "skipToContent": "Skip to main content",
         "toggleTheme": "Toggle theme",
         "openMenu": "Open menu",
         "closeMenu": "Close menu"
     },
     "hero": {
-        "welcome": "Welcome to Ebenezer",
+        "welcome": "Welcome Home",
         "subtitle": "A church with open doors, where God's love transforms lives.",
         "watchLive": "Watch Live",
-        "newHere": "New Here?"
+        "newHere": "New Here?",
+        "slide2Title": "Our Faith in Him",
+        "slide2Subtitle": "Jesus is faithful to sustain us.",
+        "slide3Title": "The Word of God",
+        "slide3Subtitle": "Light that guides and transforms the heart.",
+        "previousSlide": "Previous slide",
+        "nextSlide": "Next slide"
     },
     "footer": {
         "description": "A community of faith dedicated to sharing the love of Christ and serving our city with excellence, passion, and commitment.",
@@ -39,7 +46,7 @@
         "email": "contact@ebenezercoban.org"
     },
     "contact": {
-        "title": "CONTACT US",
+        "title": "Contact Us",
         "subtitle": "We are here to serve you. If you need information, prayer, or want to attend an activity, we are here to help.",
         "location": {
             "title": "Location",
@@ -69,37 +76,42 @@
             "phonePlaceholder": "Contact number",
             "messageLabel": "Message",
             "messagePlaceholder": "Write your message…",
-            "submit": "SEND"
+            "submit": "Send"
         },
         "whatsappFab": "Contact via WhatsApp"
     },
     "ministries": {
         "title": "Our Ministries",
         "subtitle": "There is a place for you in the Ebenezer Coban family.",
+        "servingWithPurpose": "Serving with Purpose",
         "items": {
-            "worship": {
+            "alabanza": {
                 "title": "Worship",
-                "desc": "Worship that transforms atmospheres."
+                "desc": "Continuous prophetic worship, unveiled and with governance"
             },
-            "kids": {
-                "title": "Kids",
-                "desc": "Instructing the child in their way."
+            "danza": {
+                "title": "Dance",
+                "desc": "An integral expression of worship"
             },
-            "youth": {
+            "multimedia": {
+                "title": "Multimedia",
+                "desc": "The visual voice of what happens at the altar"
+            },
+            "altarFamiliar": {
+                "title": "Family Altar",
+                "desc": "Raising altars to bless families"
+            },
+            "evangelismo": {
+                "title": "Evangelism",
+                "desc": "Agape love that seeks the restoration of the sinner"
+            },
+            "prejus": {
                 "title": "Youth",
-                "desc": "Passion and strength for God."
+                "desc": "Formed to honor God today and tomorrow"
             },
-            "women": {
-                "title": "Women",
-                "desc": "Women of faith and virtue."
-            },
-            "men": {
-                "title": "Men",
-                "desc": "Men of courage."
-            },
-            "discipleship": {
-                "title": "Discipleship",
-                "desc": "Growing in knowledge."
+            "matrimonios": {
+                "title": "Marriages",
+                "desc": "Marriages that live the design of love plus respect"
             }
         }
     },
@@ -114,15 +126,15 @@
         }
     },
     "livestream": {
-        "title": "LIVE",
-        "titleHighlight": "STREAM",
+        "title": "Live",
+        "titleHighlight": "Stream",
         "subtitle": "Join our services from anywhere.",
         "liveNow": "LIVE NOW",
         "serviceInProgress": "SERVICE IN PROGRESS",
         "weAreLive": "We are in service",
         "startingSoon": "Broadcast may start at any moment.",
         "nextService": "Next Service",
-        "pastsServices": "Previous Services",
+        "pastServices": "Previous Services",
         "watchOn": "Watch on",
         "days": {
             "sunday": "Sunday",
@@ -160,11 +172,25 @@
     },
     "audioPlayer": {
         "radio": "Radio",
+        "radioLive": "Radio Live",
         "churchLive": "Church Live",
         "liveStatus": "Live 🔴",
         "recentStream": "Recent Stream",
-        "stationName": "Rhema Stereo",
-        "frequency": "87.10 FM"
+        "stationName": "Radio Ebenezer Coban",
+        "frequency": "Streaming 24/7",
+        "playNow": "Listen Now",
+        "pause": "Pause",
+        "playing": "Playing now",
+        "media": "Media",
+        "youtube": "YouTube",
+        "watchVideos": "Watch services and videos"
+    },
+    "about": {
+        "title": "About Us",
+        "subtitle": "Learn more about our church",
+        "mission": "Our Mission",
+        "vision": "Our Vision",
+        "values": "Our Values"
     },
     "settings": {
         "title": "Settings",

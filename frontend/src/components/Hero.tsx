@@ -41,13 +41,13 @@ const Hero = () => {
     },
     {
       image: heroChurch,
-      title: "Nuestra Fe en Él", // TODO: Add keys for these
-      subtitle: "Jesús es fiel para sostenernos.",
+      title: t('hero.slide2Title'),
+      subtitle: t('hero.slide2Subtitle'),
     },
     {
       image: heroChurch,
-      title: "La Palabra de Dios",
-      subtitle: "Luz que guía y transforma el corazón.",
+      title: t('hero.slide3Title'),
+      subtitle: t('hero.slide3Subtitle'),
     },
   ];
 
@@ -128,7 +128,7 @@ const Hero = () => {
 
               <p className="text-lg md:text-2xl text-gray-100/95 font-light mb-12 max-w-[700px] mx-auto
                             drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)] leading-relaxed">
-                Una iglesia de puertas abiertas, donde el amor de Dios transforma vidas.
+                {slides[currentSlide].subtitle}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-8 justify-center">
@@ -220,7 +220,7 @@ const Hero = () => {
       </div>
 
       <div className="absolute bottom-8 w-full text-center text-xs md:text-sm text-white/40 z-20 tracking-[0.2em] uppercase font-light">
-        © 2025 Iglesia de Cristo Ebenezer Cobán
+        {t('common.copyright')}
       </div>
     </section>
   );
