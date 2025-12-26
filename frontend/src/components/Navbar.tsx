@@ -18,7 +18,7 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: t('nav.home', 'Inicio'), href: "/#hero" },
+    { name: t('nav.home', 'Inicio'), href: "/#inicio" },
     { name: t('nav.ministries', 'Ministerios'), href: "/#ministerios" },
     { name: t('nav.events', 'Eventos'), href: "/#eventos" },
     { name: t('nav.contact', 'Contacto'), href: "/#contacto" },
