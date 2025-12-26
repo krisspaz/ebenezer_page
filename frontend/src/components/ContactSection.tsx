@@ -6,225 +6,234 @@ import {
   Facebook,
   Instagram,
   Youtube,
-  MessageCircle
+  MessageCircle,
+  Mail
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
 
-const GOOGLE_MAPS_URL =
-  "https://maps.app.goo.gl/6vbQac81vJtJoRAQ9";
-
-const WAZE_URL =
-  "https://ul.waze.com/ul?place=ChIJUbAS6jJBioURQ55mttRvVc8&ll=15.46686120%2C-90.37364490&navigate=yes";
-
-const WHATSAPP_URL =
-  "https://wa.me/50250404444?text=Hola%20quiero%20más%20información";
-
+const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/6vbQac81vJtJoRAQ9";
+const WAZE_URL = "https://ul.waze.com/ul?place=ChIJUbAS6jJBioURQ55mttRvVc8&ll=15.46686120%2C-90.37364490&navigate=yes";
+const WHATSAPP_URL = "https://wa.me/50250404444?text=Hola%20quiero%20más%20información";
 const CALL_URL = "tel:+50250404444";
 
 const ContactSection = () => {
   const { t } = useTranslation();
 
   return (
-    <section
-      id="contacto"
-      className="relative overflow-hidden bg-gradient-to-b from-slate-100 to-slate-200 dark:from-[#1e293b] dark:to-[#0f172a] text-slate-800 dark:text-white py-12 md:py-16 transition-colors duration-300"
-    >
+    <section id="contacto" className="relative py-20 overflow-hidden bg-slate-50 dark:bg-[#0b1120] transition-colors duration-300">
+
+      {/* Background Decor Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F4C95D]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+
       <div className="container relative z-10 mx-auto px-4">
 
-        {/* Header */}
-        <div className="mb-10 md:mb-12 text-center">
-          <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-tight text-slate-800 dark:text-white">
-            {t('contact.title')}
-          </h2>
-          <div className="mx-auto my-4 md:my-5 h-1.5 w-20 md:w-24 rounded-full bg-[#d4a33d] dark:bg-[#F4C95D]" />
-          <p className="mx-auto max-w-2xl text-base md:text-lg font-light text-slate-600 dark:text-gray-400 leading-relaxed">
-            {t('contact.subtitle')}
-          </p>
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-heading font-bold text-slate-800 dark:text-white mb-6">
+              {t('contact.title')}
+            </h2>
+            <div className="w-24 h-1.5 bg-gradient-to-r from-[#F4C95D] to-[#d4a33d] mx-auto rounded-full mb-6" />
+            <p className="text-lg text-slate-600 dark:text-gray-400 font-light leading-relaxed">
+              {t('contact.subtitle')}
+            </p>
+          </motion.div>
         </div>
 
-        {/* GRID */}
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:gap-10 lg:grid-cols-2 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
 
-          {/* INFORMACIÓN */}
-          <div className="space-y-5 md:space-y-6">
+          {/* Left Column: Contact Info */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-8"
+          >
+            {/* Info Cards */}
+            <div className="grid gap-6">
 
-            {/* UBICACIÓN */}
-            <div className="rounded-2xl border border-[#d4a33d]/20 dark:border-[#F4C95D]/10 bg-white/80 dark:bg-[#0F172A]/80 p-6 md:p-7 shadow-lg hover:border-[#d4a33d]/40 dark:hover:border-[#F4C95D]/30 transition-all duration-300">
-              <div className="flex gap-4 md:gap-5">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d4a33d]/15 dark:bg-[#F4C95D]/15 md:h-14 md:w-14">
-                  <MapPin className="h-6 w-6 text-[#d4a33d] dark:text-[#F4C95D]" />
-                </div>
-                <div className="space-y-1.5">
-                  <h3 className="text-lg md:text-xl font-bold text-slate-800 dark:text-white">
-                    {t('contact.location.title')}
-                  </h3>
-                  <p className="text-sm md:text-base text-slate-600 dark:text-gray-200 leading-relaxed whitespace-pre-line">
-                    {t('contact.location.address')}
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    <Button
-                      size="sm"
-                      className="rounded-xl bg-slate-200 dark:bg-white/10 text-xs md:text-sm text-slate-700 dark:text-white hover:bg-slate-300 dark:hover:bg-white/20 transition"
-                      onClick={() => window.open(GOOGLE_MAPS_URL, "_blank")}
-                    >
-                      {t('contact.location.googleMaps')}
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="rounded-xl bg-slate-200 dark:bg-white/10 text-xs md:text-sm text-slate-700 dark:text-white hover:bg-slate-300 dark:hover:bg-white/20 transition"
-                      onClick={() => window.open(WAZE_URL, "_blank")}
-                    >
-                      {t('contact.location.waze')}
-                    </Button>
+              {/* Location Card */}
+              <div className="bg-white dark:bg-[#1e293b] p-6 rounded-2xl shadow-lg border border-slate-100 dark:border-white/5 hover:border-[#F4C95D]/30 transition-all group">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-[#F4C95D]/10 rounded-xl group-hover:bg-[#F4C95D]/20 transition-colors">
+                    <MapPin className="w-6 h-6 text-[#d4a33d] dark:text-[#F4C95D]" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-2">{t('contact.location.title')}</h3>
+                    <p className="text-slate-600 dark:text-gray-400 text-sm mb-4 whitespace-pre-line">
+                      {t('contact.location.address')}
+                    </p>
+                    <div className="flex gap-3">
+                      <Button variant="outline" size="sm" onClick={() => window.open(GOOGLE_MAPS_URL, "_blank")} className="text-xs">
+                        Google Maps
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => window.open(WAZE_URL, "_blank")} className="text-xs">
+                        Waze
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* TELÉFONO */}
-            <div className="rounded-2xl border border-teal-500/20 dark:border-[#14b8a6]/10 bg-white/80 dark:bg-[#0F172A]/80 p-6 md:p-7 shadow-lg hover:border-teal-500/40 dark:hover:border-[#14b8a6]/30 transition-all duration-300">
-              <div className="flex gap-4 md:gap-5">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-500/15 dark:bg-[#14b8a6]/15 md:h-14 md:w-14">
-                  <Phone className="h-6 w-6 text-teal-600 dark:text-[#14b8a6]" />
-                </div>
-                <div className="space-y-1.5">
-                  <h3 className="text-lg md:text-xl font-bold text-slate-800 dark:text-white">{t('contact.phone.title')}</h3>
-
-                  <p className="text-sm md:text-base text-slate-600 dark:text-gray-300">{t('contact.phone.subtitle')}</p>
-
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    <Button
-                      size="sm"
-                      className="rounded-xl bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-white text-xs md:text-sm hover:bg-slate-300 dark:hover:bg-white/20 transition"
-                      onClick={() => window.open(CALL_URL)}
-                    >
-                      {t('contact.phone.call')}
-                    </Button>
-
-                    <Button
-                      size="sm"
-                      className="rounded-xl border border-[#d4a33d]/70 dark:border-[#F4C95D]/70 text-[#d4a33d] dark:text-[#F4C95D] text-xs md:text-sm hover:bg-[#d4a33d]/10 dark:hover:bg-[#F4C95D]/10 transition"
-                      onClick={() => window.open(WHATSAPP_URL, "_blank")}
-                    >
-                      {t('contact.phone.whatsapp')}
-                    </Button>
+              {/* Phone & Email Card */}
+              <div className="bg-white dark:bg-[#1e293b] p-6 rounded-2xl shadow-lg border border-slate-100 dark:border-white/5 hover:border-[#F4C95D]/30 transition-all group">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-teal-500/10 rounded-xl group-hover:bg-teal-500/20 transition-colors">
+                    <Phone className="w-6 h-6 text-teal-600 dark:text-teal-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-2">{t('contact.phone.title')}</h3>
+                    <p className="text-slate-600 dark:text-gray-400 text-sm mb-4">
+                      {t('contact.phone.subtitle')}
+                    </p>
+                    <div className="flex gap-3">
+                      <Button variant="outline" size="sm" onClick={() => window.open(CALL_URL)} className="text-xs">
+                        {t('contact.phone.call')}
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => window.open(WHATSAPP_URL, "_blank")} className="text-xs border-[#25D366] text-[#25D366] hover:bg-[#25D366]/10">
+                        WhatsApp
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Schedule Card */}
+              <div className="bg-white dark:bg-[#1e293b] p-6 rounded-2xl shadow-lg border border-slate-100 dark:border-white/5 hover:border-[#F4C95D]/30 transition-all group">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-indigo-500/10 rounded-xl group-hover:bg-indigo-500/20 transition-colors">
+                    <Clock className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-2">{t('contact.schedule.title')}</h3>
+                    <div className="space-y-2 text-sm text-slate-600 dark:text-gray-400">
+                      <div className="flex justify-between">
+                        <span className="font-medium text-slate-800 dark:text-white">{t('contact.schedule.tuesday')}:</span>
+                        <span>7:00 PM – 9:00 PM</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium text-slate-800 dark:text-white">{t('contact.schedule.friday')}:</span>
+                        <span>7:00 PM – 9:00 PM</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium text-slate-800 dark:text-white">{t('contact.schedule.sunday1')}:</span>
+                        <span>8:00 AM – 10:00 AM</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium text-slate-800 dark:text-white">{t('contact.schedule.sunday2')}:</span>
+                        <span>10:30 AM – 12:30 PM</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
-            {/* HORARIOS */}
-            <div className="rounded-2xl border border-[#d4a33d]/20 dark:border-[#F4C95D]/10 bg-white/80 dark:bg-[#0F172A]/80 p-6 md:p-7 shadow-lg hover:border-[#d4a33d]/40 dark:hover:border-[#F4C95D]/30 transition-all duration-300">
-              <div className="flex gap-4 md:gap-5">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d4a33d]/15 dark:bg-[#F4C95D]/15 md:h-14 md:w-14">
-                  <Clock className="h-6 w-6 text-[#d4a33d] dark:text-[#F4C95D]" />
-                </div>
+            {/* Social Media Links */}
+            <div className="flex justify-center md:justify-start gap-6 pt-4">
+              <a href="https://www.facebook.com/ebenezercoban?locale=es_LA" target="_blank" className="p-3 bg-white dark:bg-[#1e293b] rounded-full shadow-md hover:scale-110 transition-transform text-blue-600 dark:text-blue-400">
+                <Facebook className="w-6 h-6" />
+              </a>
+              <a href="https://www.instagram.com/ebenezercoban_/" target="_blank" className="p-3 bg-white dark:bg-[#1e293b] rounded-full shadow-md hover:scale-110 transition-transform text-pink-600 dark:text-pink-400">
+                <Instagram className="w-6 h-6" />
+              </a>
+              <a href="https://www.youtube.com/@iglesiaebenezercoban" target="_blank" className="p-3 bg-white dark:bg-[#1e293b] rounded-full shadow-md hover:scale-110 transition-transform text-red-600 dark:text-red-500">
+                <Youtube className="w-6 h-6" />
+              </a>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <div className="bg-white dark:bg-[#1e293b] rounded-3xl p-8 shadow-2xl border border-slate-100 dark:border-white/5 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#F4C95D]/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
+                {t('contact.form.title')}
+              </h3>
+              <p className="text-slate-600 dark:text-gray-400 mb-8">
+                {t('contact.form.subtitle')}
+              </p>
+
+              <form action="mailto:iglesiaebenezercoban@gmail.com" method="POST" className="space-y-6">
                 <div>
-                  <h3 className="mb-1.5 text-lg md:text-xl font-bold text-slate-800 dark:text-white">{t('contact.schedule.title')}</h3>
-
-                  <p className="text-sm md:text-base text-slate-600 dark:text-gray-200 leading-relaxed">
-                    <span className="font-semibold text-slate-800 dark:text-white">{t('contact.schedule.tuesday')}:</span> 7:00 PM – 9:00 PM<br />
-                    <span className="font-semibold text-slate-800 dark:text-white">{t('contact.schedule.friday')}:</span> 7:00 PM – 9:00 PM<br />
-                    <span className="font-semibold text-slate-800 dark:text-white">{t('contact.schedule.sunday1')}:</span> 8:00 AM – 10:00 AM<br />
-                    <span className="font-semibold text-slate-800 dark:text-white">{t('contact.schedule.sunday2')}:</span> 10:30 AM – 12:30 PM
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          {/* FORMULARIO PREMIUM */}
-          <div className="rounded-3xl border border-[#d4a33d]/20 dark:border-[#F4C95D]/10 bg-white/90 dark:bg-[#0F172A]/90 p-6 md:p-8 shadow-2xl backdrop-blur-xl">
-            <h3 className="mb-2 text-2xl md:text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
-              {t('contact.form.title')}
-            </h3>
-            <p className="mb-5 text-sm md:text-base text-slate-600 dark:text-gray-300">
-              {t('contact.form.subtitle')}
-            </p>
-
-            <form
-              className="space-y-5 md:space-y-6"
-              action="mailto:iglesiaebenezercoban@gmail.com"
-              method="POST"
-            >
-              <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-xs md:text-sm text-slate-600 dark:text-gray-300">{t('contact.form.nameLabel')}</label>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">
+                    {t('contact.form.nameLabel')}
+                  </label>
                   <Input
                     required
                     placeholder={t('contact.form.namePlaceholder')}
-                    className="h-11 bg-slate-100 dark:bg-[#1e293b] border-slate-300 dark:border-[#14b8a6]/30 text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 rounded-xl focus:border-teal-500 dark:focus:border-[#14b8a6]"
+                    className="h-12 bg-slate-50 dark:bg-[#0f172a] border-slate-200 dark:border-slate-700 focus:border-[#F4C95D] rounded-xl"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-xs md:text-sm text-slate-600 dark:text-gray-300">{t('contact.form.phoneLabel')}</label>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">
+                    {t('contact.form.phoneLabel')}
+                  </label>
                   <Input
                     required
                     type="tel"
                     placeholder={t('contact.form.phonePlaceholder')}
-                    className="h-11 bg-slate-100 dark:bg-[#1e293b] border-slate-300 dark:border-[#14b8a6]/30 text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 rounded-xl focus:border-teal-500 dark:focus:border-[#14b8a6]"
+                    className="h-12 bg-slate-50 dark:bg-[#0f172a] border-slate-200 dark:border-slate-700 focus:border-[#F4C95D] rounded-xl"
                   />
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <label className="text-xs md:text-sm text-slate-600 dark:text-gray-300">{t('contact.form.messageLabel')}</label>
-                <Textarea
-                  required
-                  rows={4}
-                  placeholder={t('contact.form.messagePlaceholder')}
-                  className="resize-none bg-slate-100 dark:bg-[#1e293b] border-slate-300 dark:border-[#14b8a6]/30 text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-500 rounded-xl focus:border-teal-500 dark:focus:border-[#14b8a6]"
-                />
-              </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">
+                    {t('contact.form.messageLabel')}
+                  </label>
+                  <Textarea
+                    required
+                    rows={4}
+                    placeholder={t('contact.form.messagePlaceholder')}
+                    className="resize-none bg-slate-50 dark:bg-[#0f172a] border-slate-200 dark:border-slate-700 focus:border-[#F4C95D] rounded-xl"
+                  />
+                </div>
 
-              <Button
-                type="submit"
-                className="mt-1 h-12 w-full rounded-xl bg-[#F4C95D] text-[#0f172a] text-sm md:text-base font-bold shadow-md hover:bg-[#e6b84d] transition-colors"
-              >
-                <Send className="mr-2 h-4 w-4" />
-                {t('contact.form.submit')}
-              </Button>
-            </form>
-
-            <div className="mt-6 border-t border-slate-200 dark:border-white/10 pt-5 flex items-center justify-center gap-6">
-              <a href="https://www.facebook.com/ebenezercoban?locale=es_LA" target="_blank" className="text-slate-400 dark:text-gray-400 hover:text-teal-600 dark:hover:text-[#14b8a6] transition-colors">
-                <Facebook className="h-6 w-6" />
-              </a>
-              <a href="https://www.instagram.com/ebenezercoban_/" target="_blank" className="text-slate-400 dark:text-gray-400 hover:text-[#d4a33d] dark:hover:text-[#F4C95D] transition-colors">
-                <Instagram className="h-6 w-6" />
-              </a>
-              <a href="https://www.youtube.com/@iglesiaebenezercoban" target="_blank" className="text-slate-400 dark:text-gray-400 hover:text-[#d4a33d] dark:hover:text-[#F4C95D] transition-colors">
-                <Youtube className="h-6 w-6" />
-              </a>
+                <Button className="w-full h-12 bg-gradient-to-r from-[#F4C95D] to-[#d4a33d] hover:brightness-110 text-slate-900 font-bold rounded-xl shadow-lg shadow-[#F4C95D]/20 transition-all">
+                  <Send className="w-4 h-4 mr-2" />
+                  {t('contact.form.submit')}
+                </Button>
+              </form>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
 
-      {/* BOTÓN WHATSAPP PREMIUM */}
-      <a
+      {/* Floating WhatsApp Button */}
+      <motion.a
         href={WHATSAPP_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="
-          fixed bottom-4 left-4 z-50
-          bg-[#25D366] hover:bg-[#20bd5a] text-white
-          p-4 rounded-full shadow-2xl
-          flex items-center justify-center
-          transition-all duration-300 hover:scale-110
-          animate-in fade-in zoom-in slide-in-from-bottom-4
-        "
-        aria-label={t('contact.whatsappFab')}
-      ><MessageCircle className="h-6 w-6" />
-      </a>
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="fixed bottom-6 left-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:shadow-[#25D366]/40 transition-shadow"
+      >
+        <MessageCircle className="w-7 h-7" />
+      </motion.a>
 
-    </section >
+    </section>
   );
 };
 

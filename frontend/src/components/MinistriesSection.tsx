@@ -65,7 +65,7 @@ const MinistriesSection = () => {
     ];
 
     return (
-        <section id="ministerios" className="py-20 bg-gradient-to-b from-slate-100 to-slate-50 dark:from-[#1e293b] dark:to-[#0f172a] overflow-hidden transition-colors duration-300">
+        <section id="ministerios" className="py-24 relative overflow-hidden bg-slate-50 dark:bg-[#0b1120] transition-colors duration-300">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <motion.h2

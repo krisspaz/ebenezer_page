@@ -76,7 +76,7 @@ const LiveStreamSection = () => {
     }, []);
 
     return (
-        <section id="transmision" className="relative py-24 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-[#0f172a] dark:to-[#1e293b] overflow-hidden transition-colors duration-300">
+        <section id="transmision" className="relative py-24 bg-slate-50 dark:bg-[#0b1120] overflow-hidden transition-colors duration-300">
             {/* Ambient Background */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-[20%] -left-[10%] w-[500px] h-[500px] bg-teal-500/5 dark:bg-[#14b8a6]/5 rounded-full blur-[100px] animate-pulse-slow delay-700" />

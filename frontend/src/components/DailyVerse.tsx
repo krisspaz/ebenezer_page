@@ -90,24 +90,29 @@ const DailyVerse = () => {
     if (!verse) return null;
 
     return (
-        <section className="py-16 bg-gradient-to-br from-slate-100 to-slate-50 dark:from-[#1e293b] dark:to-[#0f172a] relative overflow-hidden transition-colors duration-300">
-            {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#d4a33d]/5 dark:bg-[#F4C95D]/5 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500/5 dark:bg-[#14b8a6]/5 rounded-full blur-3xl pointer-events-none"></div>
+        <section className="py-16 relative overflow-hidden transition-colors duration-300">
+            {/* Background with parallax-like feel */}
+            <div className="absolute inset-0 bg-slate-50 dark:bg-[#0b1120]" />
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1507692049790-de58293a4697?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-5 dark:opacity-10 mix-blend-overlay" />
+
+            {/* Ambient Gradients - Reduced size */}
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#F4C95D]/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-500/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="max-w-4xl mx-auto">
+                <div className="max-w-3xl mx-auto">
+
                     {/* Header */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="text-center mb-8"
+                        transition={{ duration: 0.5 }}
+                        className="text-center mb-6"
                     >
-                        <div className="inline-flex items-center gap-2 bg-[#d4a33d]/20 dark:bg-[#F4C95D]/20 px-4 py-2 rounded-full mb-4 border border-[#d4a33d]/30 dark:border-[#F4C95D]/30">
-                            <Sparkles className="w-5 h-5 text-[#d4a33d] dark:text-[#F4C95D]" />
-                            <span className="text-[#d4a33d] dark:text-[#F4C95D] font-semibold text-sm uppercase tracking-wide">
+                        <div className="inline-flex items-center gap-2 bg-[#F4C95D]/20 border border-[#F4C95D]/30 px-4 py-2 rounded-full mb-4 backdrop-blur-sm">
+                            <Sparkles className="w-4 h-4 text-[#d4a33d] dark:text-[#F4C95D]" />
+                            <span className="text-[#d4a33d] dark:text-[#F4C95D] font-bold text-xs uppercase tracking-widest">
                                 {t('dailyVerse.title')}
                             </span>
                         </div>
@@ -115,91 +120,101 @@ const DailyVerse = () => {
 
                     {/* Verse Card */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="bg-white dark:bg-[#0f172a] rounded-3xl shadow-2xl p-8 md:p-12 border border-[#d4a33d]/20 dark:border-[#F4C95D]/20"
+                        transition={{ duration: 0.7 }}
+                        className="relative"
                     >
-                        {/* Verse Text */}
-                        <blockquote className="mb-8">
-                            <p className="text-2xl md:text-3xl font-serif text-slate-700 dark:text-gray-100 leading-relaxed text-center italic">
-                                "{verse.text}"
-                            </p>
-                        </blockquote>
+                        <div className="absolute -inset-1 bg-gradient-to-r from-[#F4C95D]/30 via-teal-500/30 to-[#F4C95D]/30 rounded-[2rem] blur-sm opacity-30 dark:opacity-50" />
 
-                        {/* Reference */}
-                        <div className="text-center mb-8">
-                            <p className="text-lg font-bold text-[#d4a33d] dark:text-[#F4C95D]">
-                                — {verse.reference}
-                            </p>
-                            <p className="text-sm text-slate-500 dark:text-gray-400 mt-1">
-                                {verse.translation}
-                            </p>
-                        </div>
+                        <div className="relative bg-white/80 dark:bg-[#1e293b]/80 backdrop-blur-xl p-6 md:p-10 rounded-[1.8rem] border border-white/50 dark:border-white/10 shadow-xl">
 
-                        {/* Sharing Buttons */}
-                        <div className="border-t border-slate-200 dark:border-[#1e293b] pt-6">
-                            <div className="flex items-center justify-center gap-3 flex-wrap">
-                                <Button
-                                    onClick={shareToFacebook}
-                                    variant="outline"
-                                    size="sm"
-                                    className="gap-2 border-slate-300 dark:border-[#1e293b] hover:bg-slate-100 dark:hover:bg-[#1e293b] hover:text-slate-800 dark:hover:text-white"
-                                >
-                                    <Facebook className="w-4 h-4 text-teal-600 dark:text-[#14b8a6]" />
-                                    <span className="hidden sm:inline">Facebook</span>
-                                </Button>
-
-                                <Button
-                                    onClick={shareToX}
-                                    variant="outline"
-                                    size="sm"
-                                    className="gap-2 border-slate-300 dark:border-[#1e293b] hover:bg-slate-100 dark:hover:bg-[#1e293b] hover:text-slate-800 dark:hover:text-white"
-                                >
-                                    <span className="font-bold text-teal-600 dark:text-[#14b8a6]">𝕏</span>
-                                    <span className="hidden sm:inline">X</span>
-                                </Button>
-
-                                <Button
-                                    onClick={shareToInstagram}
-                                    variant="outline"
-                                    size="sm"
-                                    className="gap-2 border-slate-300 dark:border-[#1e293b] hover:bg-slate-100 dark:hover:bg-[#1e293b] hover:text-slate-800 dark:hover:text-white"
-                                >
-                                    <Instagram className="w-4 h-4 text-pink-500" />
-                                    <span className="hidden sm:inline">Instagram</span>
-                                </Button>
-
-                                <Button
-                                    onClick={shareToWhatsApp}
-                                    variant="outline"
-                                    size="sm"
-                                    className="gap-2 border-slate-300 dark:border-[#1e293b] hover:bg-slate-100 dark:hover:bg-[#1e293b] hover:text-slate-800 dark:hover:text-white"
-                                >
-                                    <MessageCircle className="w-4 h-4 text-[#d4a33d] dark:text-[#F4C95D]" />
-                                    <span className="hidden sm:inline">WhatsApp</span>
-                                </Button>
-
-                                <Button
-                                    onClick={copyToClipboard}
-                                    variant="outline"
-                                    size="sm"
-                                    className="gap-2 border-slate-300 dark:border-[#1e293b] hover:bg-slate-100 dark:hover:bg-[#1e293b] hover:text-slate-800 dark:hover:text-white"
-                                >
-                                    <Copy className="w-4 h-4" />
-                                    <span className="hidden sm:inline">{t('dailyVerse.copy')}</span>
-                                </Button>
+                            {/* Quote Icon */}
+                            <div className="absolute top-6 left-6 text-[#F4C95D]/20 font-serif text-6xl leading-none select-none">
+                                "
                             </div>
 
-                            {/* Progress Indicator */}
-                            <div className="text-center mt-6">
-                                <p className="text-xs text-slate-500 dark:text-gray-500">
-                                    Versículo {progress.current} de {progress.total} · Cambia mañana
+                            {/* Verse Text */}
+                            <blockquote className="relative z-10 mb-6 text-center px-4">
+                                <p className="text-xl md:text-2xl font-serif text-slate-800 dark:text-white leading-relaxed font-medium">
+                                    {verse.text}
+                                </p>
+                            </blockquote>
+
+                            {/* Divider */}
+                            <div className="flex justify-center mb-6">
+                                <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#F4C95D] to-transparent" />
+                            </div>
+
+                            {/* Reference */}
+                            <div className="text-center mb-8">
+                                <p className="text-lg md:text-xl font-bold text-slate-800 dark:text-white mb-1 font-heading tracking-wide">
+                                    {verse.reference}
+                                </p>
+                                <p className="text-xs font-medium text-[#d4a33d] dark:text-[#F4C95D] uppercase tracking-widest">
+                                    {verse.translation}
                                 </p>
                             </div>
+
+                            {/* Sharing Actions - Compact */}
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 border-t border-slate-100 dark:border-white/5 pt-6">
+                                <p className="text-xs text-slate-400 dark:text-gray-500 mb-1 sm:mb-0 sm:mr-2 font-medium uppercase tracking-wider">Compartir:</p>
+                                <div className="flex flex-wrap justify-center gap-1">
+                                    <Button
+                                        onClick={shareToFacebook}
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 px-3 gap-1.5 hover:bg-[#1877F2]/10 hover:text-[#1877F2] transition-colors text-xs"
+                                    >
+                                        <Facebook className="w-3.5 h-3.5" />
+                                        <span className="hidden sm:inline">Facebook</span>
+                                    </Button>
+
+                                    <Button
+                                        onClick={shareToInstagram}
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 px-3 gap-1.5 hover:bg-[#E4405F]/10 hover:text-[#E4405F] transition-colors text-xs"
+                                    >
+                                        <Instagram className="w-3.5 h-3.5" />
+                                        <span className="hidden sm:inline">Instagram</span>
+                                    </Button>
+
+                                    <Button
+                                        onClick={shareToWhatsApp}
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 px-3 gap-1.5 hover:bg-[#25D366]/10 hover:text-[#25D366] transition-colors text-xs"
+                                    >
+                                        <MessageCircle className="w-3.5 h-3.5" />
+                                        <span className="hidden sm:inline">WhatsApp</span>
+                                    </Button>
+
+                                    <div className="w-px h-5 bg-slate-200 dark:bg-white/10 mx-1 hidden sm:block" />
+
+                                    <Button
+                                        onClick={copyToClipboard}
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 px-3 gap-1.5 hover:bg-[#F4C95D]/10 hover:text-[#d4a33d] dark:hover:text-[#F4C95D] transition-colors text-xs"
+                                    >
+                                        <Copy className="w-3.5 h-3.5" />
+                                        <span className="hidden sm:inline">{t('dailyVerse.copy')}</span>
+                                    </Button>
+                                </div>
+                            </div>
+
                         </div>
                     </motion.div>
+
+                    {/* Progress Text */}
+                    <div className="text-center mt-6">
+                        <p className="text-[10px] font-medium text-slate-400 dark:text-gray-600 uppercase tracking-widest opacity-60">
+                            Versículo del día · {progress.current} / {progress.total}
+                        </p>
+                    </div>
+
                 </div>
             </div>
         </section>

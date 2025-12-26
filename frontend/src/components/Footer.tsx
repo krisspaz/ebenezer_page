@@ -4,7 +4,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-slate-100 dark:bg-[#1e293b] text-slate-800 dark:text-white border-t border-slate-200 dark:border-white/5 pt-16 pb-8 relative overflow-hidden transition-colors duration-300">
+    <footer className="bg-slate-50 dark:bg-[#0b1120] text-slate-800 dark:text-white border-t border-slate-200 dark:border-white/5 pt-16 pb-8 relative overflow-hidden transition-colors duration-300">
       {/* Background Pattern */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/5 dark:bg-[#14b8a6]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
@@ -77,11 +77,15 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-slate-200 dark:border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex gap-4">
-            {[Facebook, Instagram, Youtube].map((Icon, i) => (
-              <a key={i} href="#" className="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center text-slate-600 dark:text-white hover:bg-[#F4C95D] hover:text-[#1e293b] transition-all">
-                <Icon className="w-5 h-5" />
-              </a>
-            ))}
+            <a href="https://www.facebook.com/ebenezercoban?locale=es_LA" target="_blank" className="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center text-slate-600 dark:text-white hover:bg-[#1877F2] hover:text-white transition-all">
+              <Facebook className="w-5 h-5" />
+            </a>
+            <a href="https://www.instagram.com/ebenezercoban_/" target="_blank" className="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center text-slate-600 dark:text-white hover:bg-[#E4405F] hover:text-white transition-all">
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a href="https://www.youtube.com/@iglesiaebenezercoban" target="_blank" className="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center text-slate-600 dark:text-white hover:bg-[#FF0000] hover:text-white transition-all">
+              <Youtube className="w-5 h-5" />
+            </a>
           </div>
 
           <p className="text-slate-500 dark:text-gray-500 text-sm">

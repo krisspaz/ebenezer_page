@@ -1,4 +1,5 @@
-import { Heart, Users, Book, HandHeart } from "lucide-react";
+import { Heart, Users, Book, HandHeart, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 const values = [
   {
@@ -25,86 +26,141 @@ const values = [
 
 const AboutSection = () => {
   return (
-    <section id="nosotros" className="py-24 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-[#0f172a] dark:to-[#1e293b] relative overflow-hidden transition-colors duration-300">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[#d4a33d]/5 dark:bg-[#F4C95D]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-teal-500/5 dark:bg-[#14b8a6]/5 rounded-full blur-3xl"></div>
-      </div>
+    <section id="nosotros" className="py-24 relative overflow-hidden bg-slate-50 dark:bg-[#0b1120] transition-colors duration-300">
+      {/* Ambient Background */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#F4C95D]/20 to-transparent" />
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#F4C95D]/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-[100px] translate-x-1/2 translate-y-1/2 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-20 animate-fade-in-up">
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6 tracking-tight">
-            SOBRE <span className="text-[#d4a33d] dark:text-[#F4C95D]">NOSOTROS</span>
-          </h2>
-          <div className="w-24 h-1.5 bg-[#d4a33d] dark:bg-[#F4C95D] mx-auto mb-8 rounded-full"></div>
-          <p className="text-slate-600 dark:text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed font-light">
-            La Iglesia de Cristo Ebenezer Cobán es una comunidad de fe dedicada a compartir
-            el amor de Cristo y servir a nuestra ciudad.
-          </p>
+
+        {/* Header */}
+        <div className="text-center mb-20 max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center gap-2 bg-[#F4C95D]/10 border border-[#F4C95D]/20 px-4 py-1.5 rounded-full mb-6">
+              <Sparkles className="w-4 h-4 text-[#d4a33d] dark:text-[#F4C95D]" />
+              <span className="text-[#d4a33d] dark:text-[#F4C95D] font-bold text-xs uppercase tracking-widest">
+                Nuestra Identidad
+              </span>
+            </div>
+
+            <h2 className="text-4xl md:text-5xl font-serif text-slate-800 dark:text-white mb-6 tracking-tight">
+              Sobre Nosotros
+            </h2>
+
+            <p className="text-xl text-slate-600 dark:text-gray-400 leading-relaxed font-light">
+              La Iglesia de Cristo Ebenezer Cobán es una comunidad de fe dedicada a compartir
+              el amor de Cristo y servir a nuestra ciudad.
+            </p>
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-24">
+        {/* Values Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24 max-w-7xl mx-auto">
           {values.map((value, index) => (
-            <div
+            <motion.div
               key={index}
-              className="text-center group p-8 rounded-2xl bg-white/50 dark:bg-transparent hover:bg-white dark:hover:bg-[#1e293b] hover:shadow-lg transition-all duration-500 border border-slate-200/50 dark:border-transparent hover:border-[#d4a33d]/20 dark:hover:border-[#F4C95D]/20"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group relative"
             >
-              <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-[#d4a33d]/10 dark:bg-[#F4C95D]/10 flex items-center justify-center group-hover:bg-[#F4C95D] group-hover:scale-110 transition-all duration-500 shadow-sm">
-                <value.icon className="w-8 h-8 text-[#d4a33d] dark:text-[#F4C95D] group-hover:text-[#0f172a] transition-colors duration-500" strokeWidth={1.5} />
+              <div className="absolute -inset-0.5 bg-gradient-to-br from-[#F4C95D]/20 to-teal-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
+
+              <div className="relative h-full bg-white/80 dark:bg-[#1e293b]/80 backdrop-blur-md rounded-2xl p-8 border border-white/50 dark:border-white/10 shadow-sm hover:shadow-xl transition-all duration-300 text-center">
+                <div className="w-14 h-14 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-inner">
+                  <value.icon className="w-6 h-6 text-[#d4a33d] dark:text-[#F4C95D]" strokeWidth={2} />
+                </div>
+                <h3 className="font-heading text-lg font-bold text-slate-800 dark:text-white mb-3">
+                  {value.title}
+                </h3>
+                <p className="text-slate-600 dark:text-gray-400 text-sm leading-relaxed">
+                  {value.description}
+                </p>
               </div>
-              <h3 className="font-heading text-xl font-bold text-slate-800 dark:text-white mb-3">
-                {value.title}
-              </h3>
-              <p className="text-slate-600 dark:text-gray-400 text-sm leading-relaxed">
-                {value.description}
-              </p>
-            </div>
+            </motion.div>
           ))}
         </div>
 
+        {/* Mission & Vision */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+
           {/* Misión Card */}
-          <div className="bg-white dark:bg-[#1e293b] p-10 md:p-12 rounded-2xl shadow-lg border border-[#d4a33d]/10 dark:border-[#F4C95D]/10 hover:border-[#d4a33d]/30 dark:hover:border-[#F4C95D]/30 hover:-translate-y-1 transition-all duration-500 relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-2 h-full bg-[#d4a33d] dark:bg-[#F4C95D]"></div>
-            <div className="flex items-start gap-6 mb-6">
-              <div className="w-14 h-14 rounded-xl bg-[#d4a33d]/10 dark:bg-[#F4C95D]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#F4C95D] transition-colors duration-500">
-                <Book className="w-7 h-7 text-[#d4a33d] dark:text-[#F4C95D] group-hover:text-[#0f172a] transition-colors duration-500" strokeWidth={2} />
-              </div>
-              <div>
-                <h3 className="font-heading text-3xl font-bold text-slate-800 dark:text-white mb-2">
-                  Misión
-                </h3>
-                <div className="w-12 h-1 bg-[#d4a33d]/30 dark:bg-[#F4C95D]/30 rounded-full"></div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="group relative"
+          >
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#F4C95D]/30 to-transparent rounded-[2rem] blur opacity-30 group-hover:opacity-60 transition duration-500" />
+
+            <div className="relative bg-white dark:bg-[#1e293b] p-10 md:p-12 rounded-[2rem] border border-white/50 dark:border-white/5 shadow-xl overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#F4C95D]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="p-3 bg-[#F4C95D]/10 rounded-2xl">
+                    <Book className="w-8 h-8 text-[#d4a33d] dark:text-[#F4C95D]" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-serif font-bold text-slate-800 dark:text-white">
+                      Misión
+                    </h3>
+                    <div className="h-1 w-12 bg-[#F4C95D] rounded-full mt-2" />
+                  </div>
+                </div>
+
+                <p className="text-lg text-slate-600 dark:text-gray-300 leading-relaxed">
+                  Glorificar a Dios a través de la adoración sincera, el estudio profundo
+                  de su Palabra, y el servicio comprometido a nuestra comunidad. Buscamos
+                  ser instrumentos del amor de Cristo, transformando vidas.
+                </p>
               </div>
             </div>
-            <p className="text-slate-600 dark:text-gray-400 leading-relaxed text-lg">
-              Glorificar a Dios a través de la adoración sincera, el estudio profundo
-              de su Palabra, y el servicio comprometido a nuestra comunidad. Buscamos
-              ser instrumentos del amor de Cristo, transformando vidas.
-            </p>
-          </div>
+          </motion.div>
 
           {/* Visión Card */}
-          <div className="bg-white dark:bg-[#1e293b] p-10 md:p-12 rounded-2xl shadow-lg border border-teal-500/10 dark:border-[#14b8a6]/10 hover:border-teal-500/30 dark:hover:border-[#14b8a6]/30 hover:-translate-y-1 transition-all duration-500 relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-2 h-full bg-teal-500 dark:bg-[#14b8a6]"></div>
-            <div className="flex items-start gap-6 mb-6">
-              <div className="w-14 h-14 rounded-xl bg-teal-500/10 dark:bg-[#14b8a6]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-[#14b8a6] transition-colors duration-500">
-                <Heart className="w-7 h-7 text-teal-600 dark:text-[#14b8a6] group-hover:text-[#0f172a] transition-colors duration-500" strokeWidth={2} />
-              </div>
-              <div>
-                <h3 className="font-heading text-3xl font-bold text-slate-800 dark:text-white mb-2">
-                  Visión
-                </h3>
-                <div className="w-12 h-1 bg-teal-500/30 dark:bg-[#14b8a6]/30 rounded-full"></div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="group relative"
+          >
+            <div className="absolute -inset-0.5 bg-gradient-to-l from-teal-500/30 to-transparent rounded-[2rem] blur opacity-30 group-hover:opacity-60 transition duration-500" />
+
+            <div className="relative bg-white dark:bg-[#1e293b] p-10 md:p-12 rounded-[2rem] border border-white/50 dark:border-white/5 shadow-xl overflow-hidden">
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="p-3 bg-teal-500/10 rounded-2xl">
+                    <Heart className="w-8 h-8 text-teal-600 dark:text-[#14b8a6]" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-serif font-bold text-slate-800 dark:text-white">
+                      Visión
+                    </h3>
+                    <div className="h-1 w-12 bg-teal-500 rounded-full mt-2" />
+                  </div>
+                </div>
+
+                <p className="text-lg text-slate-600 dark:text-gray-300 leading-relaxed">
+                  Ser una iglesia que impacte positivamente a Cobán y sus alrededores,
+                  siendo conocidos por nuestro amor genuino, servicio desinteresado y
+                  compromiso inquebrantable con la verdad del Evangelio.
+                </p>
               </div>
             </div>
-            <p className="text-slate-600 dark:text-gray-400 leading-relaxed text-lg">
-              Ser una iglesia que impacte positivamente a Cobán y sus alrededores,
-              siendo conocidos por nuestro amor genuino, servicio desinteresado y
-              compromiso inquebrantable con la verdad del Evangelio.
-            </p>
-          </div>
+          </motion.div>
+
         </div>
       </div>
     </section>
