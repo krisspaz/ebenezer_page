@@ -253,29 +253,45 @@ const FloatingAudioPlayer = () => {
 
             {/* Main Toggle Button - Only show when not fullscreen */}
             {!isFullscreen && (
-                <Button
-                    onClick={() => setIsExpanded(!isExpanded)}
-                    className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 ${isExpanded ? 'mt-3' : ''
-                        } ${isPlaying
+                <div className={`flex items-center gap-2 ${isExpanded ? 'mt-3' : ''}`}>
+                    {/* Quick Pause Button - Only when playing and not expanded */}
+                    {isPlaying && !isExpanded && (
+                        <Button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                togglePlay();
+                            }}
+                            className="w-10 h-10 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 bg-red-500 hover:bg-red-600 text-white"
+                            aria-label="Pausar radio"
+                        >
+                            <Pause className="w-5 h-5" />
+                        </Button>
+                    )}
+
+                    {/* Main Button */}
+                    <Button
+                        onClick={() => setIsExpanded(!isExpanded)}
+                        className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 ${isPlaying
                             ? 'bg-[#F4C95D] text-[#0f172a] ring-4 ring-[#F4C95D]/30'
                             : isExpanded
                                 ? 'bg-slate-200 dark:bg-[#0f172a] text-slate-600 dark:text-gray-400 border-2 border-slate-300 dark:border-gray-600'
                                 : 'bg-white dark:bg-[#1e293b] text-[#d4a33d] dark:text-[#F4C95D] border-2 border-[#d4a33d] dark:border-[#F4C95D]'
-                        }`}
-                    aria-label={isExpanded ? "Cerrar menú" : "Abrir menú de medios"}
-                >
-                    {isPlaying ? (
-                        <div className="flex gap-1 h-4 items-end">
-                            <div className="w-1 bg-black animate-[bounce_1s_infinite] h-2"></div>
-                            <div className="w-1 bg-black animate-[bounce_1.2s_infinite] h-4"></div>
-                            <div className="w-1 bg-black animate-[bounce_0.8s_infinite] h-3"></div>
-                        </div>
-                    ) : isExpanded ? (
-                        <X className="w-6 h-6" />
-                    ) : (
-                        <Radio className="w-6 h-6" />
-                    )}
-                </Button>
+                            }`}
+                        aria-label={isExpanded ? "Cerrar menú" : "Abrir menú de medios"}
+                    >
+                        {isPlaying ? (
+                            <div className="flex gap-1 h-4 items-end">
+                                <div className="w-1 bg-black animate-[bounce_1s_infinite] h-2"></div>
+                                <div className="w-1 bg-black animate-[bounce_1.2s_infinite] h-4"></div>
+                                <div className="w-1 bg-black animate-[bounce_0.8s_infinite] h-3"></div>
+                            </div>
+                        ) : isExpanded ? (
+                            <X className="w-6 h-6" />
+                        ) : (
+                            <Radio className="w-6 h-6" />
+                        )}
+                    </Button>
+                </div>
             )}
         </div>
     );
