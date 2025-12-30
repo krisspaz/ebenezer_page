@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://iglesiaebenezercoban.com/</loc>
+    <loc>https://www.ebenezercoban.org/</loc>
     <lastmod>2025-02-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://iglesiaebenezercoban.com/#inicio</loc>
+    <loc>https://www.ebenezercoban.org/#inicio</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://iglesiaebenezercoban.com/#eventos</loc>
+    <loc>https://www.ebenezercoban.org/#eventos</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://iglesiaebenezercoban.com/#ministerios</loc>
+    <loc>https://www.ebenezercoban.org/#ministerios</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://iglesiaebenezercoban.com/#nosotros</loc>
+    <loc>https://www.ebenezercoban.org/#nosotros</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://iglesiaebenezercoban.com/#contacto</loc>
+    <loc>https://www.ebenezercoban.org/#contacto</loc>
     <priority>0.8</priority>
   </url>
 </urlset>
