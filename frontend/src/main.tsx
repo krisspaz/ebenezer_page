@@ -10,6 +10,9 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 import { HelmetProvider } from 'react-helmet-async';
 
+// Log version to help debug cache issues
+console.log('Build Version: ' + new Date().toISOString());
+
 createRoot(document.getElementById('root')!).render(
     <ErrorBoundary>
         <HelmetProvider>
