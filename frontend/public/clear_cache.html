@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Limpiar Caché de YouTube</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎬 Limpiar Caché de YouTube</h1>
+        <p>Haz clic en el botón para limpiar el caché y ver los videos reales</p>
+        <button onclick="clearCache()">Limpiar Caché</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function clearCache() {
+            try {
+                localStorage.removeItem('youtube_videos_cache');
+                document.getElementById('status').innerHTML = '✅ ¡Caché limpiado!<br><br>Ahora cierra esta pestaña y recarga tu aplicación (Cmd+R o F5)';
+            } catch (error) {
+                document.getElementById('status').innerHTML = '❌ Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+
+</html>

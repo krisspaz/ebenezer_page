@@ -1,0 +1,11 @@
+node_modules
+dist
+.vscode
+.env
+.DS_Store
+.git
+.gitignore
+npm-debug.log
+pnpm-lock.yaml
+bun.lockb
+.idea
