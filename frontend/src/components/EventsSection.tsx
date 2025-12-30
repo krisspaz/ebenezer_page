@@ -13,7 +13,7 @@ const EventsSection = () => {
       date: "Lunes",
       time: "8:00 AM - 10:00 AM",
       location: "Templo Principal",
-      image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2069&auto=format&fit=crop",
+      image: "/assets/images/oracion_service.jpg",
       category: t('events.categories.prayer'),
       color: "bg-teal-500"
     },
@@ -23,7 +23,7 @@ const EventsSection = () => {
       date: "Martes",
       time: "7:00 PM - 9:00 PM",
       location: "Templo Principal",
-      image: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop",
+      image: "/assets/images/discipulado_service.jpg",
       category: t('events.categories.service'),
       color: "bg-[#F4C95D]"
     },
@@ -100,7 +100,7 @@ const EventsSection = () => {
                     <img
                       src={event.image}
                       alt={event.title}
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-cover object-top transform group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute top-4 left-4 z-20">
                       <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-white shadow-sm ${event.color}`}>
