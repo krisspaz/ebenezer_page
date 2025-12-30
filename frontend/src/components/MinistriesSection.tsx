@@ -29,7 +29,8 @@ const MinistriesSection = ({ isHome = true }: MinistriesSectionProps) => {
             description: "Adoración profética continua, sin velo y con gobierno",
             verse: "Asimismo David y los jefes del ejército apartaron para el ministerio a los hijos de Asaf, de Hemán y de Jedutún, para que profetizasen con arpas, salterios y címbalos; y el número de ellos, hombres idóneos para la obra de su ministerio, fue: - 1 Crónicas 25:1",
             icon: <Music className="w-6 h-6 text-white" />,
-            image: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?q=80&w=2070&auto=format&fit=crop"
+            image: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?q=80&w=2070&auto=format&fit=crop",
+            imagePosition: "object-center"
         },
         {
             id: 2,
@@ -37,7 +38,8 @@ const MinistriesSection = ({ isHome = true }: MinistriesSectionProps) => {
             description: "Una expresión integral de adoración",
             verse: "Por lo tanto, amados hermanos, les ruego que entreguen su cuerpo a Dios por todo lo que él ha hecho a favor de ustedes. Que sea un sacrificio vivo y santo, la clase de sacrificio que a él agrada. Esa es la verdadera forma de adorarlo. - Romanos 12:1",
             icon: <Sparkles className="w-6 h-6 text-white" />,
-            image: "/assets/images/danza_ministry.jpg"
+            image: "/assets/images/danza_ministry.jpg",
+            imagePosition: "object-top"
         },
         {
             id: 3,
@@ -307,12 +309,15 @@ const MinistriesSection = ({ isHome = true }: MinistriesSectionProps) => {
                                     <div className="lg:w-1/2 relative">
                                         <div className="absolute -inset-2 bg-gradient-to-r from-[#F4C95D]/20 to-teal-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
                                         <div className="relative h-64 lg:h-80 rounded-2xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500">
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+                                            {/* Image - with premium filters */}
                                             <img
                                                 src={ministry.image}
                                                 alt={ministry.title}
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                                className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${ministry.imagePosition || 'object-center'
+                                                    } saturate-[1.10] contrast-[1.05] brightness-[1.02]`}
                                             />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
                                             {/* Number badge */}
                                             <div className="absolute top-4 left-4 bg-[#F4C95D] text-slate-900 w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg shadow-lg">
