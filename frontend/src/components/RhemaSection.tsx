@@ -5,11 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
-interface Magazine {
-    title: string;
-    link: string;
-    image: string;
-}
+import { fetchRhemaMagazines, Magazine } from '@/services/rhema';
 
 interface RhemaSectionProps {
     isHome?: boolean;
@@ -70,104 +66,31 @@ const MagazineCard = ({ mag, colorClass }: { mag: Magazine; colorClass: string }
 export const RhemaSection = ({ isHome = false }: RhemaSectionProps) => {
     const [magazines, setMagazines] = useState<Magazine[]>([]);
     const [loading, setLoading] = useState(true);
+    // Error state is less critical now as service returns fallback, but we keep it for potential future UI feedback
     const [error, setError] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
 
+    /**
+     * Effect to load magazines on component mount.
+     * Includes a simulated delay to showcase the Skeleton loading state (UX improvement),
+     * providing a smoother visual transition for the user.
+     */
     useEffect(() => {
-        const fetchMagazines = async () => {
+        const loadMagazines = async () => {
+            setLoading(true);
             try {
-                // Fetch from static JSON file in public folder
-                const response = await fetch('/rhema.json');
-                if (!response.ok) throw new Error('Failed to fetch');
-                const data = await response.json();
+                const data = await fetchRhemaMagazines();
                 setMagazines(data);
+                if (data.length === 0) setError(true);
             } catch (err) {
-                console.error(err);
+                console.error("Error loading magazines:", err);
                 setError(true);
-                // Fallback data for demo/local purposes if API fails
-                setMagazines([
-                    { "title": "DICIEMBRE 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/12/189RevistaRhema-Diciembre2025.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/12/Screenshot-2025-12-08-at-3.53.32-PM.png" },
-                    { "title": "NOVIEMBRE 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/11/188-Noviembre2025.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/11/IMG_1066.jpeg" },
-                    { "title": "OCTUBRE 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/10/187RevistaRhemaOctubre2025.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/10/Screenshot-2025-10-06-at-11.57.21-AM.png" },
-                    { "title": "SEPTIEMBRE 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/09/186RevistaRhema-Septiembre2025.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/09/Screenshot-2025-09-08-at-17.37.14.png" },
-                    { "title": "AGOSTO 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/08/185RevistaRhema-Agosto2025.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/08/IMG_5565.jpeg" },
-                    { "title": "JULIO 2025", "link": "https://www.ebenezer.org.gt/wp-content/uploads/2025/07/Julio2025.pdf", "image": "https://www.ebenezer.org.gt/wp-content/uploads/2025/07/IMG_4831.jpeg" },
-                    { "title": "JUNIO 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/183RevistaRhema-Junio2025.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/183RevistaRhema-Junio2025-1.png" },
-                    { "title": "MAYO 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/05/182_Mayo2025.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/05/IMG_3521.jpeg" },
-                    { "title": "ABRIL 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/04/181_RhemaRevista_Abril.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/04/IMG_2999.jpeg" },
-                    { "title": "MARZO 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/03/180_RhemaRevista_Espanol_Marzo2025_15Aniversario.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/03/IMG_2308.jpeg" },
-                    { "title": "FEBRERO 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/02/179_RhemaRevista_Espanol_Febrero2025.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/02/IMG_0536.jpeg" },
-                    { "title": "ENERO 2025", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/01/178_RhemaRevista_Espanol_Enero2025.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/01/178_RhemaRevista_Espanol_Enero2025-1.jpg" },
-                    { "title": "DICIEMBRE 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/177_RhemaRevista_Espanol_Diciembre2024.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-12.32.19.png" },
-                    { "title": "PRE PROCLAMA 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/PreProclamaProfetica_2024_ByRevistaRhema.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-12.34.32.png" },
-                    { "title": "NOVIEMBRE 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/176_RhemaRevista_Espanol_Noviembre2024.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-12.30.48.png" },
-                    { "title": "OCTUBRE 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/175_RhemaRevista_Espanol_Octubre2024.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-12.28.49.png" },
-                    { "title": "RETIRO LAS VEGAS 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Retiro_Pastores_LasVegas2024_ByRevistaRhema.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-12.24.10.png" },
-                    { "title": "SEPTIEMBRE 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/174_RhemaRevista_Espanol_Septiembre2024.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-12.21.54.png" },
-                    { "title": "AGOSTO 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/173_RhemaRevista_Espanol_Agosto2024.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-13.05.20.png" },
-                    { "title": "JULIO 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/172_RhemaRevista_Espanol_Julio2024.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-12.52.49.png" },
-                    { "title": "JUNIO 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/171_RhemaRevista_Espanol_Junio2024.pdf.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-12.06.50.png" },
-                    { "title": "MAYO 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/170.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-11.51.38.png" },
-                    { "title": "ABRIL 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/169_RhemaRevista_Espanol_Abril2024-2.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-12.10.28.png" },
-                    { "title": "MARZO 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/168-2.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-11.14.33.png" },
-                    { "title": "FEBRERO 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/167.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-11.12.11.png" },
-                    { "title": "ENERO 2024", "link": "https://ebenezer.org.gt/wp-content/uploads/2025/06/166.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2025/06/Screenshot-2025-06-05-at-11.07.26.png" },
-                    { "title": "ENERO", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/01/154_RhemaRevista_Espanol_Ene23-2.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/01/154_RhemaRevista_Espanol_Ene23-2-1.jpg" },
-                    { "title": "FEBRERO", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/02/155_RhemaRevista_Espanol_Feb23-1.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/02/Captura-de-pantalla-2023-02-05-140806.jpg" },
-                    { "title": "MARZO", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/03/05791733-e636-4b9a-b956-fa896f3343cb.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/03/Captura.png" },
-                    { "title": "ABRIL", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/04/6105f914-bf24-4ad5-b205-cafe27c24b4f.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/04/Captura.png" },
-                    { "title": "MAYO", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/05/158-_RhemaRevista_Espanol_Mayo23.pdf.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/05/2BD984F7-E98A-4C36-BA07-BEC6315F6352-scaled.jpeg" },
-                    { "title": "JUNIO", "link": "https://www.ebenezer.org.gt/wp-content/uploads/2023/06/159-_RhemaRevista_Espanol_Junio23-1.pdf", "image": "https://www.ebenezer.org.gt/wp-content/uploads/2023/06/Imagen-de-WhatsApp-2023-06-04-a-las-11.39.37.jpg" },
-                    { "title": "JULIO", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/07/160-_RhemaRevista_Espanol_Julio23.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/07/160portada-scaled.jpg" },
-                    { "title": "AGOSTO", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/08/161-_RhemaRevista_Espanol_Agosto23.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/08/A1378F8E-4304-4911-970D-A9D974989AD2-scaled.jpeg" },
-                    { "title": "SEPTIEMBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/09/162-_RhemaRevista_Espanol_Septiembre23.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/09/IMG_2620.jpeg" },
-                    { "title": "OCTUBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/10/163-_RhemaRevista_Espanol_Octubre23-2.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/09/Captura-de-pantalla-2023-09-30-210905.png" },
-                    { "title": "NOVIEMBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/11/164-_RhemaRevista_Espanol_Noviembre23.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/11/NOV-2023-11-04-125648.png" },
-                    { "title": "DICIEMBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2023/12/165-_RhemaRevista_Espanol_Diciembre23.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2023/12/revista-dic.png" },
-                    { "title": "ENERO", "link": "https://www.ebenezer.org.gt/wp-content/uploads/2022/01/142_Revista_Rhema.pdf", "image": "https://www.ebenezer.org.gt/wp-content/uploads/2022/01/photo_2022-01-02_12-06-21.jpg" },
-                    { "title": "FEBRERO", "link": "https://ebenezer.org.gt/wp-content/uploads/2022/03/143_RevistaRhema.pdf", "image": "https://www.ebenezer.org.gt/wp-content/uploads/2022/02/image_2022-02-07_17-59-29.png" },
-                    { "title": "MARZO", "link": "https://ebenezer.org.gt/wp-content/uploads/2022/03/144_Rev_Marzo.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2022/03/Captura-de-Pantalla-2022-03-05-a-las-09.33.06.png" },
-                    { "title": "ABRIL", "link": "https://ebenezer.org.gt/wp-content/uploads/2022/04/Edicion_145_abril_2022.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2022/04/image_2022-04-02_00-07-33.png" },
-                    { "title": "MAYO", "link": "https://www.ebenezer.org.gt/wp-content/uploads/2022/05/Edicio%CC%81n_Especial_146_mayo_2022.pdf", "image": "https://www.ebenezer.org.gt/wp-content/uploads/2022/05/Captura-de-Pantalla-2022-05-08-a-las-12.51.21.png" },
-                    { "title": "JUNIO", "link": "https://www.ebenezer.org.gt/wp-content/uploads/2022/06/147Rhema_Revista_Espan%CC%83ol.pdf", "image": "https://www.ebenezer.org.gt/wp-content/uploads/2022/06/Captura-de-Pantalla-2022-06-03-a-las-18.24.06.png" },
-                    { "title": "JULIO", "link": "https://www.ebenezer.org.gt/wp-content/uploads/2022/07/148Rhema_Revista_Espan%CC%83ol.pdf", "image": "https://www.ebenezer.org.gt/wp-content/uploads/2022/07/VIENDO-EL-ESPITIRU.jpg" },
-                    { "title": "AGOSTO", "link": "https://ebenezer.org.gt/wp-content/uploads/2022/08/149Rhema_Revista_Espan%CC%83ol.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2022/08/Captura-de-pantalla-2022-08-07-092231.jpg" },
-                    { "title": "SEPTIEMBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2022/09/150Rhema_Revista_Espan%CC%83ol.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2022/09/Revista-Septiembre.jpg" },
-                    { "title": "OCTUBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2022/10/151Rhema_Revista_Espanol.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2022/10/5EF5E7D3-53F4-4B70-9451-4EBA944E8EF0-scaled.jpeg" },
-                    { "title": "NOVIEMBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2022/11/152Rhema_Revista_Espanol.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2022/11/5D97E909-810A-4C76-8237-9E1349E26D50.jpeg" },
-                    { "title": "DICIEMBRE", "link": "https://www.ebenezer.org.gt/wp-content/uploads/2022/12/153_RhemaRevista_Espanol_Dic22.pdf", "image": "https://www.ebenezer.org.gt/wp-content/uploads/2022/12/Captura-de-pantalla-2022-12-04-122919.jpg" },
-                    { "title": "ENERO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/130.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/10/photo_2021-10-04_15-03-32.jpg" },
-                    { "title": "FEBRERO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/131-1.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/10/photo_2021-10-04_15-03-41.jpg" },
-                    { "title": "MARZO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/132-Revista-Rhema.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/132-Revista-Rhema-1.jpg" },
-                    { "title": "ABRIL", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/133.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/10/photo_2021-10-04_15-03-45.jpg" },
-                    { "title": "MAYO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/134.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/10/photo_2021-10-04_15-03-36.jpg" },
-                    { "title": "JUNIO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/06/135_revistarhema_junio_web.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/06/135_revistarhema_junio_web-1.jpg" },
-                    { "title": "JULIO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/07/136_revistarhema_final2.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/07/Captura-de-Pantalla-2021-07-07-a-las-16.59.21.png" },
-                    { "title": "AGOSTO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/08/Final_03_137_revistarhema_agosto.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/08/REVISTA-AGOSTO.jpeg" },
-                    { "title": "SEPTIEMBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/09/Revista-Rhema-138.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/09/photo_2021-09-05_11-32-46.jpg" },
-                    { "title": "OCTUBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/10/139_revistarhema_octubre.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/10/photo_2021-10-03_08-59-50-1.jpg" },
-                    { "title": "NOVIEMBRE", "link": "https://www.ebenezer.org.gt/wp-content/uploads/2021/11/Final_140_revistarhema_noviembre.pdf", "image": "https://www.ebenezer.org.gt/wp-content/uploads/2021/11/photo_2021-11-07_10-51-32.jpg" },
-                    { "title": "DICIEMBRE", "link": "https://www.ebenezer.org.gt/wp-content/uploads/2021/12/141_web_revistarhema_diciembre.pdf", "image": "https://www.ebenezer.org.gt/wp-content/uploads/2021/12/image_2021-12-05_08-29-33.png" },
-                    { "title": "ENERO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/118.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/1-ENERO-1.jpg" },
-                    { "title": "FEBRERO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/119pdf.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/2-FEBRERO-1.jpg" },
-                    { "title": "MARZO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/120-2.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/3-MARZO-1.jpg" },
-                    { "title": "ABRIL", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/121.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/4-ABRIL.jpg" },
-                    { "title": "MAYO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/122.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/5-MAYO.jpg" },
-                    { "title": "JUNIO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/123.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/6-JUNIO.jpg" },
-                    { "title": "JULIO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/124.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/7-JULIO.jpg" },
-                    { "title": "AGOSTO", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/125.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/8.jpg" },
-                    { "title": "SEPTIEMBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/126.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/9-SEPTIEMBRE.jpg" },
-                    { "title": "OCTUBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/127.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/10-OCTUBRE.jpg" },
-                    { "title": "NOVIEMBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/128_Noviembre-optimized.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/11-NOVIEMBRE.jpg" },
-                    { "title": "DICIEMBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/129.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/12-DICIEMBRE.jpg" },
-                    { "title": "DICIEMBRE", "link": "https://ebenezer.org.gt/wp-content/uploads/2021/05/9.pdf", "image": "https://ebenezer.org.gt/wp-content/uploads/2021/05/Diciembre.jpg" }
-                ]);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchMagazines();
+        loadMagazines();
     }, []);
 
     // Extract year from title (e.g., "DICIEMBRE 2024" -> 2024)

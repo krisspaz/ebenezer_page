@@ -2,9 +2,17 @@ import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "./ui/button";
+import { useState, useEffect } from "react";
 
 const EventsSection = () => {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading for premium feel
+    const timer = setTimeout(() => setLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const events = [
     {
@@ -27,6 +35,8 @@ const EventsSection = () => {
       category: t('events.categories.service'),
       color: "bg-[#F4C95D]"
     },
+    // ... other events (keeping existing data logic if I were not replacing the whole function body or similar)
+    // Wait, I am replacing the whole function body essentially. I need to include all events.
     {
       id: 3,
       title: "Servicio de Familia",
@@ -80,74 +90,91 @@ const EventsSection = () => {
 
         {/* Events Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {events.map((event, index) => (
-            <motion.div
-              key={event.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative"
-            >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#F4C95D]/20 to-teal-500/20 rounded-[2rem] blur opacity-0 group-hover:opacity-100 transition duration-500" />
-
-              <div className="relative h-full bg-white dark:bg-[#1e293b] rounded-[1.8rem] overflow-hidden border border-slate-100 dark:border-white/5 shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-1">
-                <div className="flex flex-col md:flex-row h-full">
-
-                  {/* Image Section */}
-                  <div className="relative w-full md:w-2/5 h-48 md:h-auto overflow-hidden">
-                    <div className="absolute inset-0 bg-[#0f172a]/20 group-hover:bg-[#0f172a]/0 transition-colors duration-500 z-10" />
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      className="w-full h-full object-cover object-top transform group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute top-4 left-4 z-20">
-                      <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-white shadow-sm ${event.color}`}>
-                        {event.category}
-                      </span>
-                    </div>
+          {loading ? (
+            // Skeleton Loading State
+            Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="h-48 md:h-64 rounded-[1.8rem] overflow-hidden bg-white dark:bg-[#1e293b] border border-slate-100 dark:border-white/5 shadow-lg flex flex-col md:flex-row animate-pulse">
+                <div className="w-full md:w-2/5 h-48 md:h-full bg-slate-200 dark:bg-slate-700/50" />
+                <div className="flex-1 p-6 space-y-4">
+                  <div className="h-6 bg-slate-200 dark:bg-slate-700/50 rounded-lg w-3/4" />
+                  <div className="space-y-2">
+                    <div className="h-4 bg-slate-200 dark:bg-slate-700/30 rounded w-1/2" />
+                    <div className="h-4 bg-slate-200 dark:bg-slate-700/30 rounded w-1/3" />
+                    <div className="h-4 bg-slate-200 dark:bg-slate-700/30 rounded w-1/2" />
                   </div>
-
-                  {/* Content Section */}
-                  <div className="flex-1 p-6 flex flex-col justify-center relative">
-                    <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4 font-heading group-hover:text-[#d4a33d] dark:group-hover:text-[#F4C95D] transition-colors">
-                      {event.title}
-                    </h3>
-
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-start gap-3">
-                        <Calendar className="w-4 h-4 text-[#d4a33d] dark:text-[#F4C95D] mt-1 shrink-0" />
-                        <span className="text-sm text-slate-600 dark:text-gray-300 font-medium">{event.date}</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Clock className="w-4 h-4 text-teal-600 dark:text-[#14b8a6] mt-1 shrink-0" />
-                        <span className="text-sm text-slate-600 dark:text-gray-300">{event.time}</span>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <MapPin className="w-4 h-4 text-slate-400 dark:text-gray-500 mt-1 shrink-0" />
-                        <span className="text-sm text-slate-600 dark:text-gray-300">{event.location}</span>
-                      </div>
-                    </div>
-
-                    <div className="mt-auto pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
-                      <span className="text-xs font-bold text-[#d4a33d] dark:text-[#F4C95D] uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-2 group-hover:translate-x-0 duration-300">
-                        Ver Detalles
-                      </span>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="rounded-full hover:bg-[#F4C95D]/10 hover:text-[#d4a33d] dark:hover:text-[#F4C95D]"
-                      >
-                        <ArrowRight className="w-5 h-5" />
-                      </Button>
-                    </div>
-                  </div>
-
                 </div>
               </div>
-            </motion.div>
-          ))}
+            ))
+          ) : (
+            events.map((event, index) => (
+              <motion.div
+                key={event.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group relative"
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#F4C95D]/20 to-teal-500/20 rounded-[2rem] blur opacity-0 group-hover:opacity-100 transition duration-500" />
+
+                <div className="relative h-full bg-white dark:bg-[#1e293b] rounded-[1.8rem] overflow-hidden border border-slate-100 dark:border-white/5 shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-1">
+                  <div className="flex flex-col md:flex-row h-full">
+
+                    {/* Image Section */}
+                    <div className="relative w-full md:w-2/5 h-48 md:h-auto overflow-hidden">
+                      <div className="absolute inset-0 bg-[#0f172a]/20 group-hover:bg-[#0f172a]/0 transition-colors duration-500 z-10" />
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="w-full h-full object-cover object-top transform group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute top-4 left-4 z-20">
+                        <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-white shadow-sm ${event.color}`}>
+                          {event.category}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Content Section */}
+                    <div className="flex-1 p-6 flex flex-col justify-center relative">
+                      <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4 font-heading group-hover:text-[#d4a33d] dark:group-hover:text-[#F4C95D] transition-colors">
+                        {event.title}
+                      </h3>
+
+                      <div className="space-y-3 mb-6">
+                        <div className="flex items-start gap-3">
+                          <Calendar className="w-4 h-4 text-[#d4a33d] dark:text-[#F4C95D] mt-1 shrink-0" />
+                          <span className="text-sm text-slate-600 dark:text-gray-300 font-medium">{event.date}</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <Clock className="w-4 h-4 text-teal-600 dark:text-[#14b8a6] mt-1 shrink-0" />
+                          <span className="text-sm text-slate-600 dark:text-gray-300">{event.time}</span>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <MapPin className="w-4 h-4 text-slate-400 dark:text-gray-500 mt-1 shrink-0" />
+                          <span className="text-sm text-slate-600 dark:text-gray-300">{event.location}</span>
+                        </div>
+                      </div>
+
+                      <div className="mt-auto pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#d4a33d] dark:text-[#F4C95D] uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-2 group-hover:translate-x-0 duration-300">
+                          Ver Detalles
+                        </span>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="rounded-full hover:bg-[#F4C95D]/10 hover:text-[#d4a33d] dark:hover:text-[#F4C95D]"
+                        >
+                          <ArrowRight className="w-5 h-5" />
+                        </Button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </motion.div>
+            ))
+          )}
         </div>
       </div>
     </section>
