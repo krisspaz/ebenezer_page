@@ -102,7 +102,7 @@ const AboutSection = () => {
             </h2>
 
             <p className="text-xl md:text-2xl text-slate-600 dark:text-gray-400 leading-relaxed font-light max-w-3xl mx-auto">
-              Iglesia de Cristo Ebenezer Cobán es una comunidad de fe dedicada a compartir
+              Iglesia de Cristo Ebenezer Cobán es una congregación de fe dedicada a compartir
               el amor de Cristo y servir a nuestra ciudad.
             </p>
           </motion.div>
