@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { Member, getMembersList, MEMBERS_LIST_KEY } from "../components/MemberRegistration";
 import { jsPDF } from "jspdf";
+import SEO from "../components/SEO";
 
 // Admin users configuration
 const ADMIN_USERS = [
@@ -302,6 +303,10 @@ const MemberAdminPage = () => {
     // Admin Dashboard
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+            <SEO
+                title="Panel de Congregación | Ebenezer Cobán"
+                description="Área restringida para administración de miembros."
+            />
             {/* Header */}
             <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10">
                 <div className="container mx-auto px-4 py-4">

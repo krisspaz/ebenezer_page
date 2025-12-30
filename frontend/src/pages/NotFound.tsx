@@ -2,10 +2,15 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Home, HardHat, Hammer } from "lucide-react";
 import { Button } from "../components/ui/button";
+import SEO from "../components/SEO";
 
 const NotFound = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col items-center justify-center p-4 overflow-hidden relative">
+      <SEO
+        title="Página no encontrada | Ebenezer Cobán"
+        description="La página que buscas no existe o ha sido movida."
+      />
       {/* Background particles */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
@@ -13,8 +18,8 @@ const NotFound = () => {
             key={i}
             className="absolute w-1 h-1 bg-amber-400/30 rounded-full"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}% `,
+              top: `${Math.random() * 100}% `,
             }}
             animate={{
               y: [0, -30, 0],

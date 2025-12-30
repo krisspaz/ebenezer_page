@@ -8,17 +8,21 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 
 
+import { HelmetProvider } from 'react-helmet-async';
+
 createRoot(document.getElementById('root')!).render(
     <ErrorBoundary>
-        <Suspense fallback={
-            <div className="h-screen w-full bg-zinc-950 flex items-center justify-center text-white">
-                <div className="animate-pulse flex flex-col items-center">
-                    <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                    <p className="font-medium tracking-widest text-sm">CARGANDO...</p>
+        <HelmetProvider>
+            <Suspense fallback={
+                <div className="h-screen w-full bg-zinc-950 flex items-center justify-center text-white">
+                    <div className="animate-pulse flex flex-col items-center">
+                        <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                        <p className="font-medium tracking-widest text-sm">CARGANDO...</p>
+                    </div>
                 </div>
-            </div>
-        }>
-            <App />
-        </Suspense>
+            }>
+                <App />
+            </Suspense>
+        </HelmetProvider>
     </ErrorBoundary>,
 );

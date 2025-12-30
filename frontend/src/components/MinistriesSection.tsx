@@ -2,7 +2,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Music, Users, BookOpen, Heart, Sparkles, Video, Church, Baby, GraduationCap, Trophy, Shield, HandHeart, Crown, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Skeleton } from "./ui/skeleton";
+import { useState, useEffect } from "react";
 
 interface MinistriesSectionProps {
     isHome?: boolean;
@@ -11,6 +12,15 @@ interface MinistriesSectionProps {
 const MinistriesSection = ({ isHome = true }: MinistriesSectionProps) => {
     const { t } = useTranslation();
     const [selectedMinistry, setSelectedMinistry] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        // Simulate loading for premium feel
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 800);
+        return () => clearTimeout(timer);
+    }, []);
 
     const ministries = [
         {
@@ -183,37 +193,43 @@ const MinistriesSection = ({ isHome = true }: MinistriesSectionProps) => {
                             transition={{ duration: 0.6, delay: 0.2 }}
                             className="grid grid-cols-2 gap-4"
                         >
-                            {ministries.slice(0, 4).map((item, index) => (
-                                <motion.div
-                                    key={item.id}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="relative group rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer aspect-square"
-                                >
-                                    {/* Background Image */}
-                                    <div className="absolute inset-0">
-                                        <img
-                                            src={item.image}
-                                            alt={item.title}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:from-black/95 transition-colors duration-300" />
-                                    </div>
-
-                                    {/* Content Overlay */}
-                                    <div className="absolute inset-0 p-4 flex flex-col justify-end">
-                                        <div className="bg-[#F4C95D]/20 backdrop-blur-md w-10 h-10 rounded-xl flex items-center justify-center border border-[#F4C95D]/30 mb-3">
-                                            {item.icon}
+                            {isLoading ? (
+                                Array.from({ length: 4 }).map((_, i) => (
+                                    <Skeleton key={i} className="aspect-square rounded-2xl w-full" />
+                                ))
+                            ) : (
+                                ministries.slice(0, 4).map((item, index) => (
+                                    <motion.div
+                                        key={item.id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                                        className="relative group rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer aspect-square"
+                                    >
+                                        {/* Background Image */}
+                                        <div className="absolute inset-0">
+                                            <img
+                                                src={item.image}
+                                                alt={item.title}
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:from-black/95 transition-colors duration-300" />
                                         </div>
-                                        <h3 className="text-white font-heading text-lg font-bold">{item.title}</h3>
-                                        <p className="text-gray-300 text-xs line-clamp-2">
-                                            {item.description}
-                                        </p>
-                                    </div>
-                                </motion.div>
-                            ))}
+
+                                        {/* Content Overlay */}
+                                        <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                                            <div className="bg-[#F4C95D]/20 backdrop-blur-md w-10 h-10 rounded-xl flex items-center justify-center border border-[#F4C95D]/30 mb-3">
+                                                {item.icon}
+                                            </div>
+                                            <h3 className="text-white font-heading text-lg font-bold">{item.title}</h3>
+                                            <p className="text-gray-300 text-xs line-clamp-2">
+                                                {item.description}
+                                            </p>
+                                        </div>
+                                    </motion.div>
+                                ))
+                            )}
                         </motion.div>
                     </div>
                 </div>
@@ -267,63 +283,74 @@ const MinistriesSection = ({ isHome = true }: MinistriesSectionProps) => {
             {/* Ministries List - Vertical Scroll */}
             <div className="container mx-auto px-4 pb-24">
                 <div className="max-w-5xl mx-auto space-y-8">
-                    {ministries.map((ministry, index) => (
-                        <motion.div
-                            key={ministry.id}
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.6 }}
-                            className="group"
-                        >
-                            <div className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 items-stretch`}>
-                                {/* Image */}
-                                <div className="lg:w-1/2 relative">
-                                    <div className="absolute -inset-2 bg-gradient-to-r from-[#F4C95D]/20 to-teal-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                                    <div className="relative h-64 lg:h-80 rounded-2xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500">
-                                        <img
-                                            src={ministry.image}
-                                            alt={ministry.title}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-
-                                        {/* Number badge */}
-                                        <div className="absolute top-4 left-4 bg-[#F4C95D] text-slate-900 w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg shadow-lg">
-                                            {ministry.id.toString().padStart(2, '0')}
-                                        </div>
-
-                                        {/* Icon */}
-                                        <div className="absolute bottom-4 right-4 bg-white/20 backdrop-blur-xl w-14 h-14 rounded-xl flex items-center justify-center border border-white/30">
-                                            {ministry.icon}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Content */}
+                    {isLoading ? (
+                        Array.from({ length: 3 }).map((_, i) => (
+                            <div key={i} className={`flex flex-col ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 items-stretch`}>
+                                <Skeleton className="lg:w-1/2 h-64 lg:h-80 rounded-2xl" />
                                 <div className="lg:w-1/2 flex flex-col justify-center">
-                                    <div className="bg-white dark:bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-slate-200/50 dark:border-slate-700/50 shadow-lg group-hover:shadow-xl transition-all duration-500 h-full">
-                                        <h3 className="text-2xl lg:text-3xl font-heading font-bold text-slate-800 dark:text-white mb-3 group-hover:text-[#F4C95D] transition-colors duration-300">
-                                            {ministry.title}
-                                        </h3>
-
-                                        <p className="text-lg text-slate-600 dark:text-gray-300 mb-5 leading-relaxed">
-                                            {ministry.description}
-                                        </p>
-
-                                        <div className="h-px bg-gradient-to-r from-[#F4C95D]/50 via-transparent to-transparent mb-5" />
-
-                                        <div className="flex items-start gap-3">
-                                            <BookOpen className="w-5 h-5 text-teal-500 flex-shrink-0 mt-1" />
-                                            <p className="text-sm text-slate-500 dark:text-gray-400 italic leading-relaxed">
-                                                "{ministry.verse}"
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <Skeleton className="h-48 w-full rounded-2xl" />
                                 </div>
                             </div>
-                        </motion.div>
-                    ))}
+                        ))
+                    ) : (
+                        ministries.map((ministry, index) => (
+                            <motion.div
+                                key={ministry.id}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.6 }}
+                                className="group"
+                            >
+                                <div className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 items-stretch`}>
+                                    {/* Image */}
+                                    <div className="lg:w-1/2 relative">
+                                        <div className="absolute -inset-2 bg-gradient-to-r from-[#F4C95D]/20 to-teal-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                                        <div className="relative h-64 lg:h-80 rounded-2xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500">
+                                            <img
+                                                src={ministry.image}
+                                                alt={ministry.title}
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+                                            {/* Number badge */}
+                                            <div className="absolute top-4 left-4 bg-[#F4C95D] text-slate-900 w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg shadow-lg">
+                                                {ministry.id.toString().padStart(2, '0')}
+                                            </div>
+
+                                            {/* Icon */}
+                                            <div className="absolute bottom-4 right-4 bg-white/20 backdrop-blur-xl w-14 h-14 rounded-xl flex items-center justify-center border border-white/30">
+                                                {ministry.icon}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="lg:w-1/2 flex flex-col justify-center">
+                                        <div className="bg-white dark:bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 lg:p-8 border border-slate-200/50 dark:border-slate-700/50 shadow-lg group-hover:shadow-xl transition-all duration-500 h-full">
+                                            <h3 className="text-2xl lg:text-3xl font-heading font-bold text-slate-800 dark:text-white mb-3 group-hover:text-[#F4C95D] transition-colors duration-300">
+                                                {ministry.title}
+                                            </h3>
+
+                                            <p className="text-lg text-slate-600 dark:text-gray-300 mb-5 leading-relaxed">
+                                                {ministry.description}
+                                            </p>
+
+                                            <div className="h-px bg-gradient-to-r from-[#F4C95D]/50 via-transparent to-transparent mb-5" />
+
+                                            <div className="flex items-start gap-3">
+                                                <BookOpen className="w-5 h-5 text-teal-500 flex-shrink-0 mt-1" />
+                                                <p className="text-sm text-slate-500 dark:text-gray-400 italic leading-relaxed">
+                                                    "{ministry.verse}"
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))
+                    )}
                 </div>
             </div>
         </section>

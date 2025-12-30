@@ -13,10 +13,15 @@ import ScrollReveal from "../components/ui/ScrollReveal";
 import BackToTop from "../components/ui/BackToTop";
 
 import { RhemaSection } from "../components/RhemaSection";
+import SEO from "../components/SEO";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-yellow-500/30">
+      <SEO
+        title="Iglesia de Cristo Ebenezer Cobán - Bienvenidos"
+        description="Portal oficial de Iglesia de Cristo Ebenezer en Cobán, Alta Verapaz. Ministerios, prédicas, alabanza y adoración."
+      />
       <Navbar />
       <main id="main-content">
         <Hero />
