@@ -43,7 +43,7 @@ const EventsSection = () => {
       image: "/assets/images/discipulado_service.jpg",
       category: t('events.categories.service'),
       color: "bg-[#F4C95D]",
-      description: "Profundizamos en el estudio de las Sagradas Escrituras. Este es un tiempo para aprender doctrina, entender los misterios de la Reino y crecer en el conocimiento de Cristo bajo la enseñanza pastoral."
+      description: "Profundizamos en el estudio de la Biblia en base a nuestra cobertura. Este es un tiempo para aprender doctrina y crecer en el conocimiento de Cristo bajo la enseñanza pastoral."
     },
     // ... other events (keeping existing data logic if I were not replacing the whole function body or similar)
     // Wait, I am replacing the whole function body essentially. I need to include all events.
@@ -56,7 +56,7 @@ const EventsSection = () => {
       image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop",
       category: t('events.categories.youth'),
       color: "bg-purple-500",
-      description: "Un servicio vibrante y lleno de gozo, diseñado para toda la familia. Disfrutamos de alabanza poderosa, testimonios y una palabra práctica que edifica el hogar y restaura relaciones."
+      description: "Un servicio lleno de gozo, diseñado para ti y tu familia. Disfrutamos de alabanzas poderosas y una palabra práctica que edifica el hogar y restaura relaciones."
     },
     {
       id: 4,
