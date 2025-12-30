@@ -61,9 +61,6 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-4">
           <ThemeToggle />
           <LanguageSelector />
-          <div className="bg-red-600 text-white text-[10px] px-2 py-1 rounded-full font-bold animate-pulse">
-            v{new Date().toLocaleTimeString()}
-          </div>
           <Button
             onClick={() => document.querySelector("#transmision")?.scrollIntoView({ behavior: "smooth" })}
             className="bg-[#1e293b] dark:bg-white text-white dark:text-[#1e293b] hover:bg-[#F4C95D] hover:text-[#1e293b] rounded-lg px-6 font-bold uppercase text-xs tracking-wider shadow-md transition-colors"

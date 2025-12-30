@@ -10,8 +10,15 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 import { HelmetProvider } from 'react-helmet-async';
 
-// Log version to help debug cache issues
-console.log('Build Version: ' + new Date().toISOString());
+// Force unregister any existing service workers to fix cache issues
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (const registration of registrations) {
+            console.log('Unregistering stale service worker to fix cache:', registration);
+            registration.unregister();
+        }
+    });
+}
 
 createRoot(document.getElementById('root')!).render(
     <ErrorBoundary>
