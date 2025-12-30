@@ -37,7 +37,7 @@ const MinistriesSection = ({ isHome = true }: MinistriesSectionProps) => {
             description: "Una expresión integral de adoración",
             verse: "Por lo tanto, amados hermanos, les ruego que entreguen su cuerpo a Dios por todo lo que él ha hecho a favor de ustedes. Que sea un sacrificio vivo y santo, la clase de sacrificio que a él agrada. Esa es la verdadera forma de adorarlo. - Romanos 12:1",
             icon: <Sparkles className="w-6 h-6 text-white" />,
-            image: "/images/danza-ministerio.jpg"
+            image: "/assets/images/danza_ministry.jpg"
         },
         {
             id: 3,
