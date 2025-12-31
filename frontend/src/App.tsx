@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
 import RhemaPage from "./pages/RhemaPage";
 import MinistriesPage from "./pages/MinistriesPage";
@@ -11,6 +12,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <GoogleAnalytics />
+      <Analytics />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/nosotros" element={<AboutPage />} />
