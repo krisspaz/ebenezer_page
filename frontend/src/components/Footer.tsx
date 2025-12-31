@@ -89,7 +89,7 @@ const Footer = () => {
           </div>
 
           <p className="text-slate-500 dark:text-gray-500 text-sm">
-            &copy; 2025 Iglesia de Cristo Ebenezer Cobán. Todos los derechos reservados.
+            &copy; 2025 Iglesia de Cristo Ebenezer Cobán. Todos los derechos reservados. | Colosenses 3:23-24
           </p>
 
           {/* Back To Top */}
