@@ -8,6 +8,16 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
   console.warn('Supabase URL or Key not found. App will load but data fetching will fail.');
+  console.log('Debug Info:', {
+    url: supabaseUrl,
+    keyLength: supabaseKey?.length || 0,
+    envMode: import.meta.env.MODE
+  });
+} else {
+  console.log('Supabase Client Initialized', {
+    url: supabaseUrl,
+    keyLength: supabaseKey.length
+  });
 }
 
 // Fallback to avoid crash if env variables are missing
