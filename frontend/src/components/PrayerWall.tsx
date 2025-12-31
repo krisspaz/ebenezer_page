@@ -6,7 +6,7 @@ import { Textarea } from "./ui/textarea";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
-import MemberRegistration, { Member, getMember, isMemberBlocked, MEMBER_KEY } from "./MemberRegistration";
+import MemberRegistration, { Member, getMember, checkMemberStatus, MEMBER_KEY } from "./MemberRegistration";
 
 interface Prayer {
     id: number;
@@ -133,14 +133,24 @@ const PrayerWall = () => {
 
     // Check for existing member registration
     useEffect(() => {
-        const member = getMember();
-        if (member) {
-            const blocked = isMemberBlocked(member.id);
-            setIsBlocked(blocked);
-            if (!blocked) {
-                setCurrentMember(member);
+        const checkMember = async () => {
+            const member = getMember();
+            if (member) {
+                const { exists, blocked } = await checkMemberStatus(member.id);
+
+                if (!exists) {
+                    localStorage.removeItem(MEMBER_KEY);
+                    setCurrentMember(null);
+                    return;
+                }
+
+                setIsBlocked(blocked);
+                if (!blocked) {
+                    setCurrentMember(member);
+                }
             }
-        }
+        };
+        checkMember();
     }, []);
 
     useEffect(() => {

@@ -8,9 +8,10 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
-import { Member, getMembersList, MEMBERS_LIST_KEY } from "../components/MemberRegistration";
+import { Member } from "../components/MemberRegistration";
 import { jsPDF } from "jspdf";
 import SEO from "../components/SEO";
+import { supabase } from "../lib/supabase";
 
 // Admin users configuration
 const ADMIN_USERS = [
@@ -20,6 +21,7 @@ const ADMIN_USERS = [
 ];
 
 const MemberAdminPage = () => {
+
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [adminName, setAdminName] = useState("");
     const [username, setUsername] = useState("");
@@ -34,9 +36,24 @@ const MemberAdminPage = () => {
         }
     }, [isAuthenticated]);
 
-    const loadMembers = () => {
-        const membersList = getMembersList();
-        setMembers(membersList);
+    const loadMembers = async () => {
+        const { data, error } = await supabase
+            .from('members')
+            .select('*')
+            .order('fecha_registro', { ascending: false });
+
+        if (data) {
+            // Map keys
+            const mappedMembers = data.map((m: any) => ({
+                id: m.id,
+                nombre: m.nombre,
+                apellido: m.apellido,
+                telefono: m.telefono,
+                fechaRegistro: m.fecha_registro,
+                bloqueado: m.bloqueado
+            }));
+            setMembers(mappedMembers);
+        }
     };
 
     const handleLogin = (e: React.FormEvent) => {
@@ -59,31 +76,53 @@ const MemberAdminPage = () => {
         }, 500);
     };
 
-    const toggleBlockMember = (memberId: string) => {
+    const toggleBlockMember = async (memberId: string) => {
+        const member = members.find(m => m.id === memberId);
+        if (!member) return;
+
+        const newStatus = !member.bloqueado;
+
+        const { error } = await supabase
+            .from('members')
+            .update({ bloqueado: newStatus })
+            .eq('id', memberId);
+
+        if (error) {
+            toast.error("Error al actualizar estado");
+            return;
+        }
+
         const updatedMembers = members.map(m => {
             if (m.id === memberId) {
-                return { ...m, bloqueado: !m.bloqueado };
+                return { ...m, bloqueado: newStatus };
             }
             return m;
         });
 
         setMembers(updatedMembers);
-        localStorage.setItem(MEMBERS_LIST_KEY, JSON.stringify(updatedMembers));
 
-        const member = updatedMembers.find(m => m.id === memberId);
-        if (member?.bloqueado) {
+        if (newStatus) {
             toast.success(`${member.nombre} ha sido bloqueado`);
         } else {
-            toast.success(`${member?.nombre} ha sido desbloqueado`);
+            toast.success(`${member.nombre} ha sido desbloqueado`);
         }
     };
 
-    const deleteMember = (memberId: string) => {
+    const deleteMember = async (memberId: string) => {
         const member = members.find(m => m.id === memberId);
         if (confirm(`¿Estás seguro de eliminar a ${member?.nombre} ${member?.apellido}?`)) {
+            const { error } = await supabase
+                .from('members')
+                .delete()
+                .eq('id', memberId);
+
+            if (error) {
+                toast.error("Error al eliminar miembro");
+                return;
+            }
+
             const updatedMembers = members.filter(m => m.id !== memberId);
             setMembers(updatedMembers);
-            localStorage.setItem(MEMBERS_LIST_KEY, JSON.stringify(updatedMembers));
             toast.success("Miembro eliminado");
         }
     };

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/
 import { User, Phone, UserPlus, Heart, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { supabase } from "../lib/supabase";
 
 // Storage keys
 export const MEMBER_KEY = 'ebenezer_member';
@@ -19,32 +20,26 @@ export interface Member {
     bloqueado: boolean;
 }
 
-// Helper functions for member management
 export const getMember = (): Member | null => {
     const data = localStorage.getItem(MEMBER_KEY);
     return data ? JSON.parse(data) : null;
 };
 
+// Deprecated: Local list
 export const getMembersList = (): Member[] => {
     const data = localStorage.getItem(MEMBERS_LIST_KEY);
     return data ? JSON.parse(data) : [];
 };
 
-export const saveMemberToList = (member: Member) => {
-    const list = getMembersList();
-    const existingIndex = list.findIndex(m => m.id === member.id);
-    if (existingIndex >= 0) {
-        list[existingIndex] = member;
-    } else {
-        list.push(member);
-    }
-    localStorage.setItem(MEMBERS_LIST_KEY, JSON.stringify(list));
-};
+export const checkMemberStatus = async (memberId: string): Promise<{ exists: boolean; blocked: boolean }> => {
+    const { data, error } = await supabase
+        .from('members')
+        .select('bloqueado')
+        .eq('id', memberId)
+        .single();
 
-export const isMemberBlocked = (memberId: string): boolean => {
-    const list = getMembersList();
-    const member = list.find(m => m.id === memberId);
-    return member?.bloqueado ?? false;
+    if (error || !data) return { exists: false, blocked: false };
+    return { exists: true, blocked: data.bloqueado };
 };
 
 interface MemberRegistrationProps {
@@ -94,25 +89,45 @@ const MemberRegistration = ({ onRegistered }: MemberRegistrationProps) => {
 
         setIsSubmitting(true);
 
-        // Simulate a brief delay for UX
-        await new Promise(resolve => setTimeout(resolve, 500));
+        try {
+            // Save to Supabase
+            const { data, error } = await supabase
+                .from('members')
+                .insert([
+                    {
+                        nombre: nombre.trim(),
+                        apellido: apellido.trim(),
+                        telefono: telefono.replace(/\D/g, ''),
+                    }
+                ])
+                .select()
+                .single();
 
-        const newMember: Member = {
-            id: crypto.randomUUID(),
-            nombre: nombre.trim(),
-            apellido: apellido.trim(),
-            telefono: telefono.replace(/\D/g, ''),
-            fechaRegistro: new Date().toISOString(),
-            bloqueado: false
-        };
+            if (error) throw error;
 
-        // Save to localStorage
-        localStorage.setItem(MEMBER_KEY, JSON.stringify(newMember));
-        saveMemberToList(newMember);
+            if (data) {
+                // Map back to camelCase for local app usage if needed
+                const newMember: Member = {
+                    id: data.id,
+                    nombre: data.nombre,
+                    apellido: data.apellido,
+                    telefono: data.telefono,
+                    fechaRegistro: data.fecha_registro,
+                    bloqueado: data.bloqueado
+                };
 
-        toast.success(`¡Bienvenido/a ${nombre}! Ya puedes acceder al Muro de Oración`);
-        setIsSubmitting(false);
-        onRegistered(newMember);
+                // Keep local storage for "Is Registered on this device" check
+                localStorage.setItem(MEMBER_KEY, JSON.stringify(newMember));
+
+                toast.success(`¡Bienvenido/a ${nombre}! Ya puedes acceder al Muro de Oración`);
+                onRegistered(newMember);
+            }
+        } catch (error) {
+            console.error('Error registering:', error);
+            toast.error("Hubo un error al registrarte. Por favor intenta de nuevo.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
