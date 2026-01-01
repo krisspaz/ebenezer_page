@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Volume2, VolumeX } from "lucide-react";
-import proclama2026 from "../assets/proclama2026.png";
+import proclama2026 from "../assets/4k-res-logo.jpg";
 
 interface TimeLeft {
   days: number;
