@@ -23,9 +23,9 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          src="/assets/images/2026-deleite.jpg"
+          src="/assets/images/2026-deleite.jpg?v=2026.1"
           alt="2026 Año del Deleite"
-          className="w-full h-full object-contain md:object-cover"
+          className="w-full h-full object-cover object-center"
         />
       </div>
 
