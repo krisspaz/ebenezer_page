@@ -24,6 +24,7 @@ const Navbar = () => {
     { name: t('nav.events', 'Eventos'), href: "/#eventos" },
     { name: t('nav.contact', 'Contacto'), href: "/#contacto" },
     { name: "Revista Rhema", href: "/rhema" },
+    { name: "Rhema TV", href: "/rhema-tv" },
     { name: "Congregación", href: "/admin/miembros" },
   ];
 
