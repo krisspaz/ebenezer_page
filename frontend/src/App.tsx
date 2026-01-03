@@ -13,6 +13,7 @@ import GoogleAnalytics from "./components/GoogleAnalytics";
 
 import { PlayerProvider } from "./context/PlayerContext";
 import GlobalPlayer from "./components/GlobalPlayer";
+import VersionCheck from "./components/VersionCheck";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
       <BrowserRouter>
         <GoogleAnalytics />
         <Analytics />
+        <VersionCheck />
         <GlobalPlayer />
         <Routes>
           <Route path="/" element={<Index />} />

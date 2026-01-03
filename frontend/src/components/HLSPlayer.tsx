@@ -40,14 +40,16 @@ const HLSPlayer: React.FC<HLSPlayerProps> = ({
                     lowLatencyMode: true,
                     backBufferLength: 90,
                     // Optimization settings
-                    startLevel: -1, // Auto start level (usually best, but can be forced to 0 for fastest start)
-                    maxBufferLength: 30, // Don't buffer too much ahead
-                    liveSyncDurationCount: 3, // Target 3 segments behind live edge
-                    liveMaxLatencyDurationCount: 10, // Max latency before seeking to live
+                    startLevel: 0, // Force lowest quality start for faster load
+                    maxBufferLength: 30,
+                    liveSyncDurationCount: 2, // Closer to live edge
+                    liveMaxLatencyDurationCount: 10,
                     maxMaxBufferLength: 60,
-                    capLevelToPlayerSize: true, // Don't load 4k if player is small
+                    enableSoftwareAES: true,
                     manifestLoadingTimeOut: 10000,
                     manifestLoadingMaxRetry: 3,
+                    levelLoadingTimeOut: 10000,
+                    fragLoadingTimeOut: 20000,
                 });
 
                 hls.loadSource(url);
