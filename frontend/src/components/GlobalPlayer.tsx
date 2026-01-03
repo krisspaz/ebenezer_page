@@ -10,7 +10,7 @@ const GlobalPlayer = () => {
     const location = useLocation();
 
     // Debugging: Log current state
-    // console.log("GlobalPlayer State:", { isPlaying, isFloating, config });
+    console.log("GlobalPlayer State:", { isPlaying, isFloating, config });
 
     if (!isPlaying || !config) return null;
 
@@ -71,7 +71,12 @@ const GlobalPlayer = () => {
                     playsinline={true}
                     config={{
                         file: {
-                            forceHLS: true,
+                            forceHLS: config.type === 'hls',
+                            hlsOptions: config.type === 'hls' ? {
+                                xhrSetup: function (xhr: any, url: string) {
+                                    xhr.withCredentials = false;
+                                },
+                            } : undefined
                         }
                     }}
                 />
