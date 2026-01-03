@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
+import HLSPlayer from "./HLSPlayer";
 import { usePlayer } from "@/context/PlayerContext";
 import { X, Minimize2, Maximize2 } from "lucide-react";
 import { Button } from "./ui/button";
@@ -22,6 +23,18 @@ const GlobalPlayer = () => {
     // Layout Styles
     const floatingStyles = "fixed bottom-4 right-4 w-80 aspect-video z-50 shadow-2xl rounded-xl overflow-hidden border border-slate-700 animate-in fade-in slide-in-from-bottom-5 bg-black";
     const fullPageStyles = "fixed inset-0 z-40 bg-black flex flex-col pt-[72px] items-center justify-center";
+
+    const commonProps = {
+        key: config.url, // Force remount on URL change
+        className: "react-player",
+        width: "100%",
+        height: "100%",
+        playing: true,
+        controls: true,
+        pip: true,
+        muted: false,
+        playsinline: true,
+    };
 
     return (
         <div className={isFloating ? floatingStyles : fullPageStyles}>
@@ -58,28 +71,39 @@ const GlobalPlayer = () => {
             </div>
 
             <div className={`relative w-full h-full ${!isFloating ? "max-w-6xl max-h-[80vh] aspect-video" : ""}`}>
-                <Player
-                    key={config.url} // Force remount on URL change
-                    url={config.url}
-                    className="react-player"
-                    width="100%"
-                    height="100%"
-                    playing={true}
-                    controls={true}
-                    pip={true}
-                    muted={false}
-                    playsinline={true}
-                    config={{
-                        file: {
-                            forceHLS: config.type === 'hls',
-                            hlsOptions: config.type === 'hls' ? {
-                                xhrSetup: function (xhr: any, url: string) {
-                                    xhr.withCredentials = false;
-                                },
-                            } : undefined
-                        }
-                    }}
-                />
+                {/* 
+                  SPLIT RENDER LOGIC:
+                  - YouTube: Native Iframe (Guaranteed to work)
+                  - HLS: Custom HLSPlayer (Guaranteed handling of hls.js)
+                  - Facebook: ReactPlayer (Standard)
+                */}
+
+                {config.type === 'youtube' && (
+                    <iframe
+                        width="100%"
+                        height="100%"
+                        src={`https://www.youtube.com/embed?listType=playlist&list=UUNHgmUxPdMXtOFYChK1ib1w&autoplay=1&playsinline=1`}
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className="w-full h-full border-0"
+                    />
+                )}
+
+                {config.type === 'hls' && (
+                    <HLSPlayer
+                        url={config.url}
+                        className="w-full h-full"
+                    />
+                )}
+
+                {config.type === 'facebook' && (
+                    <Player
+                        {...commonProps}
+                        url={config.url}
+                    // Default config for everything else
+                    />
+                )}
             </div>
         </div>
     );
