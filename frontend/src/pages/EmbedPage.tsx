@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -10,13 +10,20 @@ import { usePlayer } from "@/context/PlayerContext";
 const EmbedPage = () => {
     const { type } = useParams<{ type: string }>();
     const { playStream, setFloating, config: currentPlayerConfig } = usePlayer();
+    // Use a ref to prevent infinite loops or double calls if dependencies change oddly
+    const hasInitialized = useRef(false);
 
     useEffect(() => {
         const getStreamConfig = (type: string | undefined) => {
             switch (type) {
                 case "coban":
                     return {
-                        url: "https://www.youtube.com/embed/live_stream?channel=UCNHgmUxPdMXtOFYChK1ib1w",
+                        // Use the channel ID specific live endpoint.
+                        // If "channel=" doesn't work well for "always live", we might need "user=" if it was a user, 
+                        // but for a channel ID, this is the standard way.
+                        // Alternatively: https://www.youtube.com/embed?listType=user_uploads&list=IglesiaEbenezerCoban 
+                        // But for LIVE specifically: 
+                        url: "https://www.youtube.com/embed/live_stream?channel=UCNHgmUxPdMXtOFYChK1ib1w&autoplay=1",
                         type: "youtube" as const,
                         title: "Ebenezer Cobán - En Vivo",
                         description: "Transmisión oficial desde Cobán, Alta Verapaz.",
@@ -28,7 +35,7 @@ const EmbedPage = () => {
                         type: "facebook" as const,
                         title: "Ebenezer Chile",
                         description: "Transmisiones desde Ebenezer Chile.",
-                        isExternal: true, // Facebook groups handled externally for now
+                        isExternal: true,
                         externalLink: "https://www.facebook.com/groups/1089210062473843/videos/"
                     };
                 default:
@@ -40,12 +47,13 @@ const EmbedPage = () => {
 
         if (config) {
             if (!config.isExternal) {
-                // Only play internally if supported
-                // Avoid re-triggering if already playing the same URL
+                // Ensure we don't restart if already playing the same thing
                 if (currentPlayerConfig?.url !== config.url) {
                     playStream(config);
+                } else {
+                    // If already playing, just ensure we are NOT floating
+                    setFloating(false);
                 }
-                setFloating(false); // Force full view
             }
         }
 
@@ -55,10 +63,6 @@ const EmbedPage = () => {
         };
     }, [type, playStream, setFloating, currentPlayerConfig?.url]);
 
-    // If we are playing internally, the GlobalPlayer handles the video.
-    // We just render the page wrapper and metadata.
-
-    // Need to reproduce the selection logic for rendering the "Non-Player" content (like fb button or errors)
     const getRenderConfig = (type: string | undefined) => {
         switch (type) {
             case "coban":
@@ -132,9 +136,6 @@ const EmbedPage = () => {
                                     </a>
                                 </div>
                             ) : (
-                                // For internal streams (Coban), the GlobalPlayer renders on top (fixed inset).
-                                // Here we render a placeholder that sits "under" the player visually, 
-                                // or just the descriptions if the player floats.
                                 <div className="h-full flex flex-col items-center justify-center text-center py-20">
                                     <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">
                                         {renderConfig.title}
@@ -144,6 +145,10 @@ const EmbedPage = () => {
                                     </p>
                                     <p className="text-xs text-slate-400 mt-8 animate-pulse">
                                         Cargando reproductor...
+                                    </p>
+                                    {/* Small hint if player doesn't start */}
+                                    <p className="text-[10px] text-slate-500 mt-2 max-w-md">
+                                        Si ves la pantalla negra por mucho tiempo, es posible que no haya transmisión en vivo activa en YouTube en este momento.
                                     </p>
                                 </div>
                             )}

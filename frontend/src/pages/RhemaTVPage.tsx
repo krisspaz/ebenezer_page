@@ -1,10 +1,37 @@
+import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FloatingAudioPlayer from "../components/FloatingAudioPlayer";
 import SEO from "../components/SEO";
-import ReactPlayer from 'react-player';
+import { usePlayer } from "@/context/PlayerContext";
 
 const RhemaTVPage = () => {
+    const { playStream, setFloating, config: currentPlayerConfig } = usePlayer();
+
+    // Define the Rhema TV config constant
+    const rhemaConfig = {
+        url: 'https://5e85d90130e77.streamlock.net:443/6006/ngrp:6006_all/playlist.m3u8',
+        type: 'hls' as const,
+        title: 'Rhema TV',
+        description: 'Señal en vivo - Transmisión Directa',
+        isExternal: false
+    };
+
+    useEffect(() => {
+        // Only trigger play if not already playing this exact URL
+        if (currentPlayerConfig?.url !== rhemaConfig.url) {
+            playStream(rhemaConfig);
+        }
+
+        // Force full view when on this page
+        setFloating(false);
+
+        // When leaving, allow floating
+        return () => {
+            setFloating(true);
+        };
+    }, []); // Run once on mount
+
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#0b1120] text-slate-900 dark:text-white flex flex-col">
             <SEO
@@ -26,26 +53,15 @@ const RhemaTVPage = () => {
                         </p>
                     </div>
 
-                    {/* TV Player Container */}
-                    <div className="w-full bg-black shadow-2xl md:rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative aspect-video">
-                        <ReactPlayer
-                            url='https://5e85d90130e77.streamlock.net:443/6006/ngrp:6006_all/playlist.m3u8'
-                            className='react-player'
-                            width='100%'
-                            height='100%'
-                            controls={true}
-                            playing={true}
-                            muted={true} // Autoplay requires mute in most browsers
-                            playsinline={true} // For iOS
-                            pip={true}
-                            config={{
-                                file: {
-                                    attributes: {
-                                        poster: '/assets/images/4k-res-logo.jpg' // Fallback image while loading
-                                    }
-                                }
-                            }}
-                        />
+                    {/* TV Player Placeholder Area */}
+                    {/* The GlobalPlayer will overlay this area when isFloating is false. 
+                        We keep this container to reserve space in the layout and provide a background/loading state.
+                    */}
+                    <div className="w-full bg-black shadow-2xl md:rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative aspect-video flex items-center justify-center">
+                        <div className="text-center">
+                            <p className="text-slate-400 animate-pulse">Cargando señal...</p>
+                            <p className="text-xs text-slate-600 mt-2">Si el video no aparece, por favor recarga la página.</p>
+                        </div>
                     </div>
 
                     <div className="text-center text-sm text-slate-500 dark:text-slate-400">
@@ -54,6 +70,9 @@ const RhemaTVPage = () => {
                 </div>
             </main>
 
+            {/* We might want to disable the old persistent audio player if video is playing, 
+                but keeping it for now in case user wants radio. 
+                However, having two floating players could be weird. */}
             <FloatingAudioPlayer />
             <Footer />
         </div>
