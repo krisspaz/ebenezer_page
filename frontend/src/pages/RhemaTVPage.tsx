@@ -59,7 +59,7 @@ const RhemaTVPage = () => {
                         We keep this container to reserve space in the layout and provide a background/loading state.
                     */}
                     <div id="video-mount-point" className="w-full bg-black shadow-2xl md:rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative aspect-video flex items-center justify-center">
-                        <div className="text-center">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center z-0">
                             <p className="text-slate-400 animate-pulse">Cargando señal...</p>
                             <p className="text-xs text-slate-600 mt-2">Si el video no aparece, por favor recarga la página.</p>
                         </div>

@@ -60,7 +60,6 @@ export default defineConfig({
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),
-            "use-sync-external-store/shim": path.resolve(__dirname, "./src/shim.js"),
         },
     },
     server: {
@@ -70,16 +69,16 @@ export default defineConfig({
     },
     build: {
         rollupOptions: {
-            output: {
-                manualChunks(id) {
-                    if (id.includes('node_modules')) {
-                        if (id.includes('react-player') || id.includes('hls.js')) {
-                            return 'player-vendor';
-                        }
-                        return 'vendor';
-                    }
-                }
-            }
+            // output: {
+            //     manualChunks(id) {
+            //         if (id.includes('node_modules')) {
+            //             if (id.includes('react-player') || id.includes('hls.js')) {
+            //                 return 'player-vendor';
+            //             }
+            //             return 'vendor';
+            //         }
+            //     }
+            // }
         },
         chunkSizeWarningLimit: 2000,
     },
