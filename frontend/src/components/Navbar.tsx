@@ -19,12 +19,8 @@ const Navbar = () => {
 
   const navLinks = [
     { name: t('nav.home', 'Inicio'), href: "/#inicio" },
-    { name: "Sobre Nosotros", href: "/nosotros" },
-    { name: t('nav.ministries', 'Áreas'), href: "/#ministerios" },
     { name: t('nav.events', 'Eventos'), href: "/#eventos" },
-    { name: t('nav.contact', 'Contacto'), href: "/#contacto" },
     { name: "Revista Rhema", href: "/rhema" },
-    { name: "Rhema TV", href: "/rhema-tv" },
     { name: "Congregación", href: "/admin/miembros" },
   ];
 
@@ -47,7 +43,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link.name}
@@ -57,6 +53,36 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
+
+          {/* Transmisiones Dropdown */}
+          <div className="relative group">
+            <button className="text-sm font-bold text-slate-600 dark:text-blue-100 hover:text-slate-900 dark:hover:text-white transition-colors uppercase tracking-wider flex items-center gap-1">
+              Transmisiones
+            </button>
+            <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#0b1120] rounded-lg shadow-xl border border-slate-100 dark:border-slate-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+              <div className="py-2 flex flex-col">
+                <Link to="/rhema-tv" className="px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-200 transition-colors">
+                  Ebenezer Cobán
+                </Link>
+                <a
+                  href="https://www.facebook.com/groups/1089210062473843?locale=es_LA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-200 transition-colors"
+                >
+                  Ebenezer Chile
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="/#contacto"
+            className="text-sm font-bold text-slate-600 dark:text-blue-100 hover:text-slate-900 dark:hover:text-white transition-colors uppercase tracking-wider"
+          >
+            {t('nav.contact', 'Contacto')}
+          </a>
+
         </div>
 
         {/* Actions */}
@@ -88,6 +114,20 @@ const Navbar = () => {
                     {link.name}
                   </a>
                 ))}
+
+                <div className="flex flex-col gap-3 border-l-2 border-slate-300 dark:border-slate-700 pl-4 my-2">
+                  <span className="text-lg font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider text-xs">Transmisiones</span>
+                  <Link to="/rhema-tv" className="text-lg font-bold text-slate-600 dark:text-blue-100 hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Ebenezer Cobán
+                  </Link>
+                  <a href="https://www.facebook.com/groups/1089210062473843?locale=es_LA" target="_blank" rel="noopener noreferrer" className="text-lg font-bold text-slate-600 dark:text-blue-100 hover:text-slate-900 dark:hover:text-white transition-colors">
+                    Ebenezer Chile
+                  </a>
+                </div>
+
+                <a href="/#contacto" className="text-lg font-bold text-slate-600 dark:text-blue-100 hover:text-slate-900 dark:hover:text-white transition-colors">
+                  {t('nav.contact', 'Contacto')}
+                </a>
               </div>
             </SheetContent>
           </Sheet>
