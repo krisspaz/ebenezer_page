@@ -10,6 +10,8 @@ const RhemaTVPage = () => {
 
     // Define the Rhema TV config constant
     const rhemaConfig = {
+        // Streamlock URL for Rhema TV. 
+        // Note: If this URL is expired or geo-locked, it needs to be updated by the administration.
         url: 'https://5e85d90130e77.streamlock.net:443/6006/ngrp:6006_all/playlist.m3u8',
         type: 'hls' as const,
         title: 'Rhema TV',

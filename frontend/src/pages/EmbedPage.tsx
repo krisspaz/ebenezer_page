@@ -18,15 +18,13 @@ const EmbedPage = () => {
             switch (type) {
                 case "coban":
                     return {
-                        // Use the channel ID specific live endpoint.
-                        // If "channel=" doesn't work well for "always live", we might need "user=" if it was a user, 
-                        // but for a channel ID, this is the standard way.
-                        // Alternatively: https://www.youtube.com/embed?listType=user_uploads&list=IglesiaEbenezerCoban 
-                        // But for LIVE specifically: 
-                        url: "https://www.youtube.com/embed/live_stream?channel=UCNHgmUxPdMXtOFYChK1ib1w&autoplay=1",
+                        // Use the "Uploads" playlist for the channel. 
+                        // Channel ID: UCNHgmUxPdMXtOFYChK1ib1w -> Uploads ID: UUNHgmUxPdMXtOFYChK1ib1w
+                        // This plays the latest video (likely the last service) and should also pick up live streams if they are public.
+                        url: "https://www.youtube.com/embed?listType=playlist&list=UUNHgmUxPdMXtOFYChK1ib1w",
                         type: "youtube" as const,
-                        title: "Ebenezer Cobán - En Vivo",
-                        description: "Transmisión oficial desde Cobán, Alta Verapaz.",
+                        title: "Ebenezer Cobán", // Removed "En Vivo" to be more accurate since it might be a VOD
+                        description: "Servicios y transmisiones de Ebenezer Cobán.",
                         isExternal: false
                     };
                 case "chile":
@@ -67,8 +65,8 @@ const EmbedPage = () => {
         switch (type) {
             case "coban":
                 return {
-                    title: "Ebenezer Cobán - En Vivo",
-                    description: "Transmisión oficial desde Cobán, Alta Verapaz.",
+                    title: "Ebenezer Cobán",
+                    description: "Servicios y transmisiones de Ebenezer Cobán.",
                     isFacebook: false
                 };
             case "chile":
