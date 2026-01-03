@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FloatingAudioPlayer from "../components/FloatingAudioPlayer";
 import SEO from "../components/SEO";
+import ReactPlayer from 'react-player';
 
 const RhemaTVPage = () => {
     return (
@@ -21,22 +22,30 @@ const RhemaTVPage = () => {
                             Rhema <span className="text-[#F4C95D]">TV</span>
                         </h1>
                         <p className="text-base md:text-lg text-slate-600 dark:text-slate-300">
-                            Señal en vivo desde Ciudad de Guatemala
+                            Señal en vivo - Transmisión Directa
                         </p>
                     </div>
 
                     {/* TV Player Container */}
-                    <div className="w-full bg-black shadow-2xl md:rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative">
-                        {/* We use a taller aspect ratio to accommodate the external site headers if they exist */}
-                        <div className="w-full h-[85vh] md:h-[800px]">
-                            <iframe
-                                src="https://www.rtv.live/"
-                                className="w-full h-full border-0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                title="Rhema TV En Vivo"
-                            />
-                        </div>
+                    <div className="w-full bg-black shadow-2xl md:rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative aspect-video">
+                        <ReactPlayer
+                            url='https://5e85d90130e77.streamlock.net:443/6006/ngrp:6006_all/playlist.m3u8'
+                            className='react-player'
+                            width='100%'
+                            height='100%'
+                            controls={true}
+                            playing={true}
+                            start={1} // Start play immediately
+                            config={{
+                                file: {
+                                    forceHLS: true,
+                                }
+                            }}
+                        />
+                    </div>
+
+                    <div className="text-center text-sm text-slate-500 dark:text-slate-400">
+                        <p>Si la transmisión se detiene, por favor recarga la página o presiona play nuevamente.</p>
                     </div>
                 </div>
             </main>
