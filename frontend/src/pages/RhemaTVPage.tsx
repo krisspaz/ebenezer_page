@@ -35,10 +35,14 @@ const RhemaTVPage = () => {
                             height='100%'
                             controls={true}
                             playing={true}
-                            start={1} // Start play immediately
+                            muted={true} // Autoplay requires mute in most browsers
+                            playsinline={true} // For iOS
+                            pip={true}
                             config={{
                                 file: {
-                                    forceHLS: true,
+                                    attributes: {
+                                        poster: '/assets/images/4k-res-logo.jpg' // Fallback image while loading
+                                    }
                                 }
                             }}
                         />
