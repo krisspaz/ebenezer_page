@@ -1,43 +1,86 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { usePlayer } from "@/context/PlayerContext";
 
 const EmbedPage = () => {
     const { type } = useParams<{ type: string }>();
+    const { playStream, setFloating, config: currentPlayerConfig } = usePlayer();
 
-    const getStreamConfig = (type: string | undefined) => {
+    useEffect(() => {
+        const getStreamConfig = (type: string | undefined) => {
+            switch (type) {
+                case "coban":
+                    return {
+                        url: "https://www.youtube.com/embed/live_stream?channel=UCNHgmUxPdMXtOFYChK1ib1w",
+                        type: "youtube" as const,
+                        title: "Ebenezer Cobán - En Vivo",
+                        description: "Transmisión oficial desde Cobán, Alta Verapaz.",
+                        isExternal: false
+                    };
+                case "chile":
+                    return {
+                        url: "https://www.facebook.com/groups/1089210062473843/videos/",
+                        type: "facebook" as const,
+                        title: "Ebenezer Chile",
+                        description: "Transmisiones desde Ebenezer Chile.",
+                        isExternal: true, // Facebook groups handled externally for now
+                        externalLink: "https://www.facebook.com/groups/1089210062473843/videos/"
+                    };
+                default:
+                    return null;
+            }
+        };
+
+        const config = getStreamConfig(type);
+
+        if (config) {
+            if (!config.isExternal) {
+                // Only play internally if supported
+                // Avoid re-triggering if already playing the same URL
+                if (currentPlayerConfig?.url !== config.url) {
+                    playStream(config);
+                }
+                setFloating(false); // Force full view
+            }
+        }
+
+        // Cleanup: When leaving this page, enable floating mode
+        return () => {
+            setFloating(true);
+        };
+    }, [type, playStream, setFloating, currentPlayerConfig?.url]);
+
+    // If we are playing internally, the GlobalPlayer handles the video.
+    // We just render the page wrapper and metadata.
+
+    // Need to reproduce the selection logic for rendering the "Non-Player" content (like fb button or errors)
+    const getRenderConfig = (type: string | undefined) => {
         switch (type) {
             case "coban":
                 return {
                     title: "Ebenezer Cobán - En Vivo",
                     description: "Transmisión oficial desde Cobán, Alta Verapaz.",
-                    // YouTube Live Stream by Channel ID
-                    embedUrl: "https://www.youtube.com/embed/live_stream?channel=UCNHgmUxPdMXtOFYChK1ib1w&autoplay=1",
                     isFacebook: false
                 };
             case "chile":
                 return {
                     title: "Ebenezer Chile",
                     description: "Transmisiones desde Ebenezer Chile.",
-                    // Facebook Groups don't support "latest live" embeds easily. 
-                    // We'll provide a direct clean interface or a best-effort iframe if possible, 
-                    // but usually requires a specific video ID. 
-                    // For now, we link to the videos tab as a fallback or try to embed the page if allowed.
-                    embedUrl: "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fgroups%2F1089210062473843&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId",
                     isFacebook: true,
                     externalLink: "https://www.facebook.com/groups/1089210062473843/videos/"
                 };
-            default:
-                return null;
+            default: return null;
         }
-    };
+    }
 
-    const config = getStreamConfig(type);
+    const renderConfig = getRenderConfig(type);
 
-    if (!config) {
+    if (!renderConfig) {
         return (
             <div className="min-h-screen bg-slate-50 dark:bg-[#0b1120] flex flex-col">
                 <Navbar />
@@ -69,47 +112,42 @@ const EmbedPage = () => {
                         </Link>
                     </div>
 
-                    <div className="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-700">
-                        <div className="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700">
-                            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">
-                                {config.title}
-                            </h1>
-                            <p className="text-slate-600 dark:text-slate-400">
-                                {config.description}
-                            </p>
-                        </div>
-
-                        <div className="aspect-video w-full bg-black relative">
-                            {config.isFacebook ? (
-                                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-slate-900">
-                                    <p className="text-white mb-6 max-w-lg">
-                                        Las transmisiones de Facebook Live de grupos privados o cerrados no permiten incrustación automática directa por políticas de privacidad de Facebook.
+                    <div className="bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-700 min-h-[400px] flex flex-col">
+                        <div className="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700 flex-1">
+                            {renderConfig.isFacebook ? (
+                                <div className="h-full flex flex-col items-center justify-center text-center space-y-6 py-10">
+                                    <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
+                                        {renderConfig.title}
+                                    </h1>
+                                    <p className="text-slate-600 dark:text-slate-400 max-w-lg">
+                                        Las transmisiones de Facebook Live de grupos privados deben verse directamente en Facebook.
                                     </p>
                                     <a
-                                        href={config.externalLink}
+                                        href={renderConfig.externalLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center rounded-lg bg-[#1877F2] px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#166fe5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1877F2] transition-all"
+                                        className="inline-flex items-center justify-center rounded-lg bg-[#1877F2] px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#166fe5] transition-all"
                                     >
-                                        Ver Transmisión en Facebook
+                                        Ver en Facebook
                                     </a>
                                 </div>
                             ) : (
-                                <iframe
-                                    src={config.embedUrl}
-                                    title={config.title}
-                                    className="w-full h-full border-0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowFullScreen
-                                />
+                                // For internal streams (Coban), the GlobalPlayer renders on top (fixed inset).
+                                // Here we render a placeholder that sits "under" the player visually, 
+                                // or just the descriptions if the player floats.
+                                <div className="h-full flex flex-col items-center justify-center text-center py-20">
+                                    <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">
+                                        {renderConfig.title}
+                                    </h1>
+                                    <p className="text-slate-600 dark:text-slate-400">
+                                        {renderConfig.description}
+                                    </p>
+                                    <p className="text-xs text-slate-400 mt-8 animate-pulse">
+                                        Cargando reproductor...
+                                    </p>
+                                </div>
                             )}
                         </div>
-
-                        {!config.isFacebook && (
-                            <div className="bg-slate-50 dark:bg-[#0f172a] p-4 text-center text-sm text-slate-500 dark:text-slate-400">
-                                Si la transmisión no inicia automáticamente, por favor presiona play.
-                            </div>
-                        )}
                     </div>
                 </div>
             </main>
