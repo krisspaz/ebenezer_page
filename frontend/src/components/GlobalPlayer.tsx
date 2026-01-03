@@ -1,13 +1,16 @@
-import { useRef, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
 import { usePlayer } from "@/context/PlayerContext";
-import { X, Minimize2, Maximize2, ExternalLink } from "lucide-react";
+import { X, Minimize2, Maximize2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link, useLocation } from "react-router-dom";
 
 const GlobalPlayer = () => {
     const { isPlaying, isFloating, config, closePlayer, setFloating } = usePlayer();
     const location = useLocation();
+
+    // Debugging: Log current state
+    // console.log("GlobalPlayer State:", { isPlaying, isFloating, config });
 
     if (!isPlaying || !config) return null;
 
@@ -37,7 +40,7 @@ const GlobalPlayer = () => {
                 )}
 
                 {isFloating && (
-                    <Link to="/transmision/coban" onClick={() => setFloating(false)}>
+                    <Link to={config.type === 'youtube' ? "/transmision/coban" : "/rhema-tv"} onClick={() => setFloating(false)}>
                         <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 w-6 h-6">
                             <Maximize2 className="w-4 h-4" />
                         </Button>
@@ -56,6 +59,7 @@ const GlobalPlayer = () => {
 
             <div className={`relative w-full h-full ${!isFloating ? "max-w-6xl max-h-[80vh] aspect-video" : ""}`}>
                 <Player
+                    key={config.url} // Force remount on URL change
                     url={config.url}
                     className="react-player"
                     width="100%"
@@ -65,6 +69,11 @@ const GlobalPlayer = () => {
                     pip={true}
                     muted={false}
                     playsinline={true}
+                    config={{
+                        file: {
+                            forceHLS: true,
+                        }
+                    }}
                 />
             </div>
         </div>
