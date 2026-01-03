@@ -64,7 +64,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          <Link to="/rhema" className={linkStyles}>Revista</Link>
+          <Link to="/rhema" className={linkStyles}>Revista Rhema</Link>
           <Link to="/admin/miembros" className={linkStyles}>Congregación</Link>
           <a href="/#contacto" className={linkStyles}>Contacto</a>
         </div>

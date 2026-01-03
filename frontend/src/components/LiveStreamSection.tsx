@@ -4,11 +4,18 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useTranslation } from "react-i18next";
 
+interface VideoItem {
+    title: string;
+    link: string;
+    pubDate: string;
+    thumbnail: string;
+}
+
 const LiveStreamSection = () => {
     const { t } = useTranslation();
     const [isLive, setIsLive] = useState(false);
     const [nextService, setNextService] = useState("");
-    const [recentVideos, setRecentVideos] = useState<any[]>([]);
+    const [recentVideos, setRecentVideos] = useState<VideoItem[]>([]);
     const [loadingVideos, setLoadingVideos] = useState(true);
 
     // Live Status Logic

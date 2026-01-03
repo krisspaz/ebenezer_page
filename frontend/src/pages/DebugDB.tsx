@@ -5,7 +5,9 @@ import Navbar from "@/components/Navbar";
 
 const DebugDB = () => {
     const [status, setStatus] = useState<string>("Idle");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [error, setError] = useState<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [config, setConfig] = useState<any>(null);
 
     useEffect(() => {
@@ -34,7 +36,7 @@ const DebugDB = () => {
             }
 
             setStatus(`Success! Connection working. Found ${count} members.`);
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error("DB Check Error:", err);
             setStatus("Error connecting to DB");
             setError(err);

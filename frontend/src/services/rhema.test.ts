@@ -18,6 +18,7 @@ describe('Rhema Service', () => {
             }
         ];
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (global.fetch as any).mockResolvedValue({
             ok: true,
             json: async () => mockData,
@@ -29,6 +30,7 @@ describe('Rhema Service', () => {
     });
 
     it('should return fallback data on API failure', async () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (global.fetch as any).mockRejectedValue(new Error("Network error"));
 
         const result = await fetchRhemaMagazines();

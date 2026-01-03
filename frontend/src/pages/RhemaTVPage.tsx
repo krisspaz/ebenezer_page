@@ -5,19 +5,18 @@ import FloatingAudioPlayer from "../components/FloatingAudioPlayer";
 import SEO from "../components/SEO";
 import { usePlayer } from "@/context/PlayerContext";
 
+const rhemaConfig = {
+    // Updated URL or fallback logic needed. 
+    // For now, keeping the streamlock URL but acknowledging it might fail.
+    url: 'https://5e85d90130e77.streamlock.net:443/6006/ngrp:6006_all/playlist.m3u8',
+    type: 'hls' as const,
+    title: 'Rhema TV',
+    description: 'Señal en vivo - Transmisión Directa',
+    isExternal: false
+};
+
 const RhemaTVPage = () => {
     const { playStream, setFloating, config: currentPlayerConfig } = usePlayer();
-
-    // Define the Rhema TV config constant
-    const rhemaConfig = {
-        // Streamlock URL for Rhema TV. 
-        // Note: If this URL is expired or geo-locked, it needs to be updated by the administration.
-        url: 'https://5e85d90130e77.streamlock.net:443/6006/ngrp:6006_all/playlist.m3u8',
-        type: 'hls' as const,
-        title: 'Rhema TV',
-        description: 'Señal en vivo - Transmisión Directa',
-        isExternal: false
-    };
 
     useEffect(() => {
         // Only trigger play if not already playing this exact URL
@@ -32,7 +31,7 @@ const RhemaTVPage = () => {
         return () => {
             setFloating(true);
         };
-    }, []); // Run once on mount
+    }, [playStream, setFloating, currentPlayerConfig?.url]); // Run whenever relevant state changes
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#0b1120] text-slate-900 dark:text-white flex flex-col">
@@ -59,7 +58,7 @@ const RhemaTVPage = () => {
                     {/* The GlobalPlayer will overlay this area when isFloating is false. 
                         We keep this container to reserve space in the layout and provide a background/loading state.
                     */}
-                    <div className="w-full bg-black shadow-2xl md:rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative aspect-video flex items-center justify-center">
+                    <div id="video-mount-point" className="w-full bg-black shadow-2xl md:rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative aspect-video flex items-center justify-center">
                         <div className="text-center">
                             <p className="text-slate-400 animate-pulse">Cargando señal...</p>
                             <p className="text-xs text-slate-600 mt-2">Si el video no aparece, por favor recarga la página.</p>

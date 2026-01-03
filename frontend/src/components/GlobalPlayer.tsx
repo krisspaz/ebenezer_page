@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
+import { createPortal } from "react-dom";
 import HLSPlayer from "./HLSPlayer";
 import { usePlayer } from "@/context/PlayerContext";
 import { X, Minimize2, Maximize2 } from "lucide-react";
@@ -10,22 +11,37 @@ const GlobalPlayer = () => {
     const { isPlaying, isFloating, config, closePlayer, setFloating } = usePlayer();
     const location = useLocation();
 
-    // Debugging: Log current state
-    console.log("GlobalPlayer State:", { isPlaying, isFloating, config });
+    // State to track if the mount point exists in the DOM
+    const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
+
+    useEffect(() => {
+        // Check for the mount point whenever location or floating state changes
+        const checkMountPoint = () => {
+            const node = document.getElementById("video-mount-point");
+            setMountNode(node);
+        };
+
+        // Check immediately
+        checkMountPoint();
+
+        // Also set up a mutation observer just in case the page loads slightly slower than this component updates
+        const observer = new MutationObserver(checkMountPoint);
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        return () => observer.disconnect();
+    }, [location.pathname, isFloating]);
+
+    // Debugging
+    console.log("GlobalPlayer State:", { isPlaying, isFloating, mountNode: !!mountNode });
 
     if (!isPlaying || !config) return null;
+    if (config.isExternal) return null;
 
-    if (config.isExternal) return null; // External streams handled by links
-
-    // Force cast ReactPlayer to any to avoid TS issues with library types
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Player = ReactPlayer as any;
 
-    // Layout Styles
-    const floatingStyles = "fixed bottom-4 right-4 w-80 aspect-video z-50 shadow-2xl rounded-xl overflow-hidden border border-slate-700 animate-in fade-in slide-in-from-bottom-5 bg-black";
-    const fullPageStyles = "fixed inset-0 z-40 bg-black flex flex-col pt-[72px] items-center justify-center";
-
     const commonProps = {
-        key: config.url, // Force remount on URL change
+        key: config.url,
         className: "react-player",
         width: "100%",
         height: "100%",
@@ -36,25 +52,38 @@ const GlobalPlayer = () => {
         playsinline: true,
     };
 
-    return (
-        <div className={isFloating ? floatingStyles : fullPageStyles}>
+    // Determine render target and styles
+    // If not floating AND we have a mount node, we play INLINE.
+    // Otherwise, we play FLOATING (fixed z-index).
+    const isInline = !isFloating && mountNode;
+    const targetNode = isInline ? mountNode : document.body;
 
+    // Styles
+    // Inline: Fill the container relative
+    // Floating: Fixed bottom right
+    const containerClasses = isInline
+        ? "w-full h-full relative"
+        : "fixed bottom-4 right-4 w-80 aspect-video z-50 shadow-2xl rounded-xl overflow-hidden border border-slate-700 animate-in fade-in slide-in-from-bottom-5 bg-black";
+
+    const content = (
+        <div className={containerClasses}>
             {/* Controls Bar */}
-            <div className={`absolute top-0 left-0 right-0 p-2 z-10 flex justify-end gap-2 bg-gradient-to-b from-black/60 to-transparent ${!isFloating ? "px-8 pt-4" : ""}`}>
-                {!isFloating && (
+            <div className={`absolute top-0 left-0 right-0 p-2 z-10 flex justify-end gap-2 bg-gradient-to-b from-black/60 to-transparent ${isInline ? "opacity-0 hover:opacity-100 transition-opacity" : ""}`}>
+                {isInline && (
                     <Button
                         variant="ghost"
                         size="icon"
                         className="text-white hover:bg-white/20 mr-auto"
                         onClick={() => setFloating(true)}
+                        title="Minimizar reproductor"
                     >
                         <Minimize2 className="w-5 h-5" />
                     </Button>
                 )}
 
-                {isFloating && (
+                {!isInline && (
                     <Link to={config.type === 'youtube' ? "/transmision/coban" : "/rhema-tv"} onClick={() => setFloating(false)}>
-                        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 w-6 h-6">
+                        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 w-6 h-6" title="Expandir">
                             <Maximize2 className="w-4 h-4" />
                         </Button>
                     </Link>
@@ -63,21 +92,15 @@ const GlobalPlayer = () => {
                 <Button
                     variant="ghost"
                     size="icon"
-                    className={`text-white hover:bg-white/20 hover:text-red-400 ${isFloating ? "w-6 h-6" : ""}`}
+                    className={`text-white hover:bg-white/20 hover:text-red-400 ${!isInline ? "w-6 h-6" : ""}`}
                     onClick={closePlayer}
+                    title="Cerrar"
                 >
-                    <X className={isFloating ? "w-4 h-4" : "w-6 h-6"} />
+                    <X className={!isInline ? "w-4 h-4" : "w-6 h-6"} />
                 </Button>
             </div>
 
-            <div className={`relative w-full h-full ${!isFloating ? "max-w-6xl max-h-[80vh] aspect-video" : ""}`}>
-                {/* 
-                  SPLIT RENDER LOGIC:
-                  - YouTube: Native Iframe (Guaranteed to work)
-                  - HLS: Custom HLSPlayer (Guaranteed handling of hls.js)
-                  - Facebook: ReactPlayer (Standard)
-                */}
-
+            <div className={`relative w-full h-full ${!isInline ? "aspect-video" : ""}`}>
                 {config.type === 'youtube' && (
                     <iframe
                         width="100%"
@@ -101,12 +124,15 @@ const GlobalPlayer = () => {
                     <Player
                         {...commonProps}
                         url={config.url}
-                    // Default config for everything else
                     />
                 )}
             </div>
         </div>
     );
+
+    // Use Portal to render into the correct node
+    if (!targetNode) return null;
+    return createPortal(content, targetNode);
 };
 
 export default GlobalPlayer;

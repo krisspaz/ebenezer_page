@@ -44,6 +44,7 @@ const MemberAdminPage = () => {
 
         if (data) {
             // Map keys
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const mappedMembers = data.map((m: any) => ({
                 id: m.id,
                 nombre: m.nombre,

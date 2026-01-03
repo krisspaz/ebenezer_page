@@ -124,7 +124,7 @@ const MemberRegistration = ({ onRegistered }: MemberRegistrationProps) => {
             }
         } catch (error) {
             console.error('Error registering:', error);
-            toast.error(`Error: ${(error as any)?.message || "No se pudo registrar"}`);
+            toast.error(`Error: ${(error as Error)?.message || "No se pudo registrar"}`);
         } finally {
             setIsSubmitting(false);
         }

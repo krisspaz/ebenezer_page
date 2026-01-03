@@ -38,7 +38,16 @@ const HLSPlayer: React.FC<HLSPlayerProps> = ({
                     debug: false,
                     enableWorker: true,
                     lowLatencyMode: true,
-                    backBufferLength: 90
+                    backBufferLength: 90,
+                    // Optimization settings
+                    startLevel: -1, // Auto start level (usually best, but can be forced to 0 for fastest start)
+                    maxBufferLength: 30, // Don't buffer too much ahead
+                    liveSyncDurationCount: 3, // Target 3 segments behind live edge
+                    liveMaxLatencyDurationCount: 10, // Max latency before seeking to live
+                    maxMaxBufferLength: 60,
+                    capLevelToPlayerSize: true, // Don't load 4k if player is small
+                    manifestLoadingTimeOut: 10000,
+                    manifestLoadingMaxRetry: 3,
                 });
 
                 hls.loadSource(url);
@@ -47,7 +56,7 @@ const HLSPlayer: React.FC<HLSPlayerProps> = ({
                 hls.on(Hls.Events.MEDIA_ATTACHED, () => {
                     console.log('HLSPlayer: Media attached');
                     if (autoPlay) {
-                        video.play().catch(e => console.error('HLSPlayer: Autoplay failed', e));
+                        video.play().catch((e: unknown) => console.error('HLSPlayer: Autoplay failed', e));
                     }
                 });
 
@@ -77,7 +86,7 @@ const HLSPlayer: React.FC<HLSPlayerProps> = ({
                 video.src = url;
                 video.addEventListener('loadedmetadata', () => {
                     if (autoPlay) {
-                        video.play().catch(e => console.error('HLSPlayer: AutoPlay Native failed', e));
+                        video.play().catch((e: unknown) => console.error('HLSPlayer: AutoPlay Native failed', e));
                     }
                 });
                 video.addEventListener('error', (e) => {

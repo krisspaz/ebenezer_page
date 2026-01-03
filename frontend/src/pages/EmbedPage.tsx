@@ -112,7 +112,7 @@ const EmbedPage = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Main Content Area */}
                     <div className="lg:col-span-2 space-y-6">
-                        <div className="bg-black aspect-video rounded-xl overflow-hidden shadow-2xl relative group">
+                        <div id="video-mount-point" className="bg-black aspect-video rounded-xl overflow-hidden shadow-2xl relative group">
                             {/* Placeholder while GlobalPlayer loads on top */}
                             <div className="absolute inset-0 flex items-center justify-center text-white/50 bg-slate-900 border border-slate-800">
                                 <div className="text-center">

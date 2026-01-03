@@ -5,7 +5,9 @@ const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // Replace with actual ID when availab
 
 declare global {
     interface Window {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         gtag: (command: string, targetId: string, config?: Record<string, any>) => void;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dataLayer: any[];
     }
 }
@@ -22,6 +24,7 @@ const GoogleAnalytics = () => {
 
         // Initialize dataLayer
         window.dataLayer = window.dataLayer || [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         function gtag(...args: any[]) {
             window.dataLayer.push(args);
         }
