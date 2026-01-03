@@ -26,18 +26,18 @@ const EventsSection = () => {
     {
       id: 1,
       title: "Servicio de Oración",
-      date: "Lunes",
-      time: "8:00 AM - 10:00 AM",
+      date: "Miércoles", // Corrected to Miércoles (Devocional)
+      time: "7:00 PM - 9:00 PM",
       location: "Templo Principal",
       image: "/assets/images/oracion_service.jpg",
       category: t('events.categories.prayer'),
       color: "bg-teal-500",
-      description: "Iniciamos la semana buscando el rostro del Señor. Un tiempo especial de intercesión por las familias, la iglesia y nuestra nación. Únete a nosotros para clamar juntos y fortalecer nuestro espíritu en oración."
+      description: "Un tiempo especial de intercesión por las familias, la iglesia y nuestra nación."
     },
     {
       id: 2,
       title: "Servicio de Discipulado",
-      date: "Martes",
+      date: "Martes", // Confirmed Tuesday (Doctrina)
       time: "7:00 PM - 9:00 PM",
       location: "Templo Principal",
       image: "/assets/images/discipulado_service.jpg",
@@ -45,12 +45,10 @@ const EventsSection = () => {
       color: "bg-[#F4C95D]",
       description: "Profundizamos en el estudio de la Biblia en base a nuestra cobertura. Este es un tiempo para aprender doctrina y crecer en el conocimiento de Cristo bajo la enseñanza pastoral."
     },
-    // ... other events (keeping existing data logic if I were not replacing the whole function body or similar)
-    // Wait, I am replacing the whole function body essentially. I need to include all events.
     {
       id: 3,
       title: "Servicio de Familia",
-      date: "Viernes",
+      date: "Viernes", // Confirmed Friday
       time: "7:00 PM - 9:00 PM",
       location: "Templo Principal",
       image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop",
