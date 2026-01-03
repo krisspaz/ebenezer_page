@@ -28,7 +28,7 @@ export default defineConfig({
                 ],
             },
             workbox: {
-                maximumFileSizeToCacheInBytes: 5000000,
+                maximumFileSizeToCacheInBytes: 10000000, // 10MB
                 globPatterns: ["**/*.{js,css,html,ico,png,svg,webp}"],
                 runtimeCaching: [
                     {
@@ -73,11 +73,14 @@ export default defineConfig({
             output: {
                 manualChunks(id) {
                     if (id.includes('node_modules')) {
+                        if (id.includes('react-player') || id.includes('hls.js')) {
+                            return 'player-vendor';
+                        }
                         return 'vendor';
                     }
                 }
             }
         },
-        chunkSizeWarningLimit: 1000,
+        chunkSizeWarningLimit: 2000,
     },
 });
