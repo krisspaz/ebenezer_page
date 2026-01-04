@@ -27,7 +27,7 @@ const EventsSection = () => {
       id: 1,
       title: "Servicio de Oración",
       date: "Lunes", // Fixed: User confirmed Oración is Monday
-      time: "8:00 AM - 10:00 AM",
+      time: "8:00 AM - 9:30 AM",
       location: "Templo Principal",
       image: "/assets/images/oracion_service.jpg",
       category: t('events.categories.prayer'),
