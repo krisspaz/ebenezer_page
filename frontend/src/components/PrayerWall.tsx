@@ -136,9 +136,17 @@ const PrayerWall = () => {
         const checkMember = async () => {
             const member = getMember();
             if (member) {
-                const { exists, blocked } = await checkMemberStatus(member.id);
+                const { exists, blocked, error } = await checkMemberStatus(member.id);
+
+                if (error) {
+                    // Network error or offline - keep session active
+                    console.warn("Could not verify member status (likely offline). Keeping session.");
+                    if (!currentMember) setCurrentMember(member);
+                    return;
+                }
 
                 if (!exists) {
+                    console.log("Member not found in DB. Logging out.");
                     localStorage.removeItem(MEMBER_KEY);
                     setCurrentMember(null);
                     return;

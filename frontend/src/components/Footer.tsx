@@ -35,13 +35,21 @@ const Footer = () => {
               Enlaces Rápidos
             </h3>
             <ul className="space-y-4">
-              {['Sobre Nosotros', 'Eventos', 'Transmisión en Vivo', 'Contacto'].map((item) => (
-                <li key={item}>
-                  <a href={item === 'Sobre Nosotros' ? '/nosotros' : '#'} className="text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white hover:translate-x-2 transition-all duration-300 inline-block">
-                    {item}
-                  </a>
-                </li>
-              ))}
+              {['Sobre Nosotros', 'Eventos', 'Transmisión en Vivo', 'Contacto'].map((item) => {
+                let href = "#";
+                if (item === 'Sobre Nosotros') href = '/nosotros';
+                if (item === 'Eventos') href = '/#eventos';
+                if (item === 'Transmisión en Vivo') href = '/#transmision';
+                if (item === 'Contacto') href = '/#contacto';
+
+                return (
+                  <li key={item}>
+                    <a href={href} className="text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white hover:translate-x-2 transition-all duration-300 inline-block">
+                      {item}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

@@ -9,7 +9,7 @@ interface SEOProps {
 
 const SEO = ({ title, description, image, url }: SEOProps) => {
     const siteUrl = 'https://ebenezercoban.org.gt';
-    const defaultImage = '/og-image.jpg'; // We should ensure this exists or use logo
+    const defaultImage = '/social.jpg';
 
     const fullUrl = url ? `${siteUrl}${url}` : siteUrl;
     const fullImage = image ? (image.startsWith('http') ? image : `${siteUrl}${image}`) : `${siteUrl}${defaultImage}`;

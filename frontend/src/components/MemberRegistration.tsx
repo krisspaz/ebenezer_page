@@ -31,15 +31,31 @@ export const getMembersList = (): Member[] => {
     return data ? JSON.parse(data) : [];
 };
 
-export const checkMemberStatus = async (memberId: string): Promise<{ exists: boolean; blocked: boolean }> => {
-    const { data, error } = await supabase
-        .from('members')
-        .select('bloqueado')
-        .eq('id', memberId)
-        .single();
+export const checkMemberStatus = async (memberId: string): Promise<{ exists: boolean; blocked: boolean; error?: unknown }> => {
+    try {
+        const { data, error } = await supabase
+            .from('members')
+            .select('bloqueado')
+            .eq('id', memberId)
+            .maybeSingle();
 
-    if (error || !data) return { exists: false, blocked: false };
-    return { exists: true, blocked: data.bloqueado };
+        if (error) {
+            console.error("Error checking member status:", error);
+            // If network error, return error but assume exists to avoid logout
+            return { exists: true, blocked: false, error };
+        }
+
+        if (!data) {
+            // Explicitly not found
+            return { exists: false, blocked: false };
+        }
+
+        return { exists: true, blocked: data.bloqueado };
+    } catch (err) {
+        console.error("Unexpected error verifying member:", err);
+        // On crash/network fail, stay logged in
+        return { exists: true, blocked: false, error: err };
+    }
 };
 
 interface MemberRegistrationProps {
@@ -90,36 +106,55 @@ const MemberRegistration = ({ onRegistered }: MemberRegistrationProps) => {
         setIsSubmitting(true);
 
         try {
-            // Save to Supabase
-            const { data, error } = await supabase
+            const cleanPhone = telefono.replace(/\D/g, '');
+
+            // 1. Check if user already exists
+            const { data: existingUser } = await supabase
                 .from('members')
-                .insert([
-                    {
-                        nombre: nombre.trim(),
-                        apellido: apellido.trim(),
-                        telefono: telefono.replace(/\D/g, ''),
-                    }
-                ])
-                .select()
-                .single();
+                .select('*')
+                .eq('telefono', cleanPhone)
+                .maybeSingle();
 
-            if (error) throw error;
+            let memberData = existingUser;
 
-            if (data) {
+            // 2. If not exists, create new
+            if (!existingUser) {
+                const { data, error } = await supabase
+                    .from('members')
+                    .insert([
+                        {
+                            nombre: nombre.trim(),
+                            apellido: apellido.trim(),
+                            telefono: cleanPhone,
+                        }
+                    ])
+                    .select()
+                    .single();
+
+                if (error) throw error;
+                memberData = data;
+            }
+
+            if (memberData) {
                 // Map back to camelCase for local app usage if needed
                 const newMember: Member = {
-                    id: data.id,
-                    nombre: data.nombre,
-                    apellido: data.apellido,
-                    telefono: data.telefono,
-                    fechaRegistro: data.fecha_registro,
-                    bloqueado: data.bloqueado
+                    id: memberData.id,
+                    nombre: memberData.nombre,
+                    apellido: memberData.apellido,
+                    telefono: memberData.telefono,
+                    fechaRegistro: memberData.fecha_registro,
+                    bloqueado: memberData.bloqueado
                 };
 
                 // Keep local storage for "Is Registered on this device" check
                 localStorage.setItem(MEMBER_KEY, JSON.stringify(newMember));
 
-                toast.success(`¡Bienvenido/a ${nombre}! Ya puedes acceder al Muro de Oración`);
+                if (existingUser) {
+                    toast.success(`¡Bienvenido de nuevo, ${newMember.nombre}!`);
+                } else {
+                    toast.success(`¡Bienvenido/a ${nombre}! Ya puedes acceder al Muro de Oración`);
+                }
+
                 onRegistered(newMember);
             }
         } catch (error) {
