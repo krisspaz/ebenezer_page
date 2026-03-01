@@ -1,0 +1,203 @@
+{
+    "common": {
+        "loading": "Cargando...",
+        "error": "Ocurrió un error",
+        "churchName": "IGLESIA DE CRISTO",
+        "churchLocation": "EBENEZER COBÁN",
+        "rightsReserved": "© {{year}} Iglesia de Cristo Ebenezer Cobán. Todos los derechos reservados.",
+        "readMore": "Leer más",
+        "close": "Cerrar",
+        "open": "Abrir",
+        "video": "VIDEO",
+        "live": "EN VIVO",
+        "anonymous": "Anónimo",
+        "copyright": "© 2025 Iglesia de Cristo Ebenezer Cobán"
+    },
+    "nav": {
+        "home": "Inicio",
+        "ministries": "Ministerios",
+        "events": "Eventos",
+        "live": "En Vivo",
+        "prayer": "Oración",
+        "contact": "Contacto",
+        "about": "Nosotros",
+        "skipToContent": "Saltar al contenido principal",
+        "toggleTheme": "Alternar tema",
+        "openMenu": "Abrir menú",
+        "closeMenu": "Cerrar menú"
+    },
+    "hero": {
+        "welcome": "Bienvenido a Casa",
+        "subtitle": "Una iglesia de puertas abiertas, donde el amor de Dios transforma vidas.",
+        "watchLive": "Ver en Vivo",
+        "newHere": "¿Eres Nuevo?",
+        "slide2Title": "Nuestra Fe en Él",
+        "slide2Subtitle": "Jesús es fiel para sostenernos.",
+        "slide3Title": "La Palabra de Dios",
+        "slide3Subtitle": "Luz que guía y transforma el corazón.",
+        "previousSlide": "Slide anterior",
+        "nextSlide": "Siguiente slide"
+    },
+    "footer": {
+        "description": "Una comunidad de fe dedicada a compartir el amor de Cristo y servir a nuestra ciudad con excelencia, pasión y compromiso.",
+        "quickLinks": "ENLACES RÁPIDOS",
+        "contact": "CONTACTO",
+        "address": "Cobán, Alta Verapaz, Guatemala",
+        "email": "contacto@ebenezercoban.org"
+    },
+    "contact": {
+        "title": "Contáctanos",
+        "subtitle": "Estamos aquí para servirte. Si necesitas información, oración o deseas asistir a una actividad, estamos para ayudarte.",
+        "location": {
+            "title": "Ubicación",
+            "address": "1a Avenida 5-48, Zona 2\nCobán, Alta Verapaz, Guatemala",
+            "googleMaps": "Google Maps",
+            "waze": "Waze"
+        },
+        "phone": {
+            "title": "Teléfono y WhatsApp",
+            "subtitle": "Contáctanos directamente.",
+            "call": "Llamar",
+            "whatsapp": "WhatsApp"
+        },
+        "schedule": {
+            "title": "Horarios de Servicio",
+            "tuesday": "Martes",
+            "friday": "Viernes",
+            "sunday1": "Domingo – Primer servicio",
+            "sunday2": "Domingo – Segundo servicio"
+        },
+        "form": {
+            "title": "Envíanos un Mensaje",
+            "subtitle": "Llena el formulario y te responderemos lo antes posible.",
+            "nameLabel": "Nombre",
+            "namePlaceholder": "Tu nombre",
+            "phoneLabel": "Teléfono",
+            "phonePlaceholder": "Número de contacto",
+            "messageLabel": "Mensaje",
+            "messagePlaceholder": "Escribe tu mensaje…",
+            "submit": "Enviar"
+        },
+        "whatsappFab": "Contactar por WhatsApp"
+    },
+    "ministries": {
+        "title": "Nuestros Ministerios",
+        "subtitle": "Hay un lugar para ti en la familia de Ebenezer Cobán.",
+        "servingWithPurpose": "Sirviendo con Propósito",
+        "items": {
+            "alabanza": {
+                "title": "Alabanza",
+                "desc": "Adoración profética continua, sin velo y con gobierno"
+            },
+            "danza": {
+                "title": "Danza",
+                "desc": "Una expresión integral de adoración"
+            },
+            "multimedia": {
+                "title": "Multimedia",
+                "desc": "La voz visual de lo que sucede en el altar"
+            },
+            "altarFamiliar": {
+                "title": "Altar Familiar",
+                "desc": "Levantando altares para bendecir familias"
+            },
+            "evangelismo": {
+                "title": "Evangelismo",
+                "desc": "Amor ágape que busca la restauración del pecador"
+            },
+            "prejus": {
+                "title": "Prejus",
+                "desc": "Formado para honrar a Dios hoy y mañana"
+            },
+            "matrimonios": {
+                "title": "Matrimonios",
+                "desc": "Matrimonios que viven el diseño del amor más el respeto"
+            }
+        }
+    },
+    "events": {
+        "title": "Nuestra Agenda",
+        "subtitle": "No te pierdas lo que Dios está haciendo en nuestra casa.",
+        "moreInfo": "Más información",
+        "categories": {
+            "prayer": "Oración",
+            "service": "Servicio",
+            "youth": "Juventud"
+        }
+    },
+    "livestream": {
+        "title": "Transmisión",
+        "titleHighlight": "En Vivo",
+        "subtitle": "Únete a nuestros servicios desde cualquier lugar.",
+        "liveNow": "EN VIVO AHORA",
+        "serviceInProgress": "CULTO EN PROGRESO",
+        "weAreLive": "Estamos en servicio",
+        "startingSoon": "La transmisión puede iniciar en cualquier momento.",
+        "nextService": "Próximo Servicio",
+        "pastServices": "Servicios Anteriores",
+        "watchOn": "Ver en",
+        "days": {
+            "sunday": "Domingo",
+            "monday": "Lunes",
+            "tuesday": "Martes",
+            "wednesday": "Miércoles",
+            "thursday": "Jueves",
+            "friday": "Viernes",
+            "saturday": "Sábado"
+        },
+        "defaultTitle": "Transmisión en vivo"
+    },
+    "prayer": {
+        "title": "Muro de Oración",
+        "subtitle": "Oramos unos por otros. \"La oración eficaz del justo puede mucho.\"",
+        "prayForYou": "Yo oro por ti",
+        "thanks": "¡Gracias por tu oración!",
+        "postRequest": "Publicar Petición",
+        "shareLoad": "Comparte tu carga con nosotros",
+        "dialogTitle": "Publicar Petición",
+        "dialogDesc": "Comparte tu petición para que la congregación pueda orar por ti.",
+        "nameLabel": "Nombre (Opcional)",
+        "namePlaceholder": "Tu nombre o 'Anónimo'",
+        "requestLabel": "Petición",
+        "requestPlaceholder": "Escribe tu petición aquí...",
+        "publish": "Publicar",
+        "success": "Petición publicada correctamente"
+    },
+    "dailyVerse": {
+        "title": "Versículo del Día",
+        "share": "Compartir",
+        "copy": "Copiar",
+        "copied": "Copiado",
+        "verseProgress": "Versículo {{current}} de {{total}} · Cambia mañana"
+    },
+    "audioPlayer": {
+        "radio": "Radio",
+        "radioLive": "Radio en Vivo",
+        "churchLive": "Iglesia en Vivo",
+        "liveStatus": "En Vivo 🔴",
+        "recentStream": "Transmisión Reciente",
+        "stationName": "Radio Ebenezer Cobán",
+        "frequency": "Streaming 24/7",
+        "playNow": "Escuchar Ahora",
+        "pause": "Pausar",
+        "playing": "Reproduciendo ahora",
+        "media": "Medios",
+        "youtube": "YouTube",
+        "watchVideos": "Ver servicios y videos"
+    },
+    "about": {
+        "title": "Nosotros",
+        "subtitle": "Conoce más sobre nuestra iglesia",
+        "mission": "Nuestra Misión",
+        "vision": "Nuestra Visión",
+        "values": "Nuestros Valores"
+    },
+    "settings": {
+        "title": "Ajustes",
+        "theme": "Tema",
+        "language": "Idioma",
+        "accessibility": "Accesibilidad",
+        "fontSize": "Tamaño de letra",
+        "highContrast": "Alto contraste"
+    }
+}

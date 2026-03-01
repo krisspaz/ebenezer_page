@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  /* Light Mode (default) */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    /* Theme Colors */
+    --slate-light: #f8fafc;
+    --slate-mid: #e2e8f0;
+    --slate-dark: #0f172a;
+    --gold: #F4C95D;
+    --teal: #14b8a6;
+
+    /* Component Colors */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 43 89% 66%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 43 89% 66%;
+    --radius: 0.75rem;
+
+    /* Navbar */
+    --navbar-bg: 210 40% 96%;
+    --navbar-text: 222 47% 20%;
+  }
+
+  /* Dark Mode */
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 0 0% 98%;
+
+    /* Theme Colors */
+    --slate-light: #1e293b;
+    --slate-mid: #334155;
+    --slate-dark: #0f172a;
+
+    /* Component Colors */
+    --card: 222 47% 13%;
+    --card-foreground: 0 0% 98%;
+    --popover: 222 47% 13%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 43 89% 66%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 43 89% 66%;
+
+    /* Navbar */
+    --navbar-bg: 217 33% 17%;
+    --navbar-text: 0 0% 98%;
+  }
+
+  /* Light Mode Body */
+  body {
+    @apply bg-background text-foreground min-h-screen antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Light mode gradient background */
+  body:not(.dark) {
+    background-color: #f8fafc;
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(244, 201, 93, 0.08), transparent 40%),
+      radial-gradient(circle at 100% 50%, rgba(20, 184, 166, 0.05), transparent 40%),
+      radial-gradient(circle at 0% 100%, rgba(226, 232, 240, 0.8), transparent 50%);
+  }
+
+  /* Dark mode gradient background */
+  body.dark {
+    background-color: #0f172a;
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(244, 201, 93, 0.03), transparent 40%),
+      radial-gradient(circle at 100% 50%, rgba(20, 184, 166, 0.03), transparent 40%),
+      radial-gradient(circle at 0% 100%, rgba(30, 41, 59, 0.5), transparent 50%);
+  }
+}

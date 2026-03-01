@@ -1,0 +1,177 @@
+{
+    "common": {
+        "loading": "Chi oyal...",
+        "error": "Maajo'il",
+        "churchName": "IGLESIA LI CRISTO",
+        "churchLocation": "EBENEZER COBAN",
+        "rightsReserved": "© {{year}} Iglesia de Cristo Ebenezer Cobán. Chixjunil li wankilal.",
+        "readMore": "Ilb'il ru",
+        "close": "Tz'apok",
+        "open": "Teok",
+        "video": "VIDEO",
+        "live": "CHI TZOL",
+        "anonymous": "Maajo' naxnaw"
+    },
+    "nav": {
+        "home": "Chochochnal",
+        "ministries": "K'anjel",
+        "events": "Ch'utam",
+        "live": "Chi tzol",
+        "prayer": "Tijoc",
+        "contact": "Eil",
+        "about": "LAO",
+        "skipToContent": "Xik sa' li xb'een na'leb'",
+        "toggleTheme": "Jalok b'onol",
+        "openMenu": "Teok menu",
+        "closeMenu": "Tz'apok menu"
+    },
+    "hero": {
+        "welcome": "Sahil ch'oolej sa' Ebenezer",
+        "subtitle": "Jun iglesia b'ar wi' li rahom li Dios naxjal li yu'am.",
+        "watchLive": "Ilok chi tzol",
+        "newHere": "¿Ak' laa'at?"
+    },
+    "footer": {
+        "description": "Jun k'jib'al re paab'aal b'ar wi' naqajultika li rahom li Cristo ut naqak'anjela li tenamit rik'in xnimal ch'oolej.",
+        "quickLinks": "Xb'eenil Eil",
+        "contact": "EIL",
+        "address": "Cobán, Alta Verapaz, Guatemala",
+        "email": "contacto@ebenezercoban.org"
+    },
+    "contact": {
+        "title": "EILAQ QIK'IN",
+        "subtitle": "Wanko arin re aatenq'ankil. Wi taawaj xnawb'al, tijoc, malaj xik sa' jun ch'utam, wanko re aatenq'ankil.",
+        "location": {
+            "title": "Na'ajej",
+            "address": "1a Avenida 5-48, Zona 2\nCobán, Alta Verapaz, Guatemala",
+            "googleMaps": "Google Maps",
+            "waze": "Waze"
+        },
+        "phone": {
+            "title": "Hunkab'l ut WhatsApp",
+            "subtitle": "Eilaq qik'in.",
+            "call": "B'oqb'ok",
+            "whatsapp": "WhatsApp"
+        },
+        "schedule": {
+            "title": "Honal re K'anjel",
+            "tuesday": "Martes",
+            "friday": "Viernes",
+            "sunday1": "Domingo – Xb'een k'anjel",
+            "sunday2": "Domingo – Xkab' k'anjel"
+        },
+        "form": {
+            "title": "Takla jun esil",
+            "subtitle": "Tz'iib'a li esil ut tqasume chaq.",
+            "nameLabel": "K'ab'a'ej",
+            "namePlaceholder": "Laa k'ab'a'",
+            "phoneLabel": "Hunkab'l",
+            "phonePlaceholder": "Retalil hunkab'l",
+            "messageLabel": "Esil",
+            "messagePlaceholder": "Tz'iib'a laa wesil...",
+            "submit": "TAQLA"
+        },
+        "whatsappFab": "Eilaq WhatsApp"
+    },
+    "ministries": {
+        "title": "Li K'anjel",
+        "subtitle": "Wan jun na'ajej cho'aq aawe sa' li junkab'al Ebenezer.",
+        "items": {
+            "worship": {
+                "title": "Lohil K'anjel",
+                "desc": "Lohil li naxjal li mu."
+            },
+            "kids": {
+                "title": "Kok'al",
+                "desc": "Xk'utb'al li b'e chiru li kok'al."
+            },
+            "youth": {
+                "title": "Saaj",
+                "desc": "K'a'uxl ut wankilal cho'q re li Dios."
+            },
+            "women": {
+                "title": "Ixq",
+                "desc": "Ixq re paab'aal."
+            },
+            "men": {
+                "title": "Winaq",
+                "desc": "Winaq re cowilal."
+            },
+            "discipleship": {
+                "title": "Tzolok",
+                "desc": "Xk'ihal li na'leb'."
+            }
+        }
+    },
+    "events": {
+        "title": "Ch'utam",
+        "subtitle": "Mat sach chixk'ulb'al li naxb'aanu li Dios.",
+        "moreInfo": "Xnimal na'leb'",
+        "categories": {
+            "prayer": "Tijoc",
+            "service": "K'anjel",
+            "youth": "Saaj"
+        }
+    },
+    "livestream": {
+        "title": "CHI",
+        "titleHighlight": "TZOL",
+        "subtitle": "Ch'utub' aawib' qik'in b'ar wanqat.",
+        "liveNow": "CHI TZOL ANAQWAN",
+        "serviceInProgress": "K'ANJEL YOO CHI UXK",
+        "weAreLive": "Wanko sa' k'anjel",
+        "startingSoon": "Li k'anjel naru naxtikib' yalaq joq'e.",
+        "nextService": "Jun chik k'anjel",
+        "pastsServices": "K'anjel ak x-uxman",
+        "watchOn": "Ilok sa'",
+        "days": {
+            "sunday": "Domingo",
+            "monday": "Lunes",
+            "tuesday": "Martes",
+            "wednesday": "Miércoles",
+            "thursday": "Jueves",
+            "friday": "Viernes",
+            "saturday": "Sábado"
+        },
+        "defaultTitle": "K'anjel chi tzol"
+    },
+    "prayer": {
+        "title": "Na'ajej re Tijoc",
+        "subtitle": "Naqatz'ama tijoc chiqib'il rib'. \"Li xtij lix tiikil xch'ool, naxnima lix wankil.\"",
+        "prayForYou": "Nintijok aa wix",
+        "thanks": "B'antyox xban laa tij!",
+        "postRequest": "Xk'eeb'al tijoc",
+        "shareLoad": "K'e reetal laa rahil ch'oolej",
+        "dialogTitle": "Xk'eeb'al tijoc",
+        "dialogDesc": "Ye laa rajom re naq li ch'utam naru t-tijoq aa wix.",
+        "nameLabel": "K'ab'a'ej (Wi taawaj)",
+        "namePlaceholder": "Laa k'ab'a' malaj 'Maajo' naxnaw'",
+        "requestLabel": "Rajom",
+        "requestPlaceholder": "Tz'iib'a laa rajom arin...",
+        "publish": "Xk'eeb'al",
+        "success": "Xk'eeman li tijoc"
+    },
+    "dailyVerse": {
+        "title": "Raatin li Dios",
+        "share": "Jerok",
+        "copy": "Xtz'iib'ankil",
+        "copied": "Xtz'iib'aman",
+        "verseProgress": "Raatin {{current}} re {{total}} · Naxjal wulaj"
+    },
+    "audioPlayer": {
+        "radio": "Radio",
+        "churchLive": "Iglesia Chi Tzol",
+        "liveStatus": "Chi Tzol 🔴",
+        "recentStream": "K'anjel ak x-uxman",
+        "stationName": "Rhema Stereo",
+        "frequency": "87.10 FM"
+    },
+    "settings": {
+        "title": "Xb'aanuhom",
+        "theme": "B'onol",
+        "language": "Aatinob'aal",
+        "accessibility": "Tenq'",
+        "fontSize": "Nimol tz'iib'",
+        "highContrast": "Ka'xookil"
+    }
+}

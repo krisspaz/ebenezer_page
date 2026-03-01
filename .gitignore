@@ -1,0 +1,25 @@
+# System Files
+.DS_Store
+**/.DS_Store
+
+# Node
+**/node_modules/
+node_modules/
+
+# Mobile - Gradle & Build
+**/.gradle/
+**/build/
+mobile/.gradle/
+mobile/build/
+local.properties
+*.iml
+.idea/
+
+# Backend / Other
+integration_tests/
+test-results/
+
+# Junk / Duplicates
+vercel 2.json
+frontend/node_modules 2/
+frontend/src/assets/proclama2026 2.png

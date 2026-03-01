@@ -1,0 +1,15 @@
+{
+    "name": "ebenezer-root",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "build": "echo 'No root build script'"
+    },
+    "dependencies": {
+        "cheerio": "^1.0.0",
+        "node-fetch": "^3.3.2"
+    },
+    "devDependencies": {
+        "@vercel/node": "^5.5.16"
+    }
+}

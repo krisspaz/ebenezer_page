@@ -1,0 +1,203 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "churchName": "CHURCH OF CHRIST",
+        "churchLocation": "EBENEZER COBAN",
+        "rightsReserved": "© {{year}} Ebenezer Coban Church of Christ. All rights reserved.",
+        "readMore": "Read more",
+        "close": "Close",
+        "open": "Open",
+        "video": "VIDEO",
+        "live": "LIVE",
+        "anonymous": "Anonymous",
+        "copyright": "© 2025 Ebenezer Coban Church of Christ"
+    },
+    "nav": {
+        "home": "Home",
+        "ministries": "Ministries",
+        "events": "Events",
+        "live": "Live",
+        "prayer": "Prayer",
+        "contact": "Contact",
+        "about": "About Us",
+        "skipToContent": "Skip to main content",
+        "toggleTheme": "Toggle theme",
+        "openMenu": "Open menu",
+        "closeMenu": "Close menu"
+    },
+    "hero": {
+        "welcome": "Welcome Home",
+        "subtitle": "A church with open doors, where God's love transforms lives.",
+        "watchLive": "Watch Live",
+        "newHere": "New Here?",
+        "slide2Title": "Our Faith in Him",
+        "slide2Subtitle": "Jesus is faithful to sustain us.",
+        "slide3Title": "The Word of God",
+        "slide3Subtitle": "Light that guides and transforms the heart.",
+        "previousSlide": "Previous slide",
+        "nextSlide": "Next slide"
+    },
+    "footer": {
+        "description": "A community of faith dedicated to sharing the love of Christ and serving our city with excellence, passion, and commitment.",
+        "quickLinks": "QUICK LINKS",
+        "contact": "CONTACT",
+        "address": "Coban, Alta Verapaz, Guatemala",
+        "email": "contact@ebenezercoban.org"
+    },
+    "contact": {
+        "title": "Contact Us",
+        "subtitle": "We are here to serve you. If you need information, prayer, or want to attend an activity, we are here to help.",
+        "location": {
+            "title": "Location",
+            "address": "1a Avenida 5-48, Zona 2\nCoban, Alta Verapaz, Guatemala",
+            "googleMaps": "Google Maps",
+            "waze": "Waze"
+        },
+        "phone": {
+            "title": "Phone & WhatsApp",
+            "subtitle": "Contact us directly.",
+            "call": "Call",
+            "whatsapp": "WhatsApp"
+        },
+        "schedule": {
+            "title": "Service Times",
+            "tuesday": "Tuesday",
+            "friday": "Friday",
+            "sunday1": "Sunday – First service",
+            "sunday2": "Sunday – Second service"
+        },
+        "form": {
+            "title": "Send us a Message",
+            "subtitle": "Fill out the form and we will respond as soon as possible.",
+            "nameLabel": "Name",
+            "namePlaceholder": "Your name",
+            "phoneLabel": "Phone",
+            "phonePlaceholder": "Contact number",
+            "messageLabel": "Message",
+            "messagePlaceholder": "Write your message…",
+            "submit": "Send"
+        },
+        "whatsappFab": "Contact via WhatsApp"
+    },
+    "ministries": {
+        "title": "Our Ministries",
+        "subtitle": "There is a place for you in the Ebenezer Coban family.",
+        "servingWithPurpose": "Serving with Purpose",
+        "items": {
+            "alabanza": {
+                "title": "Worship",
+                "desc": "Continuous prophetic worship, unveiled and with governance"
+            },
+            "danza": {
+                "title": "Dance",
+                "desc": "An integral expression of worship"
+            },
+            "multimedia": {
+                "title": "Multimedia",
+                "desc": "The visual voice of what happens at the altar"
+            },
+            "altarFamiliar": {
+                "title": "Family Altar",
+                "desc": "Raising altars to bless families"
+            },
+            "evangelismo": {
+                "title": "Evangelism",
+                "desc": "Agape love that seeks the restoration of the sinner"
+            },
+            "prejus": {
+                "title": "Youth",
+                "desc": "Formed to honor God today and tomorrow"
+            },
+            "matrimonios": {
+                "title": "Marriages",
+                "desc": "Marriages that live the design of love plus respect"
+            }
+        }
+    },
+    "events": {
+        "title": "Our Schedule",
+        "subtitle": "Don't miss what God is doing in our house.",
+        "moreInfo": "More Info",
+        "categories": {
+            "prayer": "Prayer",
+            "service": "Service",
+            "youth": "Youth"
+        }
+    },
+    "livestream": {
+        "title": "Live",
+        "titleHighlight": "Stream",
+        "subtitle": "Join our services from anywhere.",
+        "liveNow": "LIVE NOW",
+        "serviceInProgress": "SERVICE IN PROGRESS",
+        "weAreLive": "We are in service",
+        "startingSoon": "Broadcast may start at any moment.",
+        "nextService": "Next Service",
+        "pastServices": "Previous Services",
+        "watchOn": "Watch on",
+        "days": {
+            "sunday": "Sunday",
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday"
+        },
+        "defaultTitle": "Live Stream"
+    },
+    "prayer": {
+        "title": "Prayer Wall",
+        "subtitle": "We pray for one another. \"The effective prayer of a righteous man can accomplish much.\"",
+        "prayForYou": "I pray for you",
+        "thanks": "Thank you for your prayer!",
+        "postRequest": "Post Request",
+        "shareLoad": "Share your burden with us",
+        "dialogTitle": "Post Request",
+        "dialogDesc": "Share your request so the congregation can pray for you.",
+        "nameLabel": "Name (Optional)",
+        "namePlaceholder": "Your name or 'Anonymous'",
+        "requestLabel": "Request",
+        "requestPlaceholder": "Write your request here...",
+        "publish": "Post",
+        "success": "Request posted successfully"
+    },
+    "dailyVerse": {
+        "title": "Verse of the Day",
+        "share": "Share",
+        "copy": "Copy",
+        "copied": "Copied",
+        "verseProgress": "Verse {{current}} of {{total}} · Changes tomorrow"
+    },
+    "audioPlayer": {
+        "radio": "Radio",
+        "radioLive": "Radio Live",
+        "churchLive": "Church Live",
+        "liveStatus": "Live 🔴",
+        "recentStream": "Recent Stream",
+        "stationName": "Radio Ebenezer Coban",
+        "frequency": "Streaming 24/7",
+        "playNow": "Listen Now",
+        "pause": "Pause",
+        "playing": "Playing now",
+        "media": "Media",
+        "youtube": "YouTube",
+        "watchVideos": "Watch services and videos"
+    },
+    "about": {
+        "title": "About Us",
+        "subtitle": "Learn more about our church",
+        "mission": "Our Mission",
+        "vision": "Our Vision",
+        "values": "Our Values"
+    },
+    "settings": {
+        "title": "Settings",
+        "theme": "Theme",
+        "language": "Language",
+        "accessibility": "Accessibility",
+        "fontSize": "Font size",
+        "highContrast": "High contrast"
+    }
+}
