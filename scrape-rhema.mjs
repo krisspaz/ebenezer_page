@@ -24,42 +24,70 @@ async function scrape() {
         const $ = cheerio.load(html);
         const magazines = [];
 
-        // Main selector
-        $('.eape-item-wrap').each((_, el) => {
-            const title = $(el).find('.eape-item-title').text().trim() || $(el).find('h3').text().trim();
-            const link = $(el).find('a').attr('href');
-            const image = $(el).find('img').attr('src');
+        // The page uses Elfsight PDF Embed widgets. Each widget stores its data
+        // as URL-encoded JSON in data-elfsight-pdf-embed-options attributes.
+        $('[data-elfsight-pdf-embed-options]').each((_, el) => {
+            try {
+                const encoded = $(el).attr('data-elfsight-pdf-embed-options');
+                const decoded = decodeURIComponent(encoded);
+                const data = JSON.parse(decoded);
 
-            if (title && link && image && link.toLowerCase().endsWith('.pdf')) {
-                magazines.push({
-                    title: title.toUpperCase(),
-                    link,
-                    image
-                });
+                if (data.files && Array.isArray(data.files)) {
+                    for (const file of data.files) {
+                        if (file.link && file.link.toLowerCase().endsWith('.pdf')) {
+                            magazines.push({
+                                title: (file.name || '').toUpperCase(),
+                                link: file.link,
+                                image: file.previewImage || ''
+                            });
+                        }
+                    }
+                }
+            } catch (parseError) {
+                console.warn('⚠️ Failed to parse an elfsight widget:', parseError.message);
             }
         });
 
-        // Fallback
+        // Fallback: also try the old .eape-item-wrap selector (in case structure changes back)
         if (magazines.length === 0) {
-            $('a').each((_, el) => {
-                const link = $(el).attr('href');
-                if (link && link.toLowerCase().endsWith('.pdf')) {
-                    const container = $(el).closest('div');
-                    const title = container.text().replace(/Descargar Revista/gi, '').trim();
-                    const image = container.find('img').attr('src') || $(el).parent().find('img').attr('src');
+            console.log('ℹ️ No elfsight widgets found, trying fallback selectors...');
 
-                    if (title && image) {
-                        magazines.push({
-                            title: title.toUpperCase(),
-                            link,
-                            image
-                        });
-                    }
+            $('.eape-item-wrap').each((_, el) => {
+                const title = $(el).find('.eape-item-title').text().trim() || $(el).find('h3').text().trim();
+                const link = $(el).find('a').attr('href');
+                const image = $(el).find('img').attr('src');
+
+                if (title && link && image && link.toLowerCase().endsWith('.pdf')) {
+                    magazines.push({
+                        title: title.toUpperCase(),
+                        link,
+                        image
+                    });
                 }
             });
+
+            // Second fallback: any PDF link
+            if (magazines.length === 0) {
+                $('a').each((_, el) => {
+                    const link = $(el).attr('href');
+                    if (link && link.toLowerCase().endsWith('.pdf')) {
+                        const container = $(el).closest('div');
+                        const title = container.text().replace(/Descargar Revista/gi, '').trim();
+                        const image = container.find('img').attr('src') || $(el).parent().find('img').attr('src');
+
+                        if (title && image) {
+                            magazines.push({
+                                title: title.toUpperCase(),
+                                link,
+                                image
+                            });
+                        }
+                    }
+                });
+            }
         }
 
-        // Remove duplicates
+        // Remove duplicates by link
         const uniqueMagazines = Array.from(new Set(magazines.map(m => m.link)))
             .map(link => magazines.find(m => m.link === link));
 
