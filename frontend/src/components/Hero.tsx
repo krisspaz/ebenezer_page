@@ -1,39 +1,25 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import { Calendar, Volume2, VolumeX } from "lucide-react";
-import CountdownTimer from "./CountdownTimer";
+import { Calendar } from "lucide-react";
 
 const Hero = () => {
   const { t } = useTranslation();
-  const [isMuted, setIsMuted] = useState(true);
-  const [hasInteracted, setHasInteracted] = useState(false);
-
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-    setHasInteracted(true);
-  };
 
   return (
     <section
       id="inicio"
-      className="relative w-full h-[calc(100vh-4rem)] mt-16 bg-slate-900 overflow-hidden"
+      className="relative w-full h-[calc(100vh-4rem)] mt-16 bg-[#0a0a0a] overflow-hidden"
       aria-label="2026 Año del Deleite - Retiro de Verano"
     >
-
-      {/* Video Background Layer */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-black">
-        <iframe
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-[100%] min-h-[100%] w-[177.77vh] h-[56.25vw] opacity-80 scale-105"
-          src={`https://www.youtube.com/embed/iyjlHvwZgEo?autoplay=1&mute=${isMuted ? 1 : 0}&rel=0&controls=0&showinfo=0&modestbranding=1&loop=1&playlist=iyjlHvwZgEo&playsinline=1`}
-          title="Background Video"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        ></iframe>
-      </div>
+      {/* Decorative Background gradient */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-slate-900 via-black to-slate-900 opacity-60"></div>
+      
+      {/* Ambient background glows */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-yellow-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-yellow-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
       {/* Protective Gradients: Dark at top and bottom for readability */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/90 via-transparent to-black/40 pointer-events-none"></div>
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-transparent to-black/60 pointer-events-none"></div>
 
       {/* Top Content Overlay (Title Shifted Up) */}
       <div className="absolute top-10 md:top-24 left-0 w-full z-20 flex justify-center px-4">
@@ -63,10 +49,6 @@ const Hero = () => {
                 <Calendar className="w-5 h-5 md:w-6 md:h-6 text-yellow-500" />
                 <span className="font-light">Marzo 30 — Abril 04, 2026</span>
               </div>
-
-              <div className="w-full md:w-auto">
-                <CountdownTimer targetDate="2026-03-30T00:00:00" />
-              </div>
             </div>
 
             <div className="mt-8 flex flex-col items-center gap-4 opacity-70">
@@ -77,27 +59,6 @@ const Hero = () => {
             </div>
           </div>
         </motion.div>
-
-        {/* Audio Interaction Button */}
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-          onClick={toggleMute}
-          className="absolute bottom-10 right-10 z-30 flex items-center gap-3 bg-black/60 hover:bg-yellow-500/20 px-4 py-2 rounded-full border border-white/20 backdrop-blur-md transition-all duration-300 group shadow-2xl"
-        >
-          {isMuted ? (
-            <>
-              <VolumeX className="w-5 h-5 text-white/80 group-hover:text-white" />
-              <span className="text-white/60 group-hover:text-white text-[10px] font-bold uppercase tracking-widest hidden lg:block">Escuchar</span>
-            </>
-          ) : (
-            <>
-              <Volume2 className="w-5 h-5 text-yellow-500" />
-              <span className="text-yellow-500 text-[10px] font-bold uppercase tracking-widest hidden lg:block">Audio Activado</span>
-            </>
-          )}
-        </motion.button>
       </div>
 
       {/* Bottom Copyright/Footer Info */}
@@ -109,3 +70,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
