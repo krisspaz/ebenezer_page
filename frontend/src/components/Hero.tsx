@@ -7,35 +7,36 @@ const Hero = () => {
   return (
     <section
       id="inicio"
-      className="relative w-full h-[calc(100vh-4rem)] mt-16 bg-[#0a0a0a] overflow-hidden flex items-center justify-center"
+      className="relative w-full h-[calc(100vh-4rem)] mt-16 bg-[#0a0a0a] overflow-hidden"
       aria-label="Logo Ebenezer 4K"
     >
-      {/* Decorative Background gradient */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-slate-900 via-black to-slate-900 opacity-60"></div>
-      
-      {/* Ambient background glows */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-yellow-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-yellow-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+      {/* Top and Bottom Protective Gradients for UI elements */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/60 to-transparent z-20 pointer-events-none"></div>
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/80 to-transparent z-20 pointer-events-none"></div>
 
-      {/* Main Image Layer */}
+      {/* Main Image Background - Fills everything */}
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 1.1 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="relative z-10 w-full h-full flex items-center justify-center p-4 md:p-12"
+        transition={{ duration: 2, ease: "easeOut" }}
+        className="absolute inset-0 z-0"
       >
         <img 
           src="/4k-res-logo.jpg" 
           alt="Iglesia de Cristo Ebenezer" 
-          className="max-w-full max-h-full object-contain drop-shadow-[0_0_50px_rgba(234,179,8,0.3)]"
+          className="w-full h-full object-cover"
         />
       </motion.div>
 
-      {/* Protective Gradients: Dark at top and bottom for readability if needed later */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40 pointer-events-none"></div>
+      {/* Decorative Overlays */}
+      <div className="absolute inset-0 z-10 bg-black/20 pointer-events-none"></div>
+      
+      {/* Ambient background glows for extra depth */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-yellow-500/5 rounded-full blur-[120px] pointer-events-none z-15"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-yellow-600/5 rounded-full blur-[120px] pointer-events-none z-15"></div>
 
       {/* Bottom Copyright/Footer Info */}
-      <div className="absolute bottom-8 w-full text-center text-[10px] text-white/40 z-20 tracking-[0.3em] uppercase font-light pointer-events-none">
+      <div className="absolute bottom-8 w-full text-center text-[10px] text-white/60 z-30 tracking-[0.3em] uppercase font-bold drop-shadow-lg pointer-events-none">
         {t('common.copyright')}
       </div>
     </section>
@@ -43,5 +44,6 @@ const Hero = () => {
 };
 
 export default Hero;
+
 
 
